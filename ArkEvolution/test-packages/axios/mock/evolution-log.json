@@ -1,0 +1,106 @@
+[
+  {
+    "answers": [
+      "/**\n * htmlString: 字符串\n */\nfunction isHTMLTag(htmlString) {\n    // 正则表达式匹配HTML标签\n    const tagPattern = /<[^>]+>/g; // 匹配任何不包含闭合标签的标签\n    // 使用test方法检查字符串是否匹配\n    return tagPattern.test(htmlString);\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nUpdated the `isValidHeaderName` function from a regular function declaration to an arrow function, and expanded the allowed characters in the header name validation regex to include digits and additional special characters.\n\n--- Intent 2 ---\nUpdated the `isValidHeaderName` function from a regular function declaration to an arrow function, and expanded the allowed characters in the header name validation regex to include digits and additional special characters.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 34,
+          "npm_file_path": "package/lib/core/AxiosHeaders.js",
+          "npm_start_line": 32,
+          "ohpm_end_line": 128,
+          "ohpm_file_path": "src/main/ets/components/lib/adapters/ohos/upload.js",
+          "ohpm_start_line": 120,
+          "type": "modification"
+        },
+        "npm_code_after": "const isValidHeaderName = (str) => /^[-_a-zA-Z0-9^`|~,!#$%&'*+.]+$/.test(str.trim());",
+        "npm_code_before": "function isValidHeaderName(str) {\n  return /^[-_a-zA-Z]+$/.test(str.trim());\n}",
+        "ohpm_code_before": [
+          "/**\n * htmlString: 字符串\n */\nfunction isHTMLTag(htmlString) {\n    // 正则表达式匹配HTML标签\n    const tagPattern = /<[^>]+>/g; // 匹配任何不包含闭合标签的标签\n    // 使用test方法检查字符串是否匹配\n    return tagPattern.test(htmlString);\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "package/lib/core/AxiosHeaders.js",
+      "sourceLines": "32-34",
+      "targetFile": "src/main/ets/components/lib/adapters/ohos/upload.js",
+      "targetLines": "120-128"
+    }
+  },
+  {
+    "answers": [
+      "export {\n  axios as default,\n  Axios,\n  AxiosError,\n  CanceledError,\n  isCancel,\n  CancelToken,\n  VERSION,\n  all,\n  Cancel,\n  isAxiosError,\n  spread,\n  toFormData,\n  AxiosHeaders,\n  HttpStatusCode,\n  formToJSON,\n  mergeConfig,\n  FormData,\n  AbortController,\n  AbortSignal\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nEnhanced paramsSerializer configuration to support both function shorthand and object options, automatically wrapping a function parameter into the expected object format.\n\n--- Intent 2 ---\nAdded support for passing a function directly as `paramsSerializer`, which is automatically wrapped into an object with a `serialize` property, while preserving the existing object validation behavior for non-function values.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 162,
+          "npm_file_path": "package/lib/core/Axios.js",
+          "npm_start_line": 14,
+          "ohpm_end_line": 45,
+          "ohpm_file_path": "index.js",
+          "ohpm_start_line": 25,
+          "type": "modification"
+        },
+        "npm_code_after": "/**\n * Create a new instance of Axios\n *\n * @param {Object} instanceConfig The default config for the instance\n *\n * @return {Axios} A new instance of Axios\n */\nclass Axios {\n  constructor(instanceConfig) {\n    this.defaults = instanceConfig;\n    this.interceptors = {\n      request: new InterceptorManager(),\n      response: new InterceptorManager()\n    };\n  }\n\n  /**\n   * Dispatch a request\n   *\n   * @param {String|Object} configOrUrl The config specific for this request (merged with this.defaults)\n   * @param {?Object} config\n   *\n   * @returns {Promise} The Promise to be fulfilled\n   */\n  request(configOrUrl, config) {\n    /*eslint no-param-reassign:0*/\n    // Allow for axios('example/url'[, config]) a la fetch API\n    if (typeof configOrUrl === 'string') {\n      config = config || {};\n      config.url = configOrUrl;\n    } else {\n      config = configOrUrl || {};\n    }\n\n    config = mergeConfig(this.defaults, config);\n\n    const {transitional, paramsSerializer, headers} = config;\n\n    if (transitional !== undefined) {\n      validator.assertOptions(transitional, {\n        silentJSONParsing: validators.transitional(validators.boolean),\n        forcedJSONParsing: validators.transitional(validators.boolean),\n        clarifyTimeoutError: validators.transitional(validators.boolean)\n      }, false);\n    }\n\n    if (paramsSerializer != null) {\n      if (utils.isFunction(paramsSerializer)) {\n        config.paramsSerializer = {\n          serialize: paramsSerializer\n        }\n      } else {\n        validator.assertOptions(paramsSerializer, {\n          encode: validators.function,\n          serialize: validators.function\n        }, true);\n      }\n    }\n\n    // Set config.method\n    config.method = (config.method || this.defaults.method || 'get').toLowerCase();\n\n    let contextHeaders;\n\n    // Flatten headers\n    contextHeaders = headers && utils.merge(\n      headers.common,\n      headers[config.method]\n    );\n\n    contextHeaders && utils.forEach(\n      ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],\n      (method) => {\n        delete headers[method];\n      }\n    );\n\n    config.headers = AxiosHeaders.concat(contextHeaders, headers);\n\n    // filter out skipped interceptors\n    const requestInterceptorChain = [];\n    let synchronousRequestInterceptors = true;\n    this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {\n      if (typeof interceptor.runWhen === 'function' && interceptor.runWhen(config) === false) {\n        return;\n      }\n\n      synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;\n\n      requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);\n    });\n\n    const responseInterceptorChain = [];\n    this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {\n      responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);\n    });\n\n    let promise;\n    let i = 0;\n    let len;\n\n    if (!synchronousRequestInterceptors) {\n      const chain = [dispatchRequest.bind(this), undefined];\n      chain.unshift.apply(chain, requestInterceptorChain);\n      chain.push.apply(chain, responseInterceptorChain);\n      len = chain.length;\n\n      promise = Promise.resolve(config);\n\n      while (i < len) {\n        promise = promise.then(chain[i++], chain[i++]);\n      }\n\n      return promise;\n    }\n\n    len = requestInterceptorChain.length;\n\n    let newConfig = config;\n\n    i = 0;\n\n    while (i < len) {\n      const onFulfilled = requestInterceptorChain[i++];\n      const onRejected = requestInterceptorChain[i++];\n      try {\n        newConfig = onFulfilled(newConfig);\n      } catch (error) {\n        onRejected.call(this, error);\n        break;\n      }\n    }\n\n    try {\n      promise = dispatchRequest.call(this, newConfig);\n    } catch (error) {\n      return Promise.reject(error);\n    }\n\n    i = 0;\n    len = responseInterceptorChain.length;\n\n    while (i < len) {\n      promise = promise.then(responseInterceptorChain[i++], responseInterceptorChain[i++]);\n    }\n\n    return promise;\n  }\n\n  getUri(config) {\n    config = mergeConfig(this.defaults, config);\n    const fullPath = buildFullPath(config.baseURL, config.url);\n    return buildURL(fullPath, config.params, config.paramsSerializer);\n  }\n}",
+        "npm_code_before": "/**\n * Create a new instance of Axios\n *\n * @param {Object} instanceConfig The default config for the instance\n *\n * @return {Axios} A new instance of Axios\n */\nclass Axios {\n  constructor(instanceConfig) {\n    this.defaults = instanceConfig;\n    this.interceptors = {\n      request: new InterceptorManager(),\n      response: new InterceptorManager()\n    };\n  }\n\n  /**\n   * Dispatch a request\n   *\n   * @param {String|Object} configOrUrl The config specific for this request (merged with this.defaults)\n   * @param {?Object} config\n   *\n   * @returns {Promise} The Promise to be fulfilled\n   */\n  request(configOrUrl, config) {\n    /*eslint no-param-reassign:0*/\n    // Allow for axios('example/url'[, config]) a la fetch API\n    if (typeof configOrUrl === 'string') {\n      config = config || {};\n      config.url = configOrUrl;\n    } else {\n      config = configOrUrl || {};\n    }\n\n    config = mergeConfig(this.defaults, config);\n\n    const {transitional, paramsSerializer, headers} = config;\n\n    if (transitional !== undefined) {\n      validator.assertOptions(transitional, {\n        silentJSONParsing: validators.transitional(validators.boolean),\n        forcedJSONParsing: validators.transitional(validators.boolean),\n        clarifyTimeoutError: validators.transitional(validators.boolean)\n      }, false);\n    }\n\n    if (paramsSerializer !== undefined) {\n      validator.assertOptions(paramsSerializer, {\n        encode: validators.function,\n        serialize: validators.function\n      }, true);\n    }\n\n    // Set config.method\n    config.method = (config.method || this.defaults.method || 'get').toLowerCase();\n\n    let contextHeaders;\n\n    // Flatten headers\n    contextHeaders = headers && utils.merge(\n      headers.common,\n      headers[config.method]\n    );\n\n    contextHeaders && utils.forEach(\n      ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],\n      (method) => {\n        delete headers[method];\n      }\n    );\n\n    config.headers = AxiosHeaders.concat(contextHeaders, headers);\n\n    // filter out skipped interceptors\n    const requestInterceptorChain = [];\n    let synchronousRequestInterceptors = true;\n    this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {\n      if (typeof interceptor.runWhen === 'function' && interceptor.runWhen(config) === false) {\n        return;\n      }\n\n      synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;\n\n      requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);\n    });\n\n    const responseInterceptorChain = [];\n    this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {\n      responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);\n    });\n\n    let promise;\n    let i = 0;\n    let len;\n\n    if (!synchronousRequestInterceptors) {\n      const chain = [dispatchRequest.bind(this), undefined];\n      chain.unshift.apply(chain, requestInterceptorChain);\n      chain.push.apply(chain, responseInterceptorChain);\n      len = chain.length;\n\n      promise = Promise.resolve(config);\n\n      while (i < len) {\n        promise = promise.then(chain[i++], chain[i++]);\n      }\n\n      return promise;\n    }\n\n    len = requestInterceptorChain.length;\n\n    let newConfig = config;\n\n    i = 0;\n\n    while (i < len) {\n      const onFulfilled = requestInterceptorChain[i++];\n      const onRejected = requestInterceptorChain[i++];\n      try {\n        newConfig = onFulfilled(newConfig);\n      } catch (error) {\n        onRejected.call(this, error);\n        break;\n      }\n    }\n\n    try {\n      promise = dispatchRequest.call(this, newConfig);\n    } catch (error) {\n      return Promise.reject(error);\n    }\n\n    i = 0;\n    len = responseInterceptorChain.length;\n\n    while (i < len) {\n      promise = promise.then(responseInterceptorChain[i++], responseInterceptorChain[i++]);\n    }\n\n    return promise;\n  }\n\n  getUri(config) {\n    config = mergeConfig(this.defaults, config);\n    const fullPath = buildFullPath(config.baseURL, config.url);\n    return buildURL(fullPath, config.params, config.paramsSerializer);\n  }\n}",
+        "ohpm_code_before": [
+          "export {\n  axios as default,\n  Axios,\n  AxiosError,\n  CanceledError,\n  isCancel,\n  CancelToken,\n  VERSION,\n  all,\n  Cancel,\n  isAxiosError,\n  spread,\n  toFormData,\n  AxiosHeaders,\n  HttpStatusCode,\n  formToJSON,\n  mergeConfig,\n  FormData,\n  AbortController,\n  AbortSignal\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "package/lib/core/Axios.js",
+      "sourceLines": "14-162",
+      "targetFile": "index.js",
+      "targetLines": "25-45"
+    }
+  },
+  {
+    "answers": [
+      "import deviceInfo from '@ohos.deviceInfo';\n\n/**\n * 设置证书\n */\nconst setCertificate = (config: Record<string, Object>, options: Record<string, Object>): void => {\n    // 设置caPath\n    if (config.caPath) {\n        options.caPath = config.caPath;\n    }\n\n    // 设置sslType\n    if (config.sslType) {\n        let apiVersion: number = deviceInfo.sdkApiVersion;\n        if (config.sslType === 'TLCP' && apiVersion < 20) {\n            throw new Error(`TLCP need Api >= 20,current api is ${apiVersion}`);\n        }\n        options.sslType = config.sslType;\n    }\n\n    // 设置客户端证书\n    if (config.clientEncCert) {\n        options.clientEncCert = config.clientEncCert;\n        let { keyPasswd: keyPassword, ...rest } = options.clientEncCert as Record<string, Object>;\n        let clientEncCert: Record<string, Object> = { ...rest, keyPassword };\n        // certType转换为大小字符\n        let certType: string = clientEncCert.certType as string;\n        clientEncCert.certType = certType ? certType.toUpperCase() : certType;\n        options.clientEncCert = clientEncCert;\n    }\n\n    // 设置客户端证书\n    if (!utils.isUndefined(config.clientCert)) {\n        options.clientCert = config.clientCert;\n        // keyPasswd转换为keyPassword\n        let { keyPasswd: keyPassword, ...rest } = options.clientCert as Record<string, Object>;\n        let clientCert: Record<string, Object> = { ...rest, keyPassword };\n        // certType转换为大小字符\n        let certType: string = clientCert.certType as string;\n        clientCert.certType = certType ? certType.toUpperCase() : certType;\n        options.clientCert = clientCert;\n    }\n};"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "/**\n * 设置证书\n */\nconst setCertificate = (config, options) => {\n    // 设置caPath\n    if (config.caPath) {\n        options.caPath = config.caPath;\n    }\n\n    // 设置sslType\n    if (config.sslType) {\n        let apiVersion = deviceInfo.sdkApiVersion;\n        if (config.sslType === 'TLCP' && apiVersion < 20) {\n            throw new Error(`TLCP need Api >= 20,current api is ${apiVersion}`);\n        }\n        options.sslType = config.sslType;\n    }\n\n    // 设置客户端证书\n    if (config.clientEncCert) {\n        options.clientEncCert = config.clientEncCert;\n        let { keyPasswd: keyPassword, ...rest } = options.clientEncCert;\n        let clientEncCert = { ...rest, keyPassword };\n        // certType转换为大小字符\n        let certType = clientEncCert.certType;\n        clientEncCert.certType = certType ? certType.toUpperCase() : certType;\n        options.clientEncCert = clientEncCert;\n    }\n\n    // 设置客户端证书\n    if (!utils.isUndefined(config.clientCert)) {\n        options.clientCert = config.clientCert;\n        // keyPasswd转换为keyPassword\n        let { keyPasswd: keyPassword, ...rest } = options.clientCert;\n        let clientCert = { ...rest, keyPassword };\n        // certType转换为大小字符\n        let certType = clientCert.certType;\n        clientCert.certType = certType ? certType.toUpperCase() : certType;\n        options.clientCert = clientCert;\n    }\n};"
+        ],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nUpdated the application version from 1.3.4 to 1.3.5.\n\n--- Intent 2 ---\nUpdated the application version from 1.3.4 to 1.3.5.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 1,
+          "npm_file_path": "package/lib/env/data.js",
+          "npm_start_line": 1,
+          "ohpm_end_line": 27,
+          "ohpm_file_path": "src/main/ets/components/lib/adapters/ohos/index.js",
+          "ohpm_start_line": 27,
+          "type": "modification"
+        },
+        "npm_code_after": "export const VERSION = \"1.3.5\";",
+        "npm_code_before": "export const VERSION = \"1.3.4\";",
+        "ohpm_code_before": [
+          "import deviceInfo from '@ohos.deviceInfo';"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "package/lib/env/data.js",
+      "sourceLines": "1-1",
+      "targetFile": "src/main/ets/components/lib/adapters/ohos/index.js",
+      "targetLines": "27-27"
+    }
+  }
+]

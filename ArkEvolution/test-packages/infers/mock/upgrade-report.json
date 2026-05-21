@@ -1,0 +1,386 @@
+[
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化 / 新功能",
+    "cluster_id": 1,
+    "cluster_ids": [
+      1,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 275,
+            "file_path": "lib/BPNet.js",
+            "start_line": 12,
+            "text": "class BPNet {\n    constructor(shape, opt = {}) {\n        this.shape = shape;\n        this.mode = 'sgd';\n        this.rate = 0.01;\n        this.hlayer = shape.length - 1;\n        if (this.hlayer < 1) {\n            throw new Error('The network has at least two layers');\n        }\n        this.w = [];\n        this.b = [];\n        for (let l = 0; l < this.hlayer; l++) {\n            this.w[l] = matrix_1.Matrix.generate(this.unit(l), this.unit(l - 1));\n            this.b[l] = matrix_1.Matrix.generate(1, this.unit(l));\n        }\n        if (opt.mode)\n            this.mode = opt.mode;\n        if (opt.rate)\n            this.rate = opt.rate;\n        if (opt.w)\n            this.w = opt.w;\n        if (opt.b)\n            this.b = opt.b;\n        if (opt.scale)\n            this.scale = opt.scale;\n    }\n    unit(l) {\n        let n = this.shape[l + 1];\n        return Array.isArray(n) ? n[0] : n;\n    }\n    af(l) {\n        let n = this.shape[l + 1];\n        return Array.isArray(n) ? n[1] : undefined;\n    }\n    afn(x, rows, af) {\n        switch (af) {\n            case 'Sigmoid':\n                return 1 / (1 + Math.exp(-x));\n            case 'Relu':\n                return x >= 0 ? x : 0;\n            case 'Tanh':\n                return (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));\n            case 'Softmax':\n                let d = Math.max(...rows);\n                return Math.exp(x - d) / rows.reduce((p, c) => p + Math.exp(c - d), 0);\n            default:\n                return x;\n        }\n    }\n    afd(x, af) {\n        switch (af) {\n            case 'Sigmoid':\n                return x * (1 - x);\n            case 'Relu':\n                return x >= 0 ? 1 : 0;\n            case 'Tanh':\n                return 1 - ((Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x))) ** 2;\n            case 'Softmax':\n            default:\n                return 1;\n        }\n    }\n    toJSON() {\n        return JSON.stringify({\n            mode: this.mode,\n            shape: this.shape,\n            rate: this.rate,\n            scale: this.scale ? this.scale.dataSync() : undefined,\n            w: this.w.map(w => w.dataSync()),\n            b: this.b.map(b => b.dataSync()),\n        });\n    }\n    static fromJSON(json) {\n        let tmp = JSON.parse(json);\n        let w = tmp.w.map((w) => new matrix_1.Matrix(w));\n        let b = tmp.b.map((b) => new matrix_1.Matrix(b));\n        let scale = tmp.scale ? new matrix_1.Matrix(tmp.scale) : undefined;\n        return new BPNet(tmp.shape, {\n            mode: tmp.mode,\n            rate: tmp.mode,\n            w, b, scale\n        });\n    }\n    forwardPropagation(xs) {\n        let hy = [];\n        for (let l = 0; l < this.hlayer; l++) {\n            let lastHy = l === 0 ? xs : hy[l - 1];\n            let af = this.af(l);\n            let tmp = lastHy.multiply(this.w[l].T).atomicOperation((item, _, j) => item + this.b[l].get(0, j));\n            hy[l] = tmp.atomicOperation((item, i) => this.afn(item, tmp.getRow(i), af));\n        }\n        return hy;\n    }\n    scaled(xs) {\n        if (!this.scale)\n            return xs;\n        return xs.atomicOperation((item, _, j) => {\n            let scale = this.scale;\n            let range = scale.get(1, j);\n            let average = scale.get(0, j);\n            return range === 0 ? 0 : (item - average) / range;\n        });\n    }\n    predict(xs) {\n        let hy = this.predictNet(xs);\n        return hy[hy.length - 1];\n    }\n    predictNet(xs) {\n        this.checkInput(xs);\n        xs = this.scaled(xs);\n        let hy = this.forwardPropagation(xs);\n        return [xs, ...hy];\n    }\n    backPropagationMultiple(hy, xs, ys) {\n        let m = ys.shape[0];\n        let dws = this.w.map(w => w.zeroed());\n        let dys = this.b.map(b => b.zeroed());\n        for (let n = 0; n < m; n++) {\n            let nhy = hy.map(item => new matrix_1.Matrix([item.getRow(n)]));\n            let nxs = new matrix_1.Matrix([xs.getRow(n)]);\n            let nys = new matrix_1.Matrix([ys.getRow(n)]);\n            let { dw: ndw, dy: ndy } = this.backPropagation(nhy, nxs, nys);\n            dws = dws.map((d, l) => d.addition(ndw[l]));\n            dys = dys.map((d, l) => d.addition(ndy[l]));\n        }\n        let dw = dws.map(d => d.atomicOperation(item => item / m));\n        let dy = dys.map(d => d.atomicOperation(item => item / m));\n        return { dy, dw };\n    }\n    backPropagation(hy, xs, ys) {\n        let dw = [], dy = [];\n        for (let l = this.hlayer - 1; l >= 0; l--) {\n            let lastHy = hy[l - 1] ? hy[l - 1] : xs;\n            let af = this.af(l);\n            if (l === this.hlayer - 1) {\n                dy[l] = hy[l].atomicOperation((item, r, c) => (item - ys.get(r, c)) * this.afd(item, af));\n            }\n            else {\n                dy[l] = dy[l + 1].multiply(this.w[l + 1]).atomicOperation((item, r, c) => item * this.afd(hy[l].get(r, c), af));\n            }\n            dw[l] = dy[l].T.multiply(lastHy);\n        }\n        return { dy, dw };\n    }\n    adjust(dy, dw) {\n        this.w = this.w.map((w, l) => w.subtraction(dw[l].numberMultiply(this.rate)));\n        this.b = this.b.map((b, l) => b.subtraction(dy[l].numberMultiply(this.rate)));\n    }\n    cost(hy, ys) {\n        let m = ys.shape[0];\n        let sub = hy.subtraction(ys).atomicOperation(item => (item ** 2) / 2).columnSum();\n        let tmp = sub.getRow(0).map(v => v / m);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n    calcLoss(xs, ys) {\n        this.checkSample(xs, ys);\n        let lastHy = this.predict(xs);\n        return this.cost(lastHy, ys);\n    }\n    async bgd(xs, ys, opt) {\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let hy = this.forwardPropagation(xs);\n            let { dy, dw } = this.backPropagationMultiple(hy, xs, ys);\n            this.adjust(dy, dw);\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, this.cost(hy[hy.length - 1], ys));\n                opt.async && await new Promise(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(this.cost(hy[hy.length - 1], ys));\n            }\n        }\n    }\n    async sgd(xs, ys, opt) {\n        let m = ys.shape[0];\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let hys = null;\n            for (let n = 0; n < m; n++) {\n                let nxs = new matrix_1.Matrix([xs.getRow(n)]);\n                let nys = new matrix_1.Matrix([ys.getRow(n)]);\n                let hy = this.forwardPropagation(nxs);\n                const { dy, dw } = this.backPropagation(hy, nxs, nys);\n                this.adjust(dy, dw);\n                hys = hys ? hys.connect(hy[hy.length - 1]) : hy[hy.length - 1];\n            }\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, this.cost(hys, ys));\n                opt.async && await new Promise(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(this.cost(hys, ys));\n            }\n        }\n    }\n    async mbgd(xs, ys, opt) {\n        let m = ys.shape[0];\n        let batchSize = opt.batchSize;\n        let batch = Math.ceil(m / batchSize);\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let { xs: xst, ys: yst } = common_1.upset(xs, ys);\n            let eploss = 0;\n            for (let b = 0; b < batch; b++) {\n                let start = b * batchSize;\n                let end = start + batchSize;\n                end = end > m ? m : end;\n                let size = end - start;\n                let bxs = xst.slice(start, end);\n                let bys = yst.slice(start, end);\n                let hy = this.forwardPropagation(bxs);\n                let lastHy = hy[hy.length - 1];\n                const { dy, dw } = this.backPropagationMultiple(hy, bxs, bys);\n                this.adjust(dy, dw);\n                let bloss = this.cost(lastHy, bys);\n                eploss += bloss;\n                if (opt.onBatch)\n                    opt.onBatch(b, size, bloss);\n            }\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, eploss / batch);\n                opt.async && await new Promise(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(eploss / batch);\n            }\n        }\n    }\n    checkInput(xs) {\n        if (xs.shape[1] !== this.unit(-1)) {\n            throw new Error(`Input matrix column number error, input shape -> ${this.unit(-1)}.`);\n        }\n    }\n    checkOutput(ys) {\n        if (ys.shape[1] !== this.unit(this.hlayer - 1)) {\n            throw new Error(`Output matrix column number error, output shape -> ${this.unit(this.hlayer - 1)}.`);\n        }\n    }\n    checkSample(xs, ys) {\n        if (xs.shape[0] !== ys.shape[0]) {\n            throw new Error('The row number of input and output matrix is not uniform.');\n        }\n        this.checkInput(xs);\n        this.checkOutput(ys);\n    }\n    fit(xs, ys, opt = {}) {\n        let m = ys.shape[0];\n        let nopt = { ...exports.defaultTrainingOptions(m), ...opt };\n        this.checkSample(xs, ys);\n        if (nopt.batchSize > m) {\n            throw new Error(`The batch size cannot be greater than the number of samples.`);\n        }\n        const [nxs, scale] = xs.normalization();\n        this.scale = scale;\n        xs = nxs;\n        switch (this.mode) {\n            case 'bgd':\n                return this.bgd(xs, ys, nopt);\n            case 'mbgd':\n                return this.mbgd(xs, ys, nopt);\n            case 'sgd':\n            default:\n                return this.sgd(xs, ys, nopt);\n        }\n    }\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 268,
+          "file_path": "lib/BPNet.js",
+          "start_line": 12,
+          "text": "class BPNet {\n    constructor(shape, opt = {}) {\n        this.shape = shape;\n        this.mode = 'sgd';\n        this.rate = 0.01;\n        this.hlayer = shape.length - 1;\n        if (this.hlayer < 1) {\n            throw new Error('The network has at least two layers');\n        }\n        this.w = [];\n        this.b = [];\n        for (let l = 0; l < this.hlayer; l++) {\n            this.w[l] = matrix_1.Matrix.generate(this.unit(l), this.unit(l - 1));\n            this.b[l] = matrix_1.Matrix.generate(1, this.unit(l));\n        }\n        if (opt.mode)\n            this.mode = opt.mode;\n        if (opt.rate)\n            this.rate = opt.rate;\n        if (opt.w)\n            this.w = opt.w;\n        if (opt.b)\n            this.b = opt.b;\n        if (opt.scale)\n            this.scale = opt.scale;\n    }\n    unit(l) {\n        let n = this.shape[l + 1];\n        return Array.isArray(n) ? n[0] : n;\n    }\n    af(l) {\n        let n = this.shape[l + 1];\n        return Array.isArray(n) ? n[1] : undefined;\n    }\n    afn(x, rows, af) {\n        switch (af) {\n            case 'Sigmoid':\n                return 1 / (1 + Math.exp(-x));\n            case 'Relu':\n                return x >= 0 ? x : 0;\n            case 'Tanh':\n                return (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));\n            case 'Softmax':\n                let d = Math.max(...rows);\n                return Math.exp(x - d) / rows.reduce((p, c) => p + Math.exp(c - d), 0);\n            default:\n                return x;\n        }\n    }\n    afd(x, af) {\n        switch (af) {\n            case 'Sigmoid':\n                return x * (1 - x);\n            case 'Relu':\n                return x >= 0 ? 1 : 0;\n            case 'Tanh':\n                return 1 - ((Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x))) ** 2;\n            case 'Softmax':\n            default:\n                return 1;\n        }\n    }\n    toJSON() {\n        return JSON.stringify({\n            mode: this.mode,\n            shape: this.shape,\n            rate: this.rate,\n            scale: this.scale ? this.scale.dataSync() : undefined,\n            w: this.w.map(w => w.dataSync()),\n            b: this.b.map(b => b.dataSync()),\n        });\n    }\n    static fromJSON(json) {\n        let tmp = JSON.parse(json);\n        let w = tmp.w.map((w) => new matrix_1.Matrix(w));\n        let b = tmp.b.map((b) => new matrix_1.Matrix(b));\n        let scale = tmp.scale ? new matrix_1.Matrix(tmp.scale) : undefined;\n        return new BPNet(tmp.shape, {\n            mode: tmp.mode,\n            rate: tmp.mode,\n            w, b, scale\n        });\n    }\n    calcnet(xs) {\n        let hy = [];\n        for (let l = 0; l < this.hlayer; l++) {\n            let lastHy = l === 0 ? xs : hy[l - 1];\n            let af = this.af(l);\n            let tmp = lastHy.multiply(this.w[l].T).atomicOperation((item, _, j) => item + this.b[l].get(0, j));\n            hy[l] = tmp.atomicOperation((item, i) => this.afn(item, tmp.getRow(i), af));\n        }\n        return hy;\n    }\n    scaled(xs) {\n        if (!this.scale)\n            return xs;\n        return xs.atomicOperation((item, _, j) => {\n            let scale = this.scale;\n            let range = scale.get(1, j);\n            let average = scale.get(0, j);\n            return range === 0 ? 0 : (item - average) / range;\n        });\n    }\n    predict(xs) {\n        this.checkInput(xs);\n        xs = this.scaled(xs);\n        let hy = this.calcnet(xs);\n        return hy[hy.length - 1];\n    }\n    calcDerivativeMultiple(hy, xs, ys) {\n        let m = ys.shape[0];\n        let dws = this.w.map(w => w.zeroed());\n        let dys = this.b.map(b => b.zeroed());\n        for (let n = 0; n < m; n++) {\n            let nhy = hy.map(item => new matrix_1.Matrix([item.getRow(n)]));\n            let nxs = new matrix_1.Matrix([xs.getRow(n)]);\n            let nys = new matrix_1.Matrix([ys.getRow(n)]);\n            let { dw: ndw, dy: ndy } = this.calcDerivative(nhy, nxs, nys);\n            dws = dws.map((d, l) => d.addition(ndw[l]));\n            dys = dys.map((d, l) => d.addition(ndy[l]));\n        }\n        let dw = dws.map(d => d.atomicOperation(item => item / m));\n        let dy = dys.map(d => d.atomicOperation(item => item / m));\n        return { dy, dw };\n    }\n    calcDerivative(hy, xs, ys) {\n        let dw = [], dy = [];\n        for (let l = this.hlayer - 1; l >= 0; l--) {\n            let lastHy = hy[l - 1] ? hy[l - 1] : xs;\n            let af = this.af(l);\n            if (l === this.hlayer - 1) {\n                dy[l] = hy[l].atomicOperation((item, r, c) => (item - ys.get(r, c)) * this.afd(item, af));\n            }\n            else {\n                dy[l] = dy[l + 1].multiply(this.w[l + 1]).atomicOperation((item, r, c) => item * this.afd(hy[l].get(r, c), af));\n            }\n            dw[l] = dy[l].T.multiply(lastHy);\n        }\n        return { dy, dw };\n    }\n    adjust(dy, dw) {\n        this.w = this.w.map((w, l) => w.subtraction(dw[l].numberMultiply(this.rate)));\n        this.b = this.b.map((b, l) => b.subtraction(dy[l].numberMultiply(this.rate)));\n    }\n    cost(hy, ys) {\n        let m = ys.shape[0];\n        let sub = hy.subtraction(ys).atomicOperation(item => (item ** 2) / 2).columnSum();\n        let tmp = sub.getRow(0).map(v => v / m);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n    calcLoss(xs, ys) {\n        this.checkSample(xs, ys);\n        let lastHy = this.predict(xs);\n        return this.cost(lastHy, ys);\n    }\n    async bgd(xs, ys, opt) {\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let hy = this.calcnet(xs);\n            let { dy, dw } = this.calcDerivativeMultiple(hy, xs, ys);\n            this.adjust(dy, dw);\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, this.cost(hy[hy.length - 1], ys));\n                opt.async && await new Promise(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(this.cost(hy[hy.length - 1], ys));\n            }\n        }\n    }\n    async sgd(xs, ys, opt) {\n        let m = ys.shape[0];\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let hys = null;\n            for (let n = 0; n < m; n++) {\n                let nxs = new matrix_1.Matrix([xs.getRow(n)]);\n                let nys = new matrix_1.Matrix([ys.getRow(n)]);\n                let hy = this.calcnet(nxs);\n                const { dy, dw } = this.calcDerivative(hy, nxs, nys);\n                this.adjust(dy, dw);\n                hys = hys ? hys.connect(hy[hy.length - 1]) : hy[hy.length - 1];\n            }\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, this.cost(hys, ys));\n                opt.async && await new Promise(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(this.cost(hys, ys));\n            }\n        }\n    }\n    async mbgd(xs, ys, opt) {\n        let m = ys.shape[0];\n        let batchSize = opt.batchSize;\n        let batch = Math.ceil(m / batchSize);\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let { xs: xst, ys: yst } = common_1.upset(xs, ys);\n            let eploss = 0;\n            for (let b = 0; b < batch; b++) {\n                let start = b * batchSize;\n                let end = start + batchSize;\n                end = end > m ? m : end;\n                let size = end - start;\n                let bxs = xst.slice(start, end);\n                let bys = yst.slice(start, end);\n                let hy = this.calcnet(bxs);\n                let lastHy = hy[hy.length - 1];\n                const { dy, dw } = this.calcDerivativeMultiple(hy, bxs, bys);\n                this.adjust(dy, dw);\n                let bloss = this.cost(lastHy, bys);\n                eploss += bloss;\n                if (opt.onBatch)\n                    opt.onBatch(b, size, bloss);\n            }\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, eploss / batch);\n                opt.async && await new Promise(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(eploss / batch);\n            }\n        }\n    }\n    checkInput(xs) {\n        if (xs.shape[1] !== this.unit(-1)) {\n            throw new Error(`Input matrix column number error, input shape -> ${this.unit(-1)}.`);\n        }\n    }\n    checkSample(xs, ys) {\n        this.checkInput(xs);\n        if (xs.shape[0] !== ys.shape[0]) {\n            throw new Error('The row number of input and output matrix is not uniform.');\n        }\n        if (ys.shape[1] !== this.unit(this.hlayer - 1)) {\n            throw new Error(`Output matrix column number error, output shape -> ${this.unit(this.hlayer - 1)}.`);\n        }\n    }\n    fit(xs, ys, opt = {}) {\n        let m = ys.shape[0];\n        let nopt = { ...exports.defaultTrainingOptions(m), ...opt };\n        this.checkSample(xs, ys);\n        if (nopt.batchSize > m) {\n            throw new Error(`The batch size cannot be greater than the number of samples.`);\n        }\n        const [nxs, scale] = xs.normalization();\n        this.scale = scale;\n        xs = nxs;\n        switch (this.mode) {\n            case 'bgd':\n                return this.bgd(xs, ys, nopt);\n            case 'mbgd':\n                return this.mbgd(xs, ys, nopt);\n            case 'sgd':\n            default:\n                return this.sgd(xs, ys, nopt);\n        }\n    }\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 315,
+            "file_path": "src/main/ets/lib/BPNet.ets",
+            "start_line": 11,
+            "text": "export class BPNet {\n    readonly shape: NetShape;\n    w: Matrix[];\n    b: Matrix[];\n    hlayer: number;\n    scale?: Matrix;\n    mode: Mode;\n    rate: number;\n\n    constructor(shape: NetShape, opt: BPNetOptions = {}) {\n        this.shape = shape;\n        this.mode = 'sgd';\n        this.rate = 0.01;\n        this.hlayer = shape.length - 1;\n        if (this.hlayer < 1) {\n            throw new Error('The network has at least two layers');\n        }\n        this.w = [];\n        this.b = [];\n        for (let l = 0; l < this.hlayer; l++) {\n            this.w[l] = Matrix.generate(this.unit(l), this.unit(l - 1));\n            this.b[l] = Matrix.generate(1, this.unit(l));\n        }\n        if (opt.mode)\n            this.mode = opt.mode;\n        if (opt.rate)\n            this.rate = opt.rate;\n        if (opt.w)\n            this.w = opt.w;\n        if (opt.b)\n            this.b = opt.b;\n        if (opt.scale)\n            this.scale = opt.scale;\n    }\n\n    unit(l: number): number {\n        let n = this.shape[l + 1];\n        return Array.isArray(n) ? n[0] : n;\n    }\n\n    af(l: number): ActivationFunction | undefined {\n        let n = this.shape[l + 1];\n        return Array.isArray(n) ? n[1] : undefined;\n    }\n\n    afn(x: number, rows: number[], af?: ActivationFunction): number {\n        switch (af) {\n            case 'Sigmoid':\n                return 1 / (1 + Math.exp(-x));\n            case 'Relu':\n                return x >= 0 ? x : 0;\n            case 'Tanh':\n                return (Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x));\n            case 'Softmax':\n                let d = Math.max(...rows);\n                return Math.exp(x - d) / rows.reduce((p, c) => p + Math.exp(c - d), 0);\n            default:\n                return x;\n        }\n    }\n\n    afd(x: number, af?: ActivationFunction): number {\n        switch (af) {\n            case 'Sigmoid':\n                return x * (1 - x);\n            case 'Relu':\n                return x >= 0 ? 1 : 0;\n            case 'Tanh':\n                return 1 - ((Math.exp(x) - Math.exp(-x)) / (Math.exp(x) + Math.exp(-x))) ** 2;\n            case 'Softmax':\n            default:\n                return 1;\n        }\n    }\n\n    toJSON(): string {\n        return JSON.stringify({\n            mode: this.mode,\n            shape: this.shape,\n            rate: this.rate,\n            scale: this.scale ? this.scale.dataSync() : undefined,\n            w: this.w.map(w => w.dataSync()),\n            b: this.b.map(b => b.dataSync()),\n        });\n    }\n\n    static fromJSON(json: string): BPNet {\n        let tmp: ESObject = JSON.parse(json);\n        let w: ESObject = tmp.w.map((w: number[][]) => new Matrix(w));\n        let b: ESObject = tmp.b.map((b: number[][]) => new Matrix(b));\n        let scale = tmp.scale ? new Matrix(tmp.scale) : undefined;\n        return new BPNet(tmp.shape, {\n            mode: tmp.mode,\n            rate: tmp.mode,\n            w, b, scale\n        });\n    }\n\n    calcnet(xs: Matrix): Matrix[] {\n        let hy: Matrix[] = [];\n        for (let l = 0; l < this.hlayer; l++) {\n            let lastHy = l === 0 ? xs : hy[l - 1];\n            let af = this.af(l);\n            let tmp = lastHy.multiply(this.w[l].T).atomicOperation((item, _, j) => item + this.b[l].get(0, j));\n            hy[l] = tmp.atomicOperation((item, i) => this.afn(item, tmp.getRow(i), af));\n        }\n        return hy;\n    }\n\n    scaled(xs: Matrix): Matrix {\n        if (!this.scale)\n            return xs;\n        return xs.atomicOperation((item, _, j) => {\n            let scale = this.scale!;\n            let range = scale.get(1, j);\n            let average = scale.get(0, j);\n            return range === 0 ? 0 : (item - average) / range;\n        });\n    }\n\n    predict(xs: Matrix): Matrix {\n        this.checkInput(xs);\n        xs = this.scaled(xs);\n        let hy = this.calcnet(xs);\n        return hy[hy.length - 1];\n    }\n\n    calcDerivativeMultiple(hy: Matrix[], xs: Matrix, ys: Matrix): BackPropagationResult {\n        let m = ys.shape[0];\n        let dws = this.w.map(w => w.zeroed());\n        let dys = this.b.map(b => b.zeroed());\n        for (let n = 0; n < m; n++) {\n            let nhy = hy.map(item => new Matrix([item.getRow(n)]));\n            let nxs = new Matrix([xs.getRow(n)]);\n            let nys = new Matrix([ys.getRow(n)]);\n            let backPropagationResult = this.calcDerivative(nhy, nxs, nys);\n            const ndw = backPropagationResult.dw;\n            const ndy = backPropagationResult.dy;\n            dws = dws.map((d, l) => d.addition(ndw[l]));\n            dys = dys.map((d, l) => d.addition(ndy[l]));\n        }\n        let dw = dws.map(d => d.atomicOperation(item => item / m));\n        let dy = dys.map(d => d.atomicOperation(item => item / m));\n        return { dy, dw };\n    }\n\n    calcDerivative(hy: Matrix[], xs: Matrix, ys: Matrix): BackPropagationResult {\n        let dw: Matrix[] = [], dy: Matrix[] = [];\n        for (let l = this.hlayer - 1; l >= 0; l--) {\n            let lastHy = hy[l - 1] ? hy[l - 1] : xs;\n            let af = this.af(l);\n            if (l === this.hlayer - 1) {\n                dy[l] = hy[l].atomicOperation((item, r, c) => (item - ys.get(r, c)) * this.afd(item, af));\n            }\n            else {\n                dy[l] = dy[l + 1].multiply(this.w[l + 1]).atomicOperation((item, r, c) => item * this.afd(hy[l].get(r, c), af));\n            }\n            dw[l] = dy[l].T.multiply(lastHy);\n        }\n        return { dy, dw };\n    }\n\n    adjust(dy: Matrix[], dw: Matrix[]): void {\n        this.w = this.w.map((w, l) => w.subtraction(dw[l].numberMultiply(this.rate)));\n        this.b = this.b.map((b, l) => b.subtraction(dy[l].numberMultiply(this.rate)));\n    }\n\n    cost(hy: Matrix, ys: Matrix): number {\n        let m = ys.shape[0];\n        let sub = hy.subtraction(ys).atomicOperation(item => (item ** 2) / 2).columnSum();\n        let tmp = sub.getRow(0).map(v => v / m);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n\n    calcLoss(xs: Matrix, ys: Matrix): number {\n        this.checkSample(xs, ys);\n        let lastHy = this.predict(xs);\n        return this.cost(lastHy, ys);\n    }\n\n    async bgd(xs: Matrix, ys: Matrix, opt: TrainingOptions): Promise<void> {\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let hy = this.calcnet(xs);\n            let backPropagationResult = this.calcDerivativeMultiple(hy, xs, ys);\n            const dy = backPropagationResult.dy;\n            const dw = backPropagationResult.dw;\n            this.adjust(dy, dw);\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, this.cost(hy[hy.length - 1], ys));\n                opt.async && await new Promise<ESObject>(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(this.cost(hy[hy.length - 1], ys));\n            }\n        }\n    }\n\n    async sgd(xs: Matrix, ys: Matrix, opt: TrainingOptions): Promise<void> {\n        let m = ys.shape[0];\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let hys: Matrix | null = null;\n            for (let n = 0; n < m; n++) {\n                let nxs = new Matrix([xs.getRow(n)]);\n                let nys = new Matrix([ys.getRow(n)]);\n                let hy = this.calcnet(nxs);\n                const backPropagationResult = this.calcDerivative(hy, nxs, nys);\n                const dy = backPropagationResult.dy;\n                const dw = backPropagationResult.dw;\n                this.adjust(dy, dw);\n                hys = hys ? hys.connect(hy[hy.length - 1]) : hy[hy.length - 1];\n            }\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, this.cost(hys!, ys));\n                opt.async && await new Promise<ESObject>(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(this.cost(hys!, ys));\n            }\n        }\n    }\n\n    async mbgd(xs: Matrix, ys: Matrix, opt: TrainingOptions): Promise<void> {\n        let m = ys.shape[0];\n        let batchSize = opt.batchSize!;\n        let batch = Math.ceil(m / batchSize);\n        for (let ep = 0; ep < opt.epochs; ep++) {\n            let res = upset(xs, ys);\n            const xst = res.xs;\n            const yst = res.ys;\n            let eploss = 0;\n            for (let b = 0; b < batch; b++) {\n                let start = b * batchSize;\n                let end = start + batchSize;\n                end = end > m ? m : end;\n                let size = end - start;\n                let bxs = xst.slice(start, end);\n                let bys = yst.slice(start, end);\n                let hy = this.calcnet(bxs);\n                let lastHy = hy[hy.length - 1];\n                const backPropagationResult = this.calcDerivativeMultiple(hy, bxs, bys);\n                const dy = backPropagationResult.dy;\n                const dw = backPropagationResult.dw;\n                this.adjust(dy, dw);\n                let bloss = this.cost(lastHy, bys);\n                eploss += bloss;\n                if (opt.onBatch)\n                    opt.onBatch(b, size, bloss);\n            }\n            if (opt.onEpoch) {\n                opt.onEpoch(ep, eploss / batch);\n                opt.async && await new Promise<ESObject>(resolve => setTimeout(resolve));\n            }\n            if (opt.onTrainEnd && ep === opt.epochs - 1) {\n                opt.onTrainEnd(eploss / batch);\n            }\n        }\n    }\n\n    checkInput(xs: Matrix): void {\n        if (xs.shape[1] !== this.unit(-1)) {\n            throw new Error(`Input matrix column number error, input shape -> ${this.unit(-1)}.`);\n        }\n    }\n\n    checkSample(xs: Matrix, ys: Matrix): void {\n        this.checkInput(xs);\n        if (xs.shape[0] !== ys.shape[0]) {\n            throw new Error('The row number of input and output matrix is not uniform.');\n        }\n        if (ys.shape[1] !== this.unit(this.hlayer - 1)) {\n            throw new Error(`Output matrix column number error, output shape -> ${this.unit(this.hlayer - 1)}.`);\n        }\n    }\n\n    fit(xs: Matrix, ys: Matrix, opt: Partial<TrainingOptions> = {}): Promise<void> {\n        let m = ys.shape[0];\n        let defaultOpt = defaultTrainingOptions(m);\n        let nopt: TrainingOptions = {\n            epochs: opt.epochs !== undefined ? opt.epochs : defaultOpt.epochs,\n            batchSize: opt.batchSize !== undefined ? opt.batchSize : defaultOpt.batchSize,\n            async: opt.async !== undefined ? opt.async : defaultOpt.async,\n            onBatch: opt.onBatch !== undefined ? opt.onBatch : defaultOpt.onBatch,\n            onEpoch: opt.onEpoch !== undefined ? opt.onEpoch : defaultOpt.onEpoch,\n            onTrainEnd: opt.onTrainEnd !== undefined ? opt.onTrainEnd : defaultOpt.onTrainEnd\n        };\n        this.checkSample(xs, ys);\n        if (nopt.batchSize! > m) {\n            throw new Error(`The batch size cannot be greater than the number of samples.`);\n        }\n        const normRes = xs.normalization();\n        const nxs = normRes[0];\n        const scale = normRes[1];\n        this.scale = scale;\n        xs = nxs;\n        switch (this.mode) {\n            case 'bgd':\n                return this.bgd(xs, ys, nopt);\n            case 'mbgd':\n                return this.mbgd(xs, ys, nopt);\n            case 'sgd':\n            default:\n                return this.sgd(xs, ys, nopt);\n        }\n    }\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 4,
+            "file_path": "src/main/ets/lib/index.ets",
+            "start_line": 4,
+            "text": "export * from './BPNet';"
+          }
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/BPNet.js",
+      "sourceLines": "12-275",
+      "targetFile": "src/main/ets/lib/BPNet.ets",
+      "targetLines": "11-315"
+    },
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/BPNet.ets",
+      "lines": "11-315"
+    },
+    "matched_errors": [],
+    "merged_count": 8,
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能 / 修复BUG",
+    "cluster_id": 2,
+    "cluster_ids": [
+      2,
+      15
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 255,
+            "file_path": "lib/matrix.js",
+            "start_line": 4,
+            "text": "class Matrix {\n    constructor(data) {\n        let t = data.find((d, i) => data[i - 1] && d.length !== data[i - 1].length);\n        if (t)\n            throw new Error('矩阵列不正确');\n        this.shape = [data.length, data[0].length];\n        this.self = data;\n    }\n    slice(start, end) {\n        return new Matrix(this.self.slice(start, end));\n    }\n    argMax(row) {\n        let d = this.getRow(row);\n        let max = d[0];\n        let index = 0;\n        for (let i = 0; i < d.length; i++) {\n            if (d[i] > max) {\n                max = d[i];\n                index = i;\n            }\n        }\n        return index;\n    }\n    connect(b) {\n        if (this.shape[1] !== b.shape[1]) {\n            throw new Error('列数不统一');\n        }\n        let tmp = this.dataSync().concat(b.dataSync());\n        return new Matrix(tmp);\n    }\n    zeroed() {\n        return this.atomicOperation(_ => 0);\n    }\n    clone() {\n        return new Matrix(this.dataSync());\n    }\n    getMeanOfRow(i) {\n        let tmp = this.getRow(i);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n    columnSum() {\n        let n = [];\n        for (let i = 0; i < this.shape[1]; i++) {\n            n.push(this.getCol(i).reduce((p, c) => p + c));\n        }\n        return new Matrix([n]);\n    }\n    dataSync() {\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                m.push(this.get(i, j));\n            }\n            n.push(m);\n        }\n        return n;\n    }\n    equalsShape(b) {\n        return this.shape[0] === b.shape[0] && this.shape[1] === b.shape[1];\n    }\n    equals(b) {\n        if (!this.equalsShape(b)) {\n            return false;\n        }\n        for (let i = 0; i < this.shape[0]; i++) {\n            for (let j = 0; j < this.shape[1]; j++) {\n                if (this.get(i, j) !== b.get(i, j))\n                    return false;\n            }\n        }\n        return true;\n    }\n    static generate(row, col, f) {\n        let n = [];\n        for (let i = 0; i < row; i++) {\n            let m = [];\n            for (let j = 0; j < col; j++) {\n                m.push(typeof f === 'number' ? f : 0.5 - Math.random());\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    update(row, col, val, oper) {\n        switch (oper) {\n            case '+=':\n                this.self[row][col] += val;\n                break;\n            case '-=':\n                this.self[row][col] -= val;\n                break;\n            case '*=':\n                this.self[row][col] *= val;\n                break;\n            case '/=':\n                this.self[row][col] /= val;\n                break;\n            default:\n                this.self[row][col] = val;\n        }\n    }\n    expand(n, position) {\n        let m = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            if (position === 'L') {\n                m.push([n, ...this.getRow(i)]);\n            }\n            else {\n                m.push([...this.getRow(i), n]);\n            }\n        }\n        return new Matrix(m);\n    }\n    get(i, j) {\n        return this.self[i][j];\n    }\n    getRow(i) {\n        return [...this.self[i]];\n    }\n    getCol(k) {\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            for (let j = 0; j < this.shape[1]; j++) {\n                if (j === k) {\n                    n.push(this.get(i, j));\n                }\n            }\n        }\n        return n;\n    }\n    det() {\n        if (this.shape[0] !== this.shape[1]) {\n            throw new Error('只有方阵才能计算行列式');\n        }\n        if (this.shape[0] === 2 && this.shape[1] === 2) {\n            return this.get(0, 0) * this.get(1, 1) - this.get(0, 1) * this.get(1, 0);\n        }\n        else {\n            let m = 0;\n            for (let i = 0; i < this.shape[1]; i++) {\n                if (this.get(0, i) !== 0) {\n                    m += this.get(0, i) * ((-1) ** (i + 2)) * this.cominor(0, i).det();\n                }\n            }\n            return m;\n        }\n    }\n    cominor(rowi, coli) {\n        if (this.shape[0] < 2 || this.shape[1] < 2) {\n            throw new Error('求余子式行和列必须大于2才有意义');\n        }\n        let n = this.dataSync().map((v) => {\n            v = v.filter((_, j) => j !== coli);\n            return v;\n        }).filter((_, i) => i !== rowi);\n        return new Matrix(n);\n    }\n    atomicOperation(callback) {\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                m.push(callback(this.get(i, j), i, j));\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    coLocationOperation(b, oper) {\n        if (!this.equalsShape(b)) {\n            throw new Error('必须满足两个矩阵是同形矩阵');\n        }\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                let c = oper === 'add' ? this.get(i, j) + b.get(i, j) : this.get(i, j) - b.get(i, j);\n                m.push(c);\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    subtraction(b) {\n        return this.coLocationOperation(b, 'sub');\n    }\n    addition(b) {\n        return this.coLocationOperation(b, 'add');\n    }\n    numberMultiply(b) {\n        return this.atomicOperation(item => item * b);\n    }\n    multiply(b) {\n        if (this.shape[1] !== b.shape[0]) {\n            throw new Error('当矩阵A的列数等于矩阵B的行数，A与B才可以相乘');\n        }\n        let row = this.shape[0];\n        let col = b.shape[1];\n        let bt = b.T;\n        let n = [];\n        for (let i = 0; i < row; i++) {\n            let m = [];\n            for (let k = 0; k < col; k++) {\n                let tm = this.getRow(i).reduce((p, c, j) => {\n                    return p + c * bt.get(k, j);\n                }, 0);\n                m.push(tm);\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    get T() {\n        let a = [];\n        for (let i = 0; i < this.shape[1]; i++) {\n            let n = [];\n            for (let j = 0; j < this.shape[0]; j++) {\n                n.push(this.get(j, i));\n            }\n            a.push(n);\n        }\n        return new Matrix(a);\n    }\n    normalization() {\n        let t = this.T;\n        let n = [];\n        for (let i = 0; i < t.shape[0]; i++) {\n            const max = Math.max(...t.getRow(i));\n            const min = Math.min(...t.getRow(i));\n            const range = max - min;\n            const average = min + (range / 2);\n            n.push([average, range]);\n            for (let j = 0; j < t.shape[1]; j++) {\n                let s = range === 0 ? 0 : (t.get(i, j) - average) / range;\n                t.update(i, j, s);\n            }\n        }\n        return [t.T, new Matrix(n).T];\n    }\n    print() {\n        console.log(`Matrix ${this.shape[0]}x${this.shape[1]} [`);\n        for (let i = 0; i < this.shape[0]; i++) {\n            let line = ' ';\n            for (let j = 0; j < this.shape[1]; j++) {\n                line += this.get(i, j) + ', ';\n            }\n            console.log(line);\n        }\n        console.log(']');\n    }\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 243,
+          "file_path": "lib/matrix.js",
+          "start_line": 4,
+          "text": "class Matrix {\n    constructor(data) {\n        let t = data.find((d, i) => data[i - 1] && d.length !== data[i - 1].length);\n        if (t)\n            throw new Error('矩阵列不正确');\n        this.shape = [data.length, data[0].length];\n        this.self = data;\n    }\n    slice(start, end) {\n        return new Matrix(this.self.slice(start, end));\n    }\n    connect(b) {\n        if (this.shape[1] !== b.shape[1]) {\n            throw new Error('列数不统一');\n        }\n        let tmp = this.dataSync().concat(b.dataSync());\n        return new Matrix(tmp);\n    }\n    zeroed() {\n        return this.atomicOperation(_ => 0);\n    }\n    clone() {\n        return new Matrix(this.dataSync());\n    }\n    getMeanOfRow(i) {\n        let tmp = this.getRow(i);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n    columnSum() {\n        let n = [];\n        for (let i = 0; i < this.shape[1]; i++) {\n            n.push(this.getCol(i).reduce((p, c) => p + c));\n        }\n        return new Matrix([n]);\n    }\n    dataSync() {\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                m.push(this.get(i, j));\n            }\n            n.push(m);\n        }\n        return n;\n    }\n    equalsShape(b) {\n        return this.shape[0] === b.shape[0] && this.shape[1] === b.shape[1];\n    }\n    equals(b) {\n        if (!this.equalsShape(b)) {\n            return false;\n        }\n        for (let i = 0; i < this.shape[0]; i++) {\n            for (let j = 0; j < this.shape[1]; j++) {\n                if (this.get(i, j) !== b.get(i, j))\n                    return false;\n            }\n        }\n        return true;\n    }\n    static generate(row, col, f) {\n        let n = [];\n        for (let i = 0; i < row; i++) {\n            let m = [];\n            for (let j = 0; j < col; j++) {\n                m.push(f ? f : 0.5 - Math.random());\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    update(row, col, val, oper) {\n        switch (oper) {\n            case '+=':\n                this.self[row][col] += val;\n                break;\n            case '-=':\n                this.self[row][col] -= val;\n                break;\n            case '*=':\n                this.self[row][col] *= val;\n                break;\n            case '/=':\n                this.self[row][col] /= val;\n                break;\n            default:\n                this.self[row][col] = val;\n        }\n    }\n    expand(n, position) {\n        let m = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            if (position === 'L') {\n                m.push([n, ...this.getRow(i)]);\n            }\n            else {\n                m.push([...this.getRow(i), n]);\n            }\n        }\n        return new Matrix(m);\n    }\n    get(i, j) {\n        return this.self[i][j];\n    }\n    getRow(i) {\n        return [...this.self[i]];\n    }\n    getCol(k) {\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            for (let j = 0; j < this.shape[1]; j++) {\n                if (j === k) {\n                    n.push(this.get(i, j));\n                }\n            }\n        }\n        return n;\n    }\n    det() {\n        if (this.shape[0] !== this.shape[1]) {\n            throw new Error('只有方阵才能计算行列式');\n        }\n        if (this.shape[0] === 2 && this.shape[1] === 2) {\n            return this.get(0, 0) * this.get(1, 1) - this.get(0, 1) * this.get(1, 0);\n        }\n        else {\n            let m = 0;\n            for (let i = 0; i < this.shape[1]; i++) {\n                if (this.get(0, i) !== 0) {\n                    m += this.get(0, i) * ((-1) ** (i + 2)) * this.cominor(0, i).det();\n                }\n            }\n            return m;\n        }\n    }\n    cominor(rowi, coli) {\n        if (this.shape[0] < 2 || this.shape[1] < 2) {\n            throw new Error('求余子式行和列必须大于2才有意义');\n        }\n        let n = this.dataSync().map((v) => {\n            v = v.filter((_, j) => j !== coli);\n            return v;\n        }).filter((_, i) => i !== rowi);\n        return new Matrix(n);\n    }\n    atomicOperation(callback) {\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                m.push(callback(this.get(i, j), i, j));\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    coLocationOperation(b, oper) {\n        if (!this.equalsShape(b)) {\n            throw new Error('必须满足两个矩阵是同形矩阵');\n        }\n        let n = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                let c = oper === 'add' ? this.get(i, j) + b.get(i, j) : this.get(i, j) - b.get(i, j);\n                m.push(c);\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    subtraction(b) {\n        return this.coLocationOperation(b, 'sub');\n    }\n    addition(b) {\n        return this.coLocationOperation(b, 'add');\n    }\n    numberMultiply(b) {\n        return this.atomicOperation(item => item * b);\n    }\n    multiply(b) {\n        if (this.shape[1] !== b.shape[0]) {\n            throw new Error('当矩阵A的列数等于矩阵B的行数，A与B才可以相乘');\n        }\n        let row = this.shape[0];\n        let col = b.shape[1];\n        let bt = b.T;\n        let n = [];\n        for (let i = 0; i < row; i++) {\n            let m = [];\n            for (let k = 0; k < col; k++) {\n                let tm = this.getRow(i).reduce((p, c, j) => {\n                    return p + c * bt.get(k, j);\n                }, 0);\n                m.push(tm);\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n    get T() {\n        let a = [];\n        for (let i = 0; i < this.shape[1]; i++) {\n            let n = [];\n            for (let j = 0; j < this.shape[0]; j++) {\n                n.push(this.get(j, i));\n            }\n            a.push(n);\n        }\n        return new Matrix(a);\n    }\n    normalization() {\n        let t = this.T;\n        let n = [];\n        for (let i = 0; i < t.shape[0]; i++) {\n            const max = Math.max(...t.getRow(i));\n            const min = Math.min(...t.getRow(i));\n            const range = max - min;\n            const average = min + (range / 2);\n            n.push([average, range]);\n            for (let j = 0; j < t.shape[1]; j++) {\n                let s = range === 0 ? 0 : (t.get(i, j) - average) / range;\n                t.update(i, j, s);\n            }\n        }\n        return [t.T, new Matrix(n).T];\n    }\n    print() {\n        console.log(`Matrix ${this.shape[0]}x${this.shape[1]} [`);\n        for (let i = 0; i < this.shape[0]; i++) {\n            let line = ' ';\n            for (let j = 0; j < this.shape[1]; j++) {\n                line += this.get(i, j) + ', ';\n            }\n            console.log(line);\n        }\n        console.log(']');\n    }\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 274,
+            "file_path": "src/main/ets/lib/matrix.ets",
+            "start_line": 1,
+            "text": "// TS2ArkTS-SessionId-90\nclass Matrix {\n    // TS2ArkTS-SessionId-285\n    private self: number[][];\n    // TS2ArkTS-SessionId-286\n    shape: [number, number];\n\n    // TS2ArkTS-SessionId-287\n    constructor(data: number[][]) {\n        let t = data.find((d, i) => data[i - 1] && d.length !== data[i - 1].length);\n        if (t)\n            throw new Error('矩阵列不正确');\n        this.shape = [data.length, data[0].length];\n        this.self = data;\n    }\n\n    // TS2ArkTS-SessionId-288\n    slice(start: number, end: number): Matrix {\n        return new Matrix(this.self.slice(start, end));\n    }\n\n    connect(b: Matrix): Matrix {\n        if (this.shape[1] !== b.shape[1]) {\n            throw new Error('列数不统一');\n        }\n        let tmp = this.dataSync().concat(b.dataSync());\n        return new Matrix(tmp);\n    }\n\n    zeroed(): Matrix {\n        return this.atomicOperation(_ => 0);\n    }\n\n    clone(): Matrix {\n        return new Matrix(this.dataSync());\n    }\n\n    getMeanOfRow(i: number): number {\n        let tmp = this.getRow(i);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n\n    columnSum(): Matrix {\n        let n: number[] = [];\n        for (let i = 0; i < this.shape[1]; i++) {\n            n.push(this.getCol(i).reduce((p, c) => p + c));\n        }\n        return new Matrix([n]);\n    }\n\n    dataSync(): number[][] {\n        let n: number[][] = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m: number[] = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                m.push(this.get(i, j));\n            }\n            n.push(m);\n        }\n        return n;\n    }\n\n    equalsShape(b: Matrix): boolean {\n        return this.shape[0] === b.shape[0] && this.shape[1] === b.shape[1];\n    }\n\n    equals(b: Matrix): boolean {\n        if (!this.equalsShape(b)) {\n            return false;\n        }\n        for (let i = 0; i < this.shape[0]; i++) {\n            for (let j = 0; j < this.shape[1]; j++) {\n                if (this.get(i, j) !== b.get(i, j))\n                    return false;\n            }\n        }\n        return true;\n    }\n\n    static generate(row: number, col: number, f?: number): Matrix {\n        let n: number[][] = [];\n        for (let i = 0; i < row; i++) {\n            let m: number[] = [];\n            for (let j = 0; j < col; j++) {\n                m.push(f ? f : 0.5 - Math.random());\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n\n    update(row: number, col: number, val: number, oper?: '+=' | '-=' | '*=' | '/='): void {\n        switch (oper) {\n            case '+=':\n                this.self[row][col] += val;\n                break;\n            case '-=':\n                this.self[row][col] -= val;\n                break;\n            case '*=':\n                this.self[row][col] *= val;\n                break;\n            case '/=':\n                this.self[row][col] /= val;\n                break;\n            default:\n                this.self[row][col] = val;\n        }\n    }\n\n    expand(n: number, position: 'L' | 'R'): Matrix {\n        let m: number[][] = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            if (position === 'L') {\n                m.push([n, ...this.getRow(i)]);\n            }\n            else {\n                m.push([...this.getRow(i), n]);\n            }\n        }\n        return new Matrix(m);\n    }\n\n    get(i: number, j: number): number {\n        return this.self[i][j];\n    }\n\n    getRow(i: number): number[] {\n        return [...this.self[i]];\n    }\n\n    getCol(k: number): number[] {\n        let n: number[] = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            for (let j = 0; j < this.shape[1]; j++) {\n                if (j === k) {\n                    n.push(this.get(i, j));\n                }\n            }\n        }\n        return n;\n    }\n\n    det(): number {\n        if (this.shape[0] !== this.shape[1]) {\n            throw new Error('只有方阵才能计算行列式');\n        }\n        if (this.shape[0] === 2 && this.shape[1] === 2) {\n            return this.get(0, 0) * this.get(1, 1) - this.get(0, 1) * this.get(1, 0);\n        }\n        else {\n            let m = 0;\n            for (let i = 0; i < this.shape[1]; i++) {\n                if (this.get(0, i) !== 0) {\n                    m += this.get(0, i) * ((-1) ** (i + 2)) * this.cominor(0, i).det();\n                }\n            }\n            return m;\n        }\n    }\n\n    cominor(rowi: number, coli: number): Matrix {\n        if (this.shape[0] < 2 || this.shape[1] < 2) {\n            throw new Error('求余子式行和列必须大于2才有意义');\n        }\n        let n = this.dataSync().map((v) => {\n            v = v.filter((_, j) => j !== coli);\n            return v;\n        }).filter((_, i) => i !== rowi);\n        return new Matrix(n);\n    }\n\n    atomicOperation(callback: (item: number, row: number, col: number) => number): Matrix {\n        let n: number[][] = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m: number[] = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                m.push(callback(this.get(i, j), i, j));\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n\n    coLocationOperation(b: Matrix, oper: 'add' | 'sub'): Matrix {\n        if (!this.equalsShape(b)) {\n            throw new Error('必须满足两个矩阵是同形矩阵');\n        }\n        let n: number[][] = [];\n        for (let i = 0; i < this.shape[0]; i++) {\n            let m: number[] = [];\n            for (let j = 0; j < this.shape[1]; j++) {\n                let c = oper === 'add' ? this.get(i, j) + b.get(i, j) : this.get(i, j) - b.get(i, j);\n                m.push(c);\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n\n    subtraction(b: Matrix): Matrix {\n        return this.coLocationOperation(b, 'sub');\n    }\n\n    addition(b: Matrix): Matrix {\n        return this.coLocationOperation(b, 'add');\n    }\n\n    numberMultiply(b: number): Matrix {\n        return this.atomicOperation(item => item * b);\n    }\n\n    multiply(b: Matrix): Matrix {\n        if (this.shape[1] !== b.shape[0]) {\n            throw new Error('当矩阵A的列数等于矩阵B的行数,A与B才可以相乘');\n        }\n        let row = this.shape[0];\n        let col = b.shape[1];\n        let bt = b.T;\n        let n: number[][] = [];\n        for (let i = 0; i < row; i++) {\n            let m: number[] = [];\n            for (let k = 0; k < col; k++) {\n                let tm = this.getRow(i).reduce((p, c, j) => {\n                    return p + c * bt.get(k, j);\n                }, 0);\n                m.push(tm);\n            }\n            n.push(m);\n        }\n        return new Matrix(n);\n    }\n\n    get T(): Matrix {\n        let a: number[][] = [];\n        for (let i = 0; i < this.shape[1]; i++) {\n            let n: number[] = [];\n            for (let j = 0; j < this.shape[0]; j++) {\n                n.push(this.get(j, i));\n            }\n            a.push(n);\n        }\n        return new Matrix(a);\n    }\n\n    normalization(): Matrix[] {\n        let t = this.T;\n        let n: number[][] = [];\n        for (let i = 0; i < t.shape[0]; i++) {\n            const max = Math.max(...t.getRow(i));\n            const min = Math.min(...t.getRow(i));\n            const range = max - min;\n            const average = min + (range / 2);\n            n.push([average, range]);\n            for (let j = 0; j < t.shape[1]; j++) {\n                let s = range === 0 ? 0 : (t.get(i, j) - average) / range;\n                t.update(i, j, s);\n            }\n        }\n        return [t.T, new Matrix(n).T];\n    }\n\n    print(): void {\n        console.log(`Matrix ${this.shape[0]}x${this.shape[1]} [`);\n        for (let i = 0; i < this.shape[0]; i++) {\n            let line = ' ';\n            for (let j = 0; j < this.shape[1]; j++) {\n                line += this.get(i, j) + ', ';\n            }\n            console.log(line);\n        }\n        console.log(']');\n    }\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 277,
+            "file_path": "src/main/ets/lib/matrix.ets",
+            "start_line": 276,
+            "text": "// TS2ArkTS-SessionId-122\nexport { Matrix };"
+          }
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/matrix.js",
+      "sourceLines": "4-255",
+      "targetFile": "src/main/ets/lib/matrix.ets",
+      "targetLines": "1-274"
+    },
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/matrix.ets",
+      "lines": "1-274"
+    },
+    "matched_errors": [],
+    "merged_count": 2,
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 16,
+    "cluster_ids": [
+      16
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 2,
+            "file_path": "lib/rnn.js",
+            "start_line": 2,
+            "text": "Object.defineProperty(exports, \"__esModule\", { value: true });"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 165,
+            "file_path": "src/main/ets/lib/rnn.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 3,
+            "file_path": "lib/rnn.js",
+            "start_line": 3,
+            "text": "exports.RNN = void 0;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 165,
+            "file_path": "src/main/ets/lib/rnn.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 4,
+            "file_path": "lib/rnn.js",
+            "start_line": 4,
+            "text": "const src_1 = require(\"../src\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 165,
+            "file_path": "src/main/ets/lib/rnn.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 164,
+            "file_path": "lib/rnn.js",
+            "start_line": 5,
+            "text": "class RNN {\n    constructor(opt) {\n        this.indexWord = {};\n        this.wordIndex = {};\n        this.hidenSize = 10;\n        this.rate = 0.01;\n        this.trainData = opt.trainData.map(v => v.split(''));\n        if (opt.rate)\n            this.rate = opt.rate;\n        let temp = Array.from(new Set(this.trainData.flat(1)));\n        for (let i = 0; i < temp.length; i++) {\n            this.indexWord[temp[i]] = i;\n            this.wordIndex[i] = temp[i];\n        }\n        this.inputSize = temp.length;\n        this.wordIndex[temp.length] = '/n';\n        this.indexWord['/n'] = temp.length;\n        let outputSize = this.inputSize + 1;\n        this.U = src_1.Matrix.generate(this.hidenSize, this.inputSize);\n        this.W = src_1.Matrix.generate(this.hidenSize, this.hidenSize);\n        this.V = src_1.Matrix.generate(outputSize, this.hidenSize);\n        this.firstSt = src_1.Matrix.generate(1, this.hidenSize, 0);\n    }\n    afn(x, rows, af) {\n        switch (af) {\n            case 'Tanh':\n                return Math.tanh(x);\n            case 'Softmax':\n                let d = Math.max(...rows);\n                return Math.exp(x - d) / rows.reduce((p, c) => p + Math.exp(c - d), 0);\n            default:\n                return x;\n        }\n    }\n    afd(x, af) {\n        switch (af) {\n            case 'Tanh':\n                return 1 - Math.tanh(x) ** 2;\n            case 'Softmax':\n            default:\n                return 1;\n        }\n    }\n    oneHotX(inputIndex) {\n        let xs = src_1.Matrix.generate(1, this.inputSize, 0);\n        xs.update(0, inputIndex, 1);\n        return xs;\n    }\n    oneHotXs(input) {\n        return input.map(s => {\n            let nowIndex = this.indexWord[s];\n            return this.oneHotX(nowIndex);\n        });\n    }\n    oneHotY(outputIndex) {\n        let ys = src_1.Matrix.generate(1, this.inputSize + 1, 0);\n        ys.update(0, outputIndex, 1);\n        return ys;\n    }\n    oneHotYs(input) {\n        return input.map((_, i) => {\n            let nextWord = input[i + 1] ? input[i + 1] : '/n';\n            let nextIndex = this.indexWord[nextWord];\n            return this.oneHotY(nextIndex);\n        });\n    }\n    forwardPropagation(xs) {\n        let result = [];\n        for (let i = 0; i < xs.length; i++) {\n            let xst = xs[i];\n            let lastSt = i === 0 ? this.firstSt : result[i - 1].st;\n            let { st, yt } = this.calcForward(xst, lastSt);\n            result.push({ st, yt });\n        }\n        return result;\n    }\n    calcForward(xs, lastSt = this.firstSt) {\n        let st = xs.multiply(this.U.T).addition(lastSt.multiply(this.W.T));\n        st = st.atomicOperation((item, i) => this.afn(item, st.getRow(i), 'Tanh'));\n        let yt = st.multiply(this.V.T);\n        yt = yt.atomicOperation((item, i) => this.afn(item, yt.getRow(i), 'Softmax'));\n        return { st, yt };\n    }\n    backPropagation(hy, xs, ys) {\n        let dv = this.V.zeroed();\n        let du = this.U.zeroed();\n        let dw = this.W.zeroed();\n        for (let i = 0; i < hy.length; i++) {\n            let { st, yt } = hy[i];\n            let xst = xs[i];\n            let yst = ys[i];\n            let lastSt = i === 0 ? this.firstSt : hy[i - 1].st;\n            let dyt = yt.atomicOperation((item, r, c) => (item - yst.get(r, c)) * this.afd(item, 'Softmax'));\n            let dst = dyt.multiply(this.V);\n            dst = dst.atomicOperation((item, r, c) => item * this.afd(st.get(r, c), 'Tanh'));\n            let ndv = dyt.T.multiply(st);\n            let ndu = dst.T.multiply(xst);\n            let ndw = dst.T.multiply(lastSt);\n            dv = dv.addition(ndv);\n            du = du.addition(ndu);\n            dw = dw.addition(ndw);\n        }\n        this.U = this.U.subtraction(du.numberMultiply(this.rate));\n        this.W = this.W.subtraction(dw.numberMultiply(this.rate));\n        this.V = this.V.subtraction(dv.numberMultiply(this.rate));\n    }\n    predict(input, max = 10) {\n        let data = input.split('');\n        let s = data.find(d => this.indexWord[d] === undefined);\n        if (s) {\n            console.error(`检测到有未在词典中的字：${s}`);\n            return undefined;\n        }\n        let xs = this.oneHotXs(data);\n        let hy = this.forwardPropagation(xs);\n        let lastHy = hy[hy.length - 1];\n        let nextIndex = lastHy.yt.argMax(0);\n        let nextSt = lastHy.st;\n        let result = '';\n        result += this.wordIndex[nextIndex];\n        if (nextIndex === this.inputSize)\n            return result;\n        for (let i = 0; i < max - 1; i++) {\n            let nextXs = this.oneHotX(nextIndex);\n            let hy = this.calcForward(nextXs, nextSt);\n            nextIndex = hy.yt.argMax(0);\n            nextSt = hy.st;\n            result += this.wordIndex[nextIndex];\n            if (nextIndex === this.inputSize)\n                break;\n        }\n        return result;\n    }\n    cost(hy, ys) {\n        let res = hy.map((nhy, i) => {\n            let { yt } = nhy;\n            let yst = ys[i];\n            let tmp = yt.subtraction(yst).atomicOperation(item => (item ** 2) / 2).getRow(0);\n            return tmp.reduce((a, b) => a + b) / tmp.length;\n        });\n        return res.reduce((a, b) => a + b);\n    }\n    fit(opt = {}) {\n        const { epochs = 1000, onEpochs } = opt;\n        for (let i = 0; i < epochs; i++) {\n            let e = 0;\n            for (let n = 0; n < this.trainData.length; n++) {\n                let input = this.trainData[n];\n                let xs = this.oneHotXs(input);\n                let ys = this.oneHotYs(input);\n                let hy = this.forwardPropagation(xs);\n                this.backPropagation(hy, xs, ys);\n                e += this.cost(hy, ys);\n            }\n            if (onEpochs) {\n                onEpochs(i, e / this.trainData.length);\n            }\n        }\n    }\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 165,
+            "file_path": "src/main/ets/lib/rnn.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 165,
+            "file_path": "lib/rnn.js",
+            "start_line": 165,
+            "text": "exports.RNN = RNN;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 165,
+            "file_path": "src/main/ets/lib/rnn.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/rnn.js",
+      "sourceLines": "2-165",
+      "targetFile": "src/main/ets/lib/rnn.ets",
+      "targetLines": "2-165"
+    },
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/rnn.ets",
+      "lines": "2-165"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "API层级变更",
+    "change_type": "新功能",
+    "cluster_id": 17,
+    "cluster_ids": [
+      17
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 18,
+            "file_path": "lib/index.js",
+            "start_line": 18,
+            "text": "__exportStar(require(\"./rnn\"), exports);"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 18,
+            "file_path": "src/main/ets/lib/index.ets",
+            "inferred_location": true,
+            "start_line": 18,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/index.js",
+      "sourceLines": "18-18",
+      "targetFile": "src/main/ets/lib/index.ets",
+      "targetLines": "18-18"
+    },
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/index.ets",
+      "lines": "18-18"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 18,
+    "cluster_ids": [
+      18
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [],
+        "npm_code_before": {
+          "end_line": 17,
+          "file_path": "lib/Optimize.js",
+          "start_line": 4,
+          "text": "class Optimize {\n    crossCost(hy, ys) {\n        let m = ys.shape[0];\n        let t = hy.atomicOperation((h, i, j) => {\n            let y = ys.get(i, j);\n            return y === 1 ? -Math.log(h) : -Math.log(1 - h);\n        }).columnSum();\n        let tmp = t.getRow(0).map(v => v / m);\n        return tmp.reduce((p, c) => p + c) / tmp.length;\n    }\n    momentum(xs, ys) { }\n    adaGrad(xs, ys) { }\n    adaDelta(xs, ys) { }\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 20,
+            "file_path": "src/main/ets/lib/types.ets",
+            "start_line": 13,
+            "text": "export interface TrainingOptions {\n    epochs: number;\n    batchSize: number;\n    async: boolean;\n    onBatch?: (batch: number, size: number, loss: number) => void;\n    onEpoch?: (epoch: number, loss: number) => void;\n    onTrainEnd?: (loss: number) => void;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/BPNet.ets",
+            "start_line": 3,
+            "text": "import type { ActivationFunction, TrainingOptions, Mode, BPNetOptions, NetShape, BackPropagationResult } from \"./types\";"
+          },
+          {
+            "end_line": 5,
+            "file_path": "src/main/ets/lib/index.ets",
+            "start_line": 5,
+            "text": "export * from './types';"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [],
+        "npm_code_before": {
+          "end_line": 2,
+          "file_path": "lib/Optimize.js",
+          "start_line": 2,
+          "text": "Object.defineProperty(exports, \"__esModule\", { value: true });"
+        },
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [],
+        "npm_code_before": {
+          "end_line": 3,
+          "file_path": "lib/Optimize.js",
+          "start_line": 3,
+          "text": "exports.Optimize = void 0;"
+        },
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [],
+        "npm_code_before": {
+          "end_line": 18,
+          "file_path": "lib/Optimize.js",
+          "start_line": 18,
+          "text": "exports.Optimize = Optimize;"
+        },
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/Optimize.js",
+      "sourceLines": "2-18",
+      "targetFile": "src/main/ets/lib/types.ets",
+      "targetLines": "13-20"
+    },
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/types.ets",
+      "lines": "13-20"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "taskId": "emath_v1.3.1_to_v1.5.0__emath_vOHPM_upgradeTask",
+  "recordedAt": "2026-05-14T13:50:32.545Z",
+  "metadata": {
+    "name": "emath",
+    "npmOriginalVersion": "1.3.1",
+    "npmTargetVersion": "1.5.0",
+    "ohpmOriginalVersion": "OHPM"
+  }
+}

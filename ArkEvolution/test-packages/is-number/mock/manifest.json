@@ -1,0 +1,10 @@
+{
+  "taskId": "is-number_v7.0.0_to_v7.0.1__is-number_vohpm_upgradeTask",
+  "recordedAt": "2026-05-12T12:17:35.499Z",
+  "metadata": {
+    "name": "is-number",
+    "npmOriginalVersion": "7.0.0",
+    "npmTargetVersion": "7.0.1",
+    "ohpmOriginalVersion": "ohpm"
+  }
+}

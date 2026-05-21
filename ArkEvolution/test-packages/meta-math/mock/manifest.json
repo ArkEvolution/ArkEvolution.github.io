@@ -1,0 +1,10 @@
+{
+  "taskId": "meta-math_v0.1.7_to_v0.2.0__meta-math_vohpm_upgradeTask",
+  "recordedAt": "2026-05-14T15:50:30.487Z",
+  "metadata": {
+    "name": "meta-math",
+    "npmOriginalVersion": "0.1.7",
+    "npmTargetVersion": "0.2.0",
+    "ohpmOriginalVersion": "ohpm"
+  }
+}

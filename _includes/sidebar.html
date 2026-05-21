@@ -2,7 +2,7 @@
 
 <div id="sidebar" class="d-flex flex-column align-items-end">
   <div class="profile-wrapper">
-    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
+    <a href="{{ '/' | relative_url }}" id="avatar" class="site-logo">
       {% if site.avatar != empty and site.avatar %}
         {% capture avatar_url %}
             {% if site.avatar contains '://' %}
@@ -13,7 +13,7 @@
               {{ site.avatar | relative_url }}
             {% endif %}
           {% endcapture %}
-        <img src="{{ avatar_url | strip }}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
+        <img src="{{ avatar_url | strip }}" alt="ArkEvolution logo" onerror="this.style.display='none'">
       {% endif %}
     </a>
 
@@ -35,11 +35,12 @@
     <!-- the real tabs -->
     {% for tab in site.tabs %}
       <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
-        <a href="{{ tab.url | relative_url }}" class="nav-link">
+        {% assign tab_href = tab.external_url | default: tab.url %}
+        <a href="{{ tab_href | relative_url }}" class="nav-link">
           <i class="fa-fw {{ tab.icon }}"></i>
           {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
 
-          <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
+          <span>{{ tab.nav_title | default: site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
         </a>
       </li>
       <!-- .nav-item -->

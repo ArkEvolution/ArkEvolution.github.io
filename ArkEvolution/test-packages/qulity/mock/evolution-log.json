@@ -1,0 +1,304 @@
+[
+  {
+    "answers": [
+      "const Cache            = require(\"./Cache\");",
+      "const { EventEmitter } = require(\"events\");",
+      "class ActiveCache extends Cache {\n\n    /**\n     * Extended class that implements an events driver.\n     * @param {Array|Object} [iterable] Optional initial values of this Cache.\n     * @example const AC = new Qulity.ActiveCache(Iterable?);\n     * @extends {EventEmitter}\n     */\n    constructor (iterable = {}) {\n        super(iterable);\n\n        /**\n         * An event manager for this ActiveCache.\n         * @name ActiveCache#_emitter\n         * @type {EventEmitter}\n         * @private\n         */\n        this._emitter = new EventEmitter();\n    }\n\n    /**\n     * Current types of events.\n     * @typedef {String} Event\n     * @param {String} set\n     * @param {String} delete\n     */\n\n    /**\n     * Registers a handler for this ActiveCache.\n     * @param {Event} event An event to handle.\n     * @param {Function} handler A handler for this registered event.\n     * @returns {ActiveCache}\n     */\n    on (event, handler) {\n        this._emitter.on(event, handler);\n        return this;\n    }\n\n    set (keyContext, value) {\n        super.set(keyContext, value);\n        this._emitter.emit(\"set\", keyContext, value);\n        return this;\n    }\n\n    delete (keyContext) {\n        super.delete(keyContext);\n        this._emitter.emit(\"delete\", keyContext);\n        return this;\n    }\n}",
+      "module.exports = ActiveCache;"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced an ActiveCache class that extends Cache with EventEmitter functionality, enabling event-driven operations by emitting \"set\" and \"delete\" events when cache entries are modified.",
+        "metadata": {
+          "npm_end_line": 4,
+          "npm_file_path": "lib/Extensions/ActiveCache.js",
+          "npm_start_line": 4,
+          "type": "addition"
+        },
+        "npm_code_after": "const Cache            = require(\"./Cache\");",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced an ActiveCache class that extends Cache with EventEmitter functionality, enabling event-driven operations by emitting \"set\" and \"delete\" events when cache entries are modified.",
+        "metadata": {
+          "npm_end_line": 5,
+          "npm_file_path": "lib/Extensions/ActiveCache.js",
+          "npm_start_line": 5,
+          "type": "addition"
+        },
+        "npm_code_after": "const { EventEmitter } = require(\"events\");",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced an ActiveCache class that extends Cache with EventEmitter functionality, enabling event-driven operations by emitting \"set\" and \"delete\" events when cache entries are modified.",
+        "metadata": {
+          "npm_end_line": 56,
+          "npm_file_path": "lib/Extensions/ActiveCache.js",
+          "npm_start_line": 7,
+          "type": "addition"
+        },
+        "npm_code_after": "class ActiveCache extends Cache {\n\n    /**\n     * Extended class that implements an events driver.\n     * @param {Array|Object} [iterable] Optional initial values of this Cache.\n     * @example const AC = new Qulity.ActiveCache(Iterable?);\n     * @extends {EventEmitter}\n     */\n    constructor (iterable = {}) {\n        super(iterable);\n\n        /**\n         * An event manager for this ActiveCache.\n         * @name ActiveCache#_emitter\n         * @type {EventEmitter}\n         * @private\n         */\n        this._emitter = new EventEmitter();\n    }\n\n    /**\n     * Current types of events.\n     * @typedef {String} Event\n     * @param {String} set\n     * @param {String} delete\n     */\n\n    /**\n     * Registers a handler for this ActiveCache.\n     * @param {Event} event An event to handle.\n     * @param {Function} handler A handler for this registered event.\n     * @returns {ActiveCache}\n     */\n    on (event, handler) {\n        this._emitter.on(event, handler);\n        return this;\n    }\n\n    set (keyContext, value) {\n        super.set(keyContext, value);\n        this._emitter.emit(\"set\", keyContext, value);\n        return this;\n    }\n\n    delete (keyContext) {\n        super.delete(keyContext);\n        this._emitter.emit(\"delete\", keyContext);\n        return this;\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced an ActiveCache class that extends Cache with EventEmitter functionality, enabling event-driven operations by emitting \"set\" and \"delete\" events when cache entries are modified.",
+        "metadata": {
+          "npm_end_line": 58,
+          "npm_file_path": "lib/Extensions/ActiveCache.js",
+          "npm_start_line": 58,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports = ActiveCache;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/Extensions/ActiveCache.js",
+      "sourceLines": "4-58",
+      "targetFile": "unknown",
+      "targetLines": "N/A"
+    },
+    "location": {
+      "filePath": "unknown",
+      "lines": "N/A"
+    }
+  },
+  {
+    "answers": [
+      "const Collection = require(\"../Base/Collection\");",
+      "class Cache extends Collection {\n\n    /**\n     * Base class that manages additional utility functions and other features.\n     * @param {Array|Object} [iterable] Optional initial values of this Cache.\n     * @example const CC = new Qulity.Cache(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (iterable = {}) {\n        super(iterable)\n    }\n\n    /**\n     * Ensures an entry being in this Cache map.\n     * @param {*} keyContext Specifies the address for the value.\n     * @param {*} value A value to be conditionally inserted.\n     * @returns {Boolean} Whether or not a new value was inserted.\n     */\n    default (keyContext, value) {\n        if (this.has(keyContext)) return false;\n        this.set(keyContext, value);\n        return true;\n    }\n}",
+      "module.exports = Cache;"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced a new `Cache` class extending `Collection` with a `default` method that conditionally sets a value only if the key doesn't already exist, returning whether a new entry was inserted.",
+        "metadata": {
+          "npm_end_line": 4,
+          "npm_file_path": "lib/Extensions/Cache.js",
+          "npm_start_line": 4,
+          "type": "addition"
+        },
+        "npm_code_after": "const Collection = require(\"../Base/Collection\");",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced a new `Cache` class extending `Collection` with a `default` method that conditionally sets a value only if the key doesn't already exist, returning whether a new entry was inserted.",
+        "metadata": {
+          "npm_end_line": 29,
+          "npm_file_path": "lib/Extensions/Cache.js",
+          "npm_start_line": 6,
+          "type": "addition"
+        },
+        "npm_code_after": "class Cache extends Collection {\n\n    /**\n     * Base class that manages additional utility functions and other features.\n     * @param {Array|Object} [iterable] Optional initial values of this Cache.\n     * @example const CC = new Qulity.Cache(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (iterable = {}) {\n        super(iterable)\n    }\n\n    /**\n     * Ensures an entry being in this Cache map.\n     * @param {*} keyContext Specifies the address for the value.\n     * @param {*} value A value to be conditionally inserted.\n     * @returns {Boolean} Whether or not a new value was inserted.\n     */\n    default (keyContext, value) {\n        if (this.has(keyContext)) return false;\n        this.set(keyContext, value);\n        return true;\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Introduced a new `Cache` class extending `Collection` with a `default` method that conditionally sets a value only if the key doesn't already exist, returning whether a new entry was inserted.",
+        "metadata": {
+          "npm_end_line": 31,
+          "npm_file_path": "lib/Extensions/Cache.js",
+          "npm_start_line": 31,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports = Cache;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/Extensions/Cache.js",
+      "sourceLines": "4-31",
+      "targetFile": "unknown",
+      "targetLines": "N/A"
+    },
+    "location": {
+      "filePath": "unknown",
+      "lines": "N/A"
+    }
+  },
+  {
+    "answers": [
+      "export {\n  Collection,\n  Cache,\n  ActiveCache,\n  BaseManager as Manager,\n  DataStore\n};"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added new Cache and ActiveCache extension modules to the library exports, introducing caching functionality alongside existing base and manager components.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 24,
+          "npm_file_path": "Qulity.js",
+          "npm_start_line": 2,
+          "ohpm_end_line": 21,
+          "ohpm_file_path": "src/main/ets/Qulity.ets",
+          "ohpm_start_line": 17,
+          "type": "modification"
+        },
+        "npm_code_after": "/*\n    Qulity is built from the ground up by QSmally.\n    Qulity © 2021 by QSmally, all rights reserved.\n    Please report bugs by creating an issue on the repo.\n\n    Originally included in project QSmally/QDB.\n\n    Obviously the Node runtime is not created by myself,\n    it's created by their respective owners.\n    All rights are reserved.\n*/\n\n\nmodule.exports = {\n\n    // Base\n    Collection: require(\"./lib/Base/Collection\"),\n\n    // Extensions\n    Cache:       require(\"./lib/Extensions/Cache\"),\n    ActiveCache: require(\"./lib/Extensions/ActiveCache\"),\n\n    // Managers\n    Manager:   require(\"./lib/Managers/BaseManager\"),\n    DataStore: require(\"./lib/Managers/DataStore\")\n\n};",
+        "npm_code_before": "/*\n    Qulity is built from the ground up by QSmally.\n    Qulity © 2021 by QSmally, all rights reserved.\n    Please report bugs by creating an issue on the repo.\n\n    Originally included in project QSmally/QDB.\n\n    Obviously the Node runtime is not created by myself,\n    it's created by their respective owners.\n    All rights are reserved.\n*/\n\n\nmodule.exports = {\n\n    // Base\n    Collection: require(\"./lib/Base/Collection\"),\n\n    // Managers\n    Manager:   require(\"./lib/Managers/BaseManager\"),\n    DataStore: require(\"./lib/Managers/DataStore\")\n\n};",
+        "ohpm_code_before": [
+          "export {\n  Collection,\n  BaseManager as Manager,\n  DataStore\n};"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "Qulity.js",
+      "sourceLines": "2-24",
+      "targetFile": "src/main/ets/Qulity.ets",
+      "targetLines": "17-21"
+    },
+    "location": {
+      "filePath": "src/main/ets/Qulity.ets",
+      "lines": "17-21"
+    }
+  },
+  {
+    "answers": [
+      "if (Iterable) {\n    if (Iterable instanceof Array) {\n        for (let i: number = 0; i < Iterable.length; i++) {\n            const entry: ESObject = Iterable[i];\n            // 确保是 [key, val] 格式\n            if (entry instanceof Array && entry.length >= 2) {\n                this.set(entry[0], entry[1]);\n            }\n        }\n    } else {\n        const keys: string[] = Object.keys(Iterable);\n        for (let i: number = 0; i < keys.length; i++) {\n            const keyContext: string = keys[i];\n            this.set(keyContext, Iterable[keyContext]);\n        }\n    }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Collection class to improve code readability and consistency by renaming parameters and variables to more descriptive names, standardizing iteration variable names (keyContext, value), and deprecating `some`/`every` methods in favor of `someSatisfy`/`everySatisfy` with deprecation warnings. & Renamed the parameter `Key` to `keyContext` and `Value` to `value` in the standard collection methods (`set`, `delete`, `get`, `has`), and reorganized the code by adding section comments (\"Standard methods\" and \"Migration methods\") to improve clarity and distinguish between standard and migration-related functionality.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 3,
+          "npm_end_line": 18,
+          "npm_file_path": "lib/Base/Collection.js",
+          "npm_start_line": 16,
+          "ohpm_end_line": 27,
+          "ohpm_file_path": "library/src/main/ets/lib/Base/Collection.ets",
+          "ohpm_start_line": 11,
+          "type": "modification"
+        },
+        "npm_code_after": "\n\n        for (const keyContext in iterable) {\n            Array.isArray(iterable) ?\n                this.set(iterable[keyContext][0], iterable[keyContext][1]) :\n                this.set(keyContext, iterable[keyContext]);\n        }",
+        "npm_code_before": "\n\n        if (Iterable instanceof Array)\n        for (const Key in Iterable) this.set(Iterable[Key][0], Iterable[Key][1]);\n        else for (const Key in Iterable) this.set(Key, Iterable[Key]);",
+        "ohpm_code_before": [
+          "\n\n        if (Iterable) {\n            if (Iterable instanceof Array) {\n                for (let i: number = 0; i < Iterable.length; i++) {\n                    const entry: ESObject = Iterable[i];\n                    // 确保是 [key, val] 格式\n                    if (entry instanceof Array && entry.length >= 2) {\n                        this.set(entry[0], entry[1]);\n                    }\n                }\n            } else {\n                const keys: string[] = Object.keys(Iterable);\n                for (let i: number = 0; i < keys.length; i++) {\n                    const key: string = keys[i];\n                    this.set(key, Iterable[key]);\n                }\n            }\n        }"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/Base/Collection.js",
+      "sourceLines": "16-18",
+      "targetFile": "library/src/main/ets/lib/Base/Collection.ets",
+      "targetLines": "11-27"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+      "lines": "11-27"
+    }
+  },
+  {
+    "answers": [
+      "export default class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [iterable] Optional initial values of this DataStore.\n     */\n    constructor(iterable: ESObject = {}) {\n        super(iterable);\n    }\n\n    /**\n     * An entry of this DataStore.\n     * @typedef {Function|Object} DataModel\n     */\n\n    /**\n     * Inserts or updates a model.\n     * @param {String|Number} keyContext Key of the model to be inserted.\n     * @param {Function|Object|DataModel} model The data model to set into the DataStore.\n     * @returns {DataStore}\n     */\n    // 使用 ESObject 作为返回类型，以兼容 Map.set 的 this 返回类型检查\n    set(keyContext: string | number, model: ESObject): ESObject {\n        const typeModel = typeof model;\n        const typeKey = typeof keyContext;\n\n        if (typeModel !== \"function\" && typeModel !== \"object\") return this;\n        if (typeKey !== \"string\" && typeKey !== \"number\") return this;\n\n        super.set(keyContext, model);\n        return this;\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} keyContext Key of the model to be resolved.\n     * @returns {DataModel} Model that got resolved or cached.\n     */\n    resolve(keyContext: string | number): ESObject {\n        const typeKey = typeof keyContext;\n        if (typeKey !== \"string\" && typeKey !== \"number\") return null;\n\n        return super.get(keyContext);\n    }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import DataStore from \"./lib/Managers/DataStore\";"
+        ],
+        "intent": "The changes refactor the DataStore constructor to delegate initialization to the parent Collection class via `super(iterable)`, removing manual iteration logic, and standardize parameter naming conventions (e.g., `Key` to `keyContext`, `Model` to `model`) for consistency.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 48,
+          "npm_file_path": "lib/Managers/DataStore.js",
+          "npm_start_line": 6,
+          "ohpm_end_line": 55,
+          "ohpm_file_path": "src/main/ets/lib/Managers/DataStore.ets",
+          "ohpm_start_line": 3,
+          "type": "modification"
+        },
+        "npm_code_after": "class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [iterable] Optional initial values of this DataStore.\n     * @example const DS = new Qulity.DataStore(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (iterable = {}) {\n        super(iterable);\n    }\n\n    /**\n     * An entry of this DataStore.\n     * @typedef {Function|Object} DataModel\n     */\n\n    /**\n     * Inserts or updates a model.\n     * @param {String|Number} keyContext Key of the model to be inserted.\n     * @param {Function|Object|DataModel} model The data model to set into the DataStore.\n     * @returns {DataStore}\n     */\n    set (keyContext, model) {\n        if (![\"function\", \"object\"].includes(typeof model))    return null;\n        if (![\"string\", \"number\"].includes(typeof keyContext)) return null;\n        return super.set(keyContext, model);\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} keyContext Key of the model to be resolved.\n     * @returns {DataModel} Model that got resolved or cached.\n     */\n    resolve (keyContext) {\n        return super.get(keyContext);\n    }\n}",
+        "npm_code_before": "class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [Iterable] Optional initial values of this DataStore.\n     * @example const DS = new Qulity.DataStore(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (Iterable = {}) {\n\n        super();\n\n        if (Iterable instanceof Array)\n        for (const Key in Iterable) this.set(Iterable[Key][0], Iterable[Key][1]);\n        else for (const Key in Iterable) this.set(Key, Iterable[Key]);\n\n    }\n\n\n    /**\n     * Sets a model into the DataStore.\n     * @param {String|Number} Key Key of the model to be inserted.\n     * @param {Function|Object|DataModel} Model The data model to set into the DataStore.\n     * @returns {DataStore}\n     */\n    set (Key, Model) {\n        if (![\"function\", \"object\"].includes(typeof Model)) return null;\n        if (![\"string\", \"number\"].includes(typeof Key))     return null;\n        return super.set(Key, Model);\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} Key Key of the model to be resolved.\n     * @returns {DataModel} Model that got resolved or cached.\n     */\n    resolve (Key) {\n        if (![\"string\", \"number\"].includes(typeof Key)) return null;\n        const Model = super.get(Key);\n        return Model;\n    }\n\n}",
+        "ohpm_code_before": [
+          "export default class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [Iterable] Optional initial values of this DataStore.\n     */\n    constructor(Iterable: ESObject = {}) {\n        super();\n\n        if (Iterable instanceof Array) {\n            for (let i = 0; i < Iterable.length; i++) {\n                const entry: ESObject = Iterable[i];\n                if (entry instanceof Array && entry.length >= 2) {\n                    this.set(entry[0], entry[1]);\n                }\n            }\n        } else {\n            const keys = Object.keys(Iterable);\n            for (let i = 0; i < keys.length; i++) {\n                const key: string = keys[i];\n                this.set(key, Iterable[key]);\n            }\n        }\n    }\n\n    /**\n     * Sets a model into the DataStore.\n     * @param {String|Number} Key Key of the model to be inserted.\n     * @param {Function|Object} Model The data model to set into the DataStore.\n     */\n    // 使用 ESObject 作为返回类型，以兼容 Map.set 的 this 返回类型检查\n    set(Key: string | number, Model: ESObject): ESObject {\n        const typeModel = typeof Model;\n        const typeKey = typeof Key;\n\n        if (typeModel !== \"function\" && typeModel !== \"object\") return this;\n        if (typeKey !== \"string\" && typeKey !== \"number\") return this;\n\n        super.set(Key, Model);\n        return this;\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} Key Key of the model to be resolved.\n     */\n    resolve(Key: string | number): ESObject {\n        const typeKey = typeof Key;\n        if (typeKey !== \"string\" && typeKey !== \"number\") return null;\n\n        return super.get(Key);\n    }\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/Managers/DataStore.js",
+      "sourceLines": "6-48",
+      "targetFile": "src/main/ets/lib/Managers/DataStore.ets",
+      "targetLines": "3-55"
+    },
+    "location": {
+      "filePath": "src/main/ets/lib/Managers/DataStore.ets",
+      "lines": "3-55"
+    }
+  },
+  {
+    "answers": [
+      "export default class BaseManager {\n    public cache: Collection;\n    private holds: ESObject | null;\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [iterable] Optional initial values of this Manager.\n     * @param {Function} [holds] An optional data stricture belonging to this Manager.\n     */\n    constructor(iterable: ESObject = {}, holds: ESObject | null = null) {\n        this.cache = new Collection();\n        this.holds = holds;\n\n        for (const keyContext in iterable) {\n            if (Array.isArray(iterable)) {\n                const entry: ESObject = iterable[keyContext];\n                if (entry instanceof Array && entry.length >= 2) {\n                    this.cache.set(entry[0], entry[1]);\n                }\n            } else {\n                this.cache.set(keyContext, iterable[keyContext]);\n            }\n        }\n    }\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     */\n    add(identifier: string, model: ESObject): BaseManager | null {\n        if (typeof identifier !== \"string\") return null;\n        if (this.cache.has(identifier)) return null;\n\n        if (this.holds && !(model instanceof (this.holds as ESObject))) return null;\n\n        this.cache.set(identifier, model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     */\n    remove(identifier: string): BaseManager | null {\n        if (typeof identifier !== \"string\") return null;\n        if (!this.cache.has(identifier)) return null;\n\n        this.cache.delete(identifier);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     */\n    resolve(idOrInstance: ESObject): ESObject {\n        if (this.holds && idOrInstance instanceof (this.holds as ESObject)) return this.holds;\n        if (typeof idOrInstance !== \"string\") return null;\n        return this.cache.get(idOrInstance);\n    }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import BaseManager from \"./lib/Managers/BaseManager\";"
+        ],
+        "intent": "Refactored the `BaseManager` class to adopt modern JavaScript conventions by renaming parameters to camelCase, replacing `Object.defineProperty` with direct property assignments, and improving the iteration logic for initializing the cache with a `for...in` loop that handles both arrays and objects.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 2,
+          "npm_end_line": 84,
+          "npm_file_path": "lib/Managers/BaseManager.js",
+          "npm_start_line": 6,
+          "ohpm_end_line": 64,
+          "ohpm_file_path": "src/main/ets/lib/Managers/BaseManager.ets",
+          "ohpm_start_line": 3,
+          "type": "modification"
+        },
+        "npm_code_after": "class BaseManager {\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [iterable] Optional initial values of this Manager.\n     * @param {Function} [holds] An optional data stricture belonging to this Manager.\n     * @example class MyManager extends Qulity.Manager\n     * @implements Collection\n     */\n    constructor (iterable = {}, holds = null) {\n\n        /**\n         * Cached dataset entries of this Manager.\n         * @name BaseManager#cache\n         * @type {Collection}\n         * @readonly\n         */\n        this.cache = new Collection();\n\n        for (const keyContext in iterable) {\n            Array.isArray(iterable) ?\n                this.cache.set(iterable[keyContext][0], iterable[keyContext][1]) :\n                this.cache.set(keyContext, iterable[keyContext]);\n        }\n\n        /**\n         * A structure belonging to this Manager.\n         * @name BaseManager#holds\n         * @type {Function?}\n         * @readonly\n         */\n        this.holds = holds;\n    }\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     * @param {String} identifier Identifier string for the address of this model.\n     * @param {Function|*} model A data model to add to this Manager.\n     * @returns {Manager}\n     */\n    add (identifier, model) {\n        if (typeof identifier !== \"string\")               return null;\n        if (this.cache.has(identifier))                   return null;\n        if (this.holds && !(model instanceof this.holds)) return null;\n\n        this.cache.set(identifier, model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     * @param {String} identifier Identifier string of the instance.\n     * @returns {Manager}\n     */\n    remove (identifier) {\n        if (typeof identifier !== \"string\") return null;\n        if (!this.cache.has(identifier))    return null;\n\n        this.cache.delete(identifier);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     * @param {String|Function|*} idOrInstance Identifier to resolve from this Manager.\n     * @returns {Function|*} A data model resolved from this Manager's cache.\n     */\n    resolve (idOrInstance) {\n        if (this.holds && idOrInstance instanceof this.holds) return this.holds;\n        if (typeof idOrInstance !== \"string\") return null;\n        return this.cache.get(idOrInstance);\n    }\n}",
+        "npm_code_before": "class BaseManager {\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [Iterable] Optional initial values of this Manager.\n     * @param {Function} [Holds] An optional data stricture belonging to this Manager.\n     * @example class MyManager extends Qulity.Manager\n     */\n    constructor (Iterable = {}, Holds = null) {\n\n        /**\n         * Cached dataset entries of this Manager.\n         * @name BaseManager#cache\n         * @type {Collection}\n         * @readonly\n         */\n        Object.defineProperty(this, \"cache\", {\n            enumerable: true,\n            value: new Collection()\n        });\n\n        if (Iterable instanceof Array)\n        for (const Key in Iterable) this.cache.set(Iterable[Key][0], Iterable[Key][1]);\n        else for (const Key in Iterable) this.cache.set(Key, Iterable[Key]);\n\n        /**\n         * A structure belonging to this Manager.\n         * @name BaseManager#holds\n         * @type {Function?}\n         * @private\n         */\n        Object.defineProperty(this, \"holds\", {\n            enumerable: true,\n            value: Holds\n        });\n\n    }\n\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     * @param {String} Id Identifier string for the address of this model.\n     * @param {Function|*} Model A data model to add to this Manager.\n     * @returns {Manager}\n     */\n    add (Id, Model) {\n        if (typeof Id !== \"string\")                       return null;\n        if (this.cache.has(Id))                           return null;\n        if (this.holds && !(Model instanceof this.holds)) return null;\n\n        this.cache.set(Id, Model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     * @param {String} Id Identifier string of the instance.\n     * @returns {Manager}\n     */\n    remove (Id) {\n        if (typeof Id !== \"string\") return null;\n        if (!this.cache.has(Id))    return null;\n\n        this.cache.delete(Id);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     * @param {String|Function|*} IdOrInstance Identifier to resolve from this Manager.\n     * @returns {Function|*} A data model resolved from this Manager's cache.\n     */\n    resolve (IdOrInstance) {\n        if (this.holds && IdOrInstance instanceof this.holds) return this.holds;\n        if (typeof IdOrInstance !== \"string\") return null;\n        return this.cache.get(IdOrInstance);\n    }\n\n}",
+        "ohpm_code_before": [
+          "export default class BaseManager {\n    public cache: Collection;\n    private holds: ESObject | null;\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [Iterable] Optional initial values of this Manager.\n     * @param {Function} [Holds] An optional data stricture belonging to this Manager.\n     */\n    constructor(Iterable: ESObject = {}, Holds: ESObject | null = null) {\n        this.cache = new Collection();\n        this.holds = Holds;\n\n        if (Iterable instanceof Array) {\n            for (let i = 0; i < Iterable.length; i++) {\n                const entry: ESObject = Iterable[i];\n                if (entry instanceof Array && entry.length >= 2) {\n                    this.cache.set(entry[0], entry[1]);\n                }\n            }\n        } else {\n            const keys = Object.keys(Iterable);\n            for (let i = 0; i < keys.length; i++) {\n                const key: string = keys[i];\n                this.cache.set(key, Iterable[key]);\n            }\n        }\n    }\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     */\n    add(Id: string, Model: ESObject): BaseManager | null {\n        if (typeof Id !== \"string\") return null;\n        if (this.cache.has(Id)) return null;\n\n        if (this.holds && !(Model instanceof (this.holds as ESObject))) return null;\n\n        this.cache.set(Id, Model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     */\n    remove(Id: string): BaseManager | null {\n        if (typeof Id !== \"string\") return null;\n        if (!this.cache.has(Id)) return null;\n\n        this.cache.delete(Id);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     */\n    resolve(IdOrInstance: ESObject): ESObject {\n        if (this.holds && IdOrInstance instanceof (this.holds as ESObject)) return this.holds;\n        if (typeof IdOrInstance !== \"string\") return null;\n        return this.cache.get(IdOrInstance);\n    }\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/Managers/BaseManager.js",
+      "sourceLines": "6-84",
+      "targetFile": "src/main/ets/lib/Managers/BaseManager.ets",
+      "targetLines": "3-64"
+    },
+    "location": {
+      "filePath": "src/main/ets/lib/Managers/BaseManager.ets",
+      "lines": "3-64"
+    }
+  }
+]

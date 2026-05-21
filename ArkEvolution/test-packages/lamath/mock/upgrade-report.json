@@ -1,0 +1,3794 @@
+[
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 8,
+    "cluster_ids": [
+      8
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 18,
+            "file_path": "lib/vec.js",
+            "start_line": 11,
+            "text": "/**\r\n * Create a vector of the scpecified dimension with all of its components\r\n * initialized to zero.\r\n * @param dim Vector dimension.\r\n */\r\nfunction zero(dim) {\r\n    return unif(dim, 0);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 17,
+          "file_path": "lib/vec.js",
+          "start_line": 11,
+          "text": "/**\r\n * Initialize a zero vector with dim components.\r\n * @param dim Vector dimension.\r\n */\r\nfunction zero(dim) {\r\n    return unif(dim, 0);\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 35,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 30,
+            "text": "export function zero(rows: number, cols: number): Matrix {\n    let res: Matrix = new Array(rows * cols + 2).fill(0);\n    res[0] = rows;\n    res[1] = cols;\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 42,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 37,
+            "text": "export function identity(dim: number): Matrix {\n    let res: Matrix = zero(dim, dim);\n    for (let i = 0; i < dim; ++i)\n        res[i * dim + i + 2] = 1;\n    return res;\n}"
+          }
+        ]
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/vec.js",
+      "sourceLines": "11-18",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "30-35"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "30-35"
+    },
+    "matched_errors": [],
+    "status": "未应用"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 18,
+    "cluster_ids": [
+      18
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [],
+        "npm_code_before": {
+          "end_line": 381,
+          "file_path": "lib/vec.js",
+          "start_line": 365,
+          "text": "/**\r\n * Return a vector with components in range [0, 1] depending on how close the\r\n * input vector values are to the lower and upper edge value. If a component is\r\n * less that lower edge it gets value 0. Conversely, if it is greater than the\r\n * upper edge, it gets value 1. If a component is between lower and upper edge,\r\n * its value is smoothly interpolated between zero and one.\r\n * @param v The input vector.\r\n * @param edgeLower The lower edge to which the components are compared.\r\n * @param edgeUpper The upper edge to which the components are compared.\r\n * @param out Result vector.\r\n */\r\nfunction smoothStep(v, edgeLower, edgeUpper, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.smoothStep(v[i], edgeLower, edgeUpper);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 40,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 37,
+            "text": "export function smoothStep(edgeLower: number, edgeUpper: number, value: number): number {\n    let t: number = clamp((value - edgeLower) / (edgeUpper - edgeLower), 0, 1);\n    return t * t * (3 - (2 * t));\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 368,
+            "file_path": "lib/vec.js",
+            "start_line": 363,
+            "text": "/**\r\n * Returns the string representation of a vector formatted like this: [x y z]\r\n */\r\nfunction toString(vec) {\r\n    return \"[\" + vec.join(\" \") + \"]\";\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 388,
+          "file_path": "lib/vec.js",
+          "start_line": 383,
+          "text": "/**\r\n * Returns the string representation of a vector formatted like this: [x y z]\r\n */\r\nfunction toString(v) {\r\n    return \"[\" + v.join(\" \") + \"]\";\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 393,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 388,
+            "text": "/**\n * Returns the string representation of a vector formatted like this: [x y z]\n */\nexport function toString(v: Vector): string {\n    return \"[\" + v.join(\" \") + \"]\";\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 361,
+            "file_path": "lib/vec.js",
+            "start_line": 345,
+            "text": "/**\r\n * Return a vector with components in range [0, 1] depending on how close the\r\n * input vector values are to the lower and upper edge value. If a component is\r\n * less that lower edge it gets value 0. Conversely, if it is greater than the\r\n * upper edge, it gets value 1. If a component is between lower and upper edge,\r\n * its value is smoothly interpolated between zero and one.\r\n * @param vec The input vector.\r\n * @param edgeLower The lower edge to which the components are compared.\r\n * @param edgeUpper The upper edge to which the components are compared.\r\n * @param out Result vector.\r\n */\r\nfunction smoothStep(vec, edgeLower, edgeUpper, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.smoothStep(vec[i], edgeLower, edgeUpper);\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/vec.js",
+      "sourceLines": "345-388",
+      "targetFile": "src/main/ets/lib/fmath.ets, src/main/ets/lib/vec.ets",
+      "targetLines": "37-393"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/fmath.ets, src/main/ets/lib/vec.ets",
+      "lines": "37-393"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 24,
+    "cluster_ids": [
+      24
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 58,
+            "file_path": "lib/mat.js",
+            "start_line": 54,
+            "text": "function toMat3(m) {\r\n    let res = redim(m, 3, 3);\r\n    res[10] = 1;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 67,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "inferred_location": true,
+            "start_line": 54,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 59,
+            "file_path": "lib/mat.js",
+            "start_line": 59,
+            "text": "exports.toMat3 = toMat3;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 67,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "inferred_location": true,
+            "start_line": 54,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 66,
+            "file_path": "lib/mat.js",
+            "start_line": 60,
+            "text": "function toMat4(m) {\r\n    let res = redim(m, 4, 4);\r\n    res[17] = 1;\r\n    if (m[0] == 2)\r\n        res[12] = 1;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 67,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "inferred_location": true,
+            "start_line": 54,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 67,
+            "file_path": "lib/mat.js",
+            "start_line": 67,
+            "text": "exports.toMat4 = toMat4;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 67,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "inferred_location": true,
+            "start_line": 54,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "54-67",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "54-67"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "54-67"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 25,
+    "cluster_ids": [
+      25
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 94,
+            "file_path": "lib/mat.js",
+            "start_line": 85,
+            "text": "function rotationX(dim, angle) {\r\n    let res = identity(dim);\r\n    let sina = Math.sin(angle);\r\n    let cosa = Math.cos(angle);\r\n    res[dim + 3] = cosa;\r\n    res[dim + 4] = sina;\r\n    res[2 * dim + 3] = -sina;\r\n    res[2 * dim + 4] = cosa;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 67,
+          "file_path": "lib/mat.js",
+          "start_line": 56,
+          "text": "function rotationX(dim, angle) {\r\n    if (dim < 3)\r\n        throw RangeError(\"The matrix dimension must be at least 3.\");\r\n    let res = identity(dim);\r\n    let sina = Math.sin(angle);\r\n    let cosa = Math.cos(angle);\r\n    res[dim + 3] = cosa;\r\n    res[dim + 4] = sina;\r\n    res[2 * dim + 3] = -sina;\r\n    res[2 * dim + 4] = cosa;\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 72,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 61,
+            "text": "export function rotationX(dim: number, angle: number): Matrix {\n    if (dim < 3)\n        throw RangeError(\"The matrix dimension must be at least 3.\");\n    let res: Matrix = identity(dim);\n    let sina: number = Math.sin(angle);\n    let cosa: number = Math.cos(angle);\n    res[dim + 3] = cosa;\n    res[dim + 4] = sina;\n    res[2 * dim + 3] = -sina;\n    res[2 * dim + 4] = cosa;\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "56-94",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "61-72"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "61-72"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 27,
+    "cluster_ids": [
+      27
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 151,
+            "file_path": "lib/mat.js",
+            "start_line": 142,
+            "text": "function lookAt(direction, up) {\r\n    let zaxis = Vec.norm(Vec.inv(direction));\r\n    let xaxis = Vec.norm(Vec.cross(up, zaxis));\r\n    let yaxis = Vec.cross(zaxis, xaxis);\r\n    return [4, 4,\r\n        xaxis[vec_1.x], yaxis[vec_1.x], zaxis[vec_1.x], 0,\r\n        xaxis[vec_1.y], yaxis[vec_1.y], zaxis[vec_1.y], 0,\r\n        xaxis[vec_1.z], yaxis[vec_1.z], zaxis[vec_1.z], 0,\r\n        0, 0, 0, 1];\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 126,
+          "file_path": "lib/mat.js",
+          "start_line": 117,
+          "text": "function lookAt(direction, up) {\r\n    let zaxis = vec_1.norm(vec_1.inv(direction));\r\n    let xaxis = vec_1.norm(vec_1.cross(up, zaxis));\r\n    let yaxis = vec_1.cross(zaxis, xaxis);\r\n    return [4, 4,\r\n        xaxis[vec_1.x], yaxis[vec_1.x], zaxis[vec_1.x], 0,\r\n        xaxis[vec_1.y], yaxis[vec_1.y], zaxis[vec_1.y], 0,\r\n        xaxis[vec_1.z], yaxis[vec_1.z], zaxis[vec_1.z], 0,\r\n        0, 0, 0, 1];\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 131,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 122,
+            "text": "export function lookAt(direction: Vector, up: Vector): Matrix {\n    let zaxis: Vector = norm(inv(direction));\n    let xaxis: Vector = norm(cross(up, zaxis));\n    let yaxis: Vector = cross(zaxis, xaxis);\n    return [4, 4,\n        xaxis[x], yaxis[x], zaxis[x], 0,\n        xaxis[y], yaxis[y], zaxis[y], 0,\n        xaxis[z], yaxis[z], zaxis[z], 0,\n        0, 0, 0, 1];\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "117-151",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "122-131"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "122-131"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 28,
+    "cluster_ids": [
+      28
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 162,
+            "file_path": "lib/mat.js",
+            "start_line": 153,
+            "text": "function add(mat, other, out = create(mat[0], mat[1])) {\r\n    let len = mat.length;\r\n    if (typeof other === \"number\")\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] + other;\r\n    else\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] + other[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 140,
+          "file_path": "lib/mat.js",
+          "start_line": 128,
+          "text": "function add(mat, other, out = create(mat[0], mat[1])) {\r\n    let len = mat.length;\r\n    if (typeof other === \"number\")\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] + other;\r\n    else {\r\n        if (mat[0] != other[0] || mat[1] != other[1])\r\n            throw RangeError(\"Matrices must have same dimensions.\");\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] + other[i];\r\n    }\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 145,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 133,
+            "text": "export function add(mat: Matrix, other: Matrix | number, out: Matrix = create(mat[0], mat[1])): Matrix {\n    let len: number = mat.length;\n    if (typeof other === \"number\")\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] + other;\n    else {\n        if (mat[0] != other[0] || mat[1] != other[1])\n            throw RangeError(\"Matrices must have same dimensions.\");\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] + other[i];\n    }\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 173,
+            "file_path": "lib/mat.js",
+            "start_line": 164,
+            "text": "function sub(mat, other, out = create(mat[0], mat[1])) {\r\n    let len = mat.length;\r\n    if (typeof other === \"number\")\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] - other;\r\n    else\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] - other[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 154,
+          "file_path": "lib/mat.js",
+          "start_line": 142,
+          "text": "function sub(mat, other, out = create(mat[0], mat[1])) {\r\n    let len = mat.length;\r\n    if (typeof other === \"number\")\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] - other;\r\n    else {\r\n        if (mat[0] != other[0] || mat[1] != other[1])\r\n            throw RangeError(\"Matrices must have same dimensions.\");\r\n        for (let i = 2; i < len; ++i)\r\n            out[i] = mat[i] - other[i];\r\n    }\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 159,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 147,
+            "text": "export function sub(mat: Matrix, other: Matrix | number, out: Matrix = create(mat[0], mat[1])): Matrix {\n    let len: number = mat.length;\n    if (typeof other === \"number\")\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] - other;\n    else {\n        if (mat[0] != other[0] || mat[1] != other[1])\n            throw RangeError(\"Matrices must have same dimensions.\");\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] - other[i];\n    }\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "128-173",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "133-159"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "133-159"
+    },
+    "matched_errors": [
+      {
+        "endLine": 149,
+        "filePath": "library/src/main/ets/lib/mat.ets",
+        "info": "Cannot redeclare exported variable 'add'.",
+        "startColumn": 17,
+        "startLine": 149
+      },
+      {
+        "endLine": 149,
+        "filePath": "library/src/main/ets/lib/mat.ets",
+        "info": "Duplicate function implementation.",
+        "startColumn": 17,
+        "startLine": 149
+      }
+    ],
+    "status": "遗留问题"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 29,
+    "cluster_ids": [
+      29
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 210,
+            "file_path": "lib/mat.js",
+            "start_line": 204,
+            "text": "function transform(mat, vec) {\r\n    let cols = mat[1];\r\n    if (vec.length < cols)\r\n        throw Error(`The vector should have ${cols} elements`);\r\n    let vecm = [cols, 1, ...vec];\r\n    return mul(mat, vecm).slice(2);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 192,
+          "file_path": "lib/mat.js",
+          "start_line": 185,
+          "text": "function transform(mat, vec) {\r\n    let cols = mat[1];\r\n    let len = vec.length;\r\n    if (len < cols)\r\n        vec = vec_1.redim(vec, cols);\r\n    let vecm = [cols, 1, ...vec];\r\n    return mul(mat, vecm).slice(2);\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 197,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 190,
+            "text": "export function transform(mat: Matrix, vec: Vector): Vector {\n    let cols: number = mat[1];\n    let len: number = vec.length;\n    if (len < cols)\n        vec = redim(vec, cols);\n    let vecm: Matrix = [cols, 1, ...vec];\n    return mul(mat, vecm).slice(2);\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "185-210",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "190-197"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "190-197"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 32,
+    "cluster_ids": [
+      32
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 2,
+            "file_path": "lib/quat.js",
+            "start_line": 2,
+            "text": "Object.defineProperty(exports, \"__esModule\", { value: true });"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 6,
+            "file_path": "lib/quat.js",
+            "start_line": 6,
+            "text": "/**\r\n * # Quaternions\r\n */\r\nconst FMath = require(\"./fmath\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 7,
+            "file_path": "lib/quat.js",
+            "start_line": 7,
+            "text": "const Vec = require(\"./vec\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 8,
+            "file_path": "lib/quat.js",
+            "start_line": 8,
+            "text": "const LERP_THRESHOLD = 0.95;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 11,
+            "file_path": "lib/quat.js",
+            "start_line": 9,
+            "text": "function ident() {\r\n    return [1, [0, 0, 0]];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 12,
+            "file_path": "lib/quat.js",
+            "start_line": 12,
+            "text": "exports.ident = ident;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 15,
+            "file_path": "lib/quat.js",
+            "start_line": 13,
+            "text": "function isReal(quat) {\r\n    return Vec.equals(quat[1], Vec.zero(3));\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 16,
+            "file_path": "lib/quat.js",
+            "start_line": 16,
+            "text": "exports.isReal = isReal;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 19,
+            "file_path": "lib/quat.js",
+            "start_line": 17,
+            "text": "function isPure(quat) {\r\n    return quat[0] == 0;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 20,
+            "file_path": "lib/quat.js",
+            "start_line": 20,
+            "text": "exports.isPure = isPure;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 23,
+            "file_path": "lib/quat.js",
+            "start_line": 21,
+            "text": "function lenSqr([s, vec]) {\r\n    return Vec.lenSqr(vec) + (s * s);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 24,
+            "file_path": "lib/quat.js",
+            "start_line": 24,
+            "text": "exports.lenSqr = lenSqr;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 27,
+            "file_path": "lib/quat.js",
+            "start_line": 25,
+            "text": "function len(quat) {\r\n    return Math.sqrt(lenSqr(quat));\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 28,
+            "file_path": "lib/quat.js",
+            "start_line": 28,
+            "text": "exports.len = len;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 31,
+            "file_path": "lib/quat.js",
+            "start_line": 29,
+            "text": "function isNorm(quat) {\r\n    return FMath.approxEquals(lenSqr(quat), 1);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 32,
+            "file_path": "lib/quat.js",
+            "start_line": 32,
+            "text": "exports.isNorm = isNorm;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 36,
+            "file_path": "lib/quat.js",
+            "start_line": 33,
+            "text": "function norm(quat) {\r\n    let l = len(quat);\r\n    return [quat[0] / l, Vec.div(quat[1], l)];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 37,
+            "file_path": "lib/quat.js",
+            "start_line": 37,
+            "text": "exports.norm = norm;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 45,
+            "file_path": "lib/quat.js",
+            "start_line": 38,
+            "text": "function fromAxisAngle(angle, axis) {\r\n    let lensqr = Vec.lenSqr(axis);\r\n    if (angle == 0 || lensqr == 0)\r\n        return ident();\r\n    let normaxis = lensqr == 1 ? axis : Vec.div(axis, Math.sqrt(lensqr));\r\n    let halfangle = angle / 2;\r\n    return [Math.cos(halfangle), Vec.mul(normaxis, Math.sin(halfangle))];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 46,
+            "file_path": "lib/quat.js",
+            "start_line": 46,
+            "text": "exports.fromAxisAngle = fromAxisAngle;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 63,
+            "file_path": "lib/quat.js",
+            "start_line": 47,
+            "text": "function toMatrix(quat) {\r\n    let [s, [x, y, z]] = isNorm(quat) ? quat : norm(quat);\r\n    let xx = x * x;\r\n    let xy = x * y;\r\n    let xz = x * z;\r\n    let xs = x * s;\r\n    let yy = y * y;\r\n    let yz = y * z;\r\n    let ys = y * s;\r\n    let zz = z * z;\r\n    let zs = z * s;\r\n    return [3, 3,\r\n        1 - 2 * (yy + zz), 2 * (xy + zs), 2 * (xz - ys),\r\n        2 * (xy - zs), 1 - 2 * (xx + zz), 2 * (yz + xs),\r\n        2 * (xz + ys), 2 * (yz - xs), 1 - 2 * (xx + yy)\r\n    ];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 64,
+            "file_path": "lib/quat.js",
+            "start_line": 64,
+            "text": "exports.toMatrix = toMatrix;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 73,
+            "file_path": "lib/quat.js",
+            "start_line": 65,
+            "text": "function inv(quat) {\r\n    let res = conj(quat);\r\n    let ls = lenSqr(quat);\r\n    if (FMath.approxEquals(ls, 1))\r\n        return res;\r\n    res[0] /= ls;\r\n    Vec.div(res[1], ls, res[1]);\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 74,
+            "file_path": "lib/quat.js",
+            "start_line": 74,
+            "text": "exports.inv = inv;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 77,
+            "file_path": "lib/quat.js",
+            "start_line": 75,
+            "text": "function conj([s, vec]) {\r\n    return [s, Vec.inv(vec)];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 78,
+            "file_path": "lib/quat.js",
+            "start_line": 78,
+            "text": "exports.conj = conj;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 88,
+            "file_path": "lib/quat.js",
+            "start_line": 79,
+            "text": "function mul([s1, [x1, y1, z1]], [s2, [x2, y2, z2]]) {\r\n    return [\r\n        s1 * s2 - x1 * x2 - y1 * y2 - z1 * z2,\r\n        [\r\n            s1 * x2 + s2 * x1 + y1 * z2 - y2 * z1,\r\n            s1 * y2 + s2 * y1 + z1 * x2 - z2 * x1,\r\n            s1 * z2 + s2 * z1 + x1 * y2 - x2 * y1\r\n        ]\r\n    ];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 89,
+            "file_path": "lib/quat.js",
+            "start_line": 89,
+            "text": "exports.mul = mul;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 93,
+            "file_path": "lib/quat.js",
+            "start_line": 90,
+            "text": "function rotate(quat, vec) {\r\n    let q = isNorm(quat) ? quat : norm(quat);\r\n    return mul(mul(q, [0, vec]), conj(q))[1];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 94,
+            "file_path": "lib/quat.js",
+            "start_line": 94,
+            "text": "exports.rotate = rotate;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 97,
+            "file_path": "lib/quat.js",
+            "start_line": 95,
+            "text": "function lerp([s1, v1], [s2, v2], interPos) {\r\n    return [FMath.mix(s1, s2, interPos), Vec.mix(v1, v2, interPos)];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 98,
+            "file_path": "lib/quat.js",
+            "start_line": 98,
+            "text": "exports.lerp = lerp;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 124,
+            "file_path": "lib/quat.js",
+            "start_line": 99,
+            "text": "function slerp(quat1, quat2, interPos) {\r\n    let q1 = isNorm(quat1) ? quat1 : norm(quat1);\r\n    let q2 = isNorm(quat2) ? quat2 : norm(quat2);\r\n    let v1 = [q1[0], ...q1[1]];\r\n    let v2 = [q2[0], ...q2[1]];\r\n    let dot = Vec.dot(v1, v2);\r\n    if (dot < 0) {\r\n        Vec.inv(v1, v1);\r\n        dot = -dot;\r\n    }\r\n    if (dot > LERP_THRESHOLD)\r\n        Vec.mix(v1, v2, interPos, v1);\r\n    else {\r\n        let theta0 = Math.acos(dot);\r\n        let theta = theta0 * interPos;\r\n        let sintheta0 = Math.sin(theta0);\r\n        let sintheta = Math.sin(theta);\r\n        let s1 = Math.sin(theta0 - theta) / sintheta0;\r\n        let s2 = sintheta / sintheta0;\r\n        Vec.mul(v1, s1, v1);\r\n        Vec.mul(v2, s2, v2);\r\n        Vec.add(v1, v2, v1);\r\n    }\r\n    let [s, x, y, z] = v1;\r\n    return [s, [x, y, z]];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 125,
+            "file_path": "lib/quat.js",
+            "start_line": 125,
+            "text": "exports.slerp = slerp;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 128,
+            "file_path": "lib/quat.js",
+            "start_line": 126,
+            "text": "function equals(quat, other) {\r\n    return quat[0] == other[0] && Vec.equals(quat[1], other[1]);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 129,
+            "file_path": "lib/quat.js",
+            "start_line": 129,
+            "text": "exports.equals = equals;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 133,
+            "file_path": "lib/quat.js",
+            "start_line": 130,
+            "text": "function approxEquals(quat, other, epsilon) {\r\n    return FMath.approxEquals(quat[0], other[0], epsilon) &&\r\n        Vec.approxEquals(quat[1], other[1], epsilon);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 134,
+            "file_path": "lib/quat.js",
+            "start_line": 134,
+            "text": "exports.approxEquals = approxEquals;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 137,
+            "file_path": "lib/quat.js",
+            "start_line": 135,
+            "text": "function toString(quat) {\r\n    return `[${quat[0]} ${Vec.toString(quat[1])}]`;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 138,
+            "file_path": "lib/quat.js",
+            "start_line": 138,
+            "text": "exports.toString = toString;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 138,
+            "file_path": "src/main/ets/lib/quat.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/quat.js",
+      "sourceLines": "2-138",
+      "targetFile": "src/main/ets/lib/quat.ets",
+      "targetLines": "2-138"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/quat.ets",
+      "lines": "2-138"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 33,
+    "cluster_ids": [
+      33
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 2,
+            "file_path": "lib/quot.js",
+            "start_line": 2,
+            "text": "Object.defineProperty(exports, \"__esModule\", { value: true });"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 6,
+            "file_path": "lib/quot.js",
+            "start_line": 6,
+            "text": "/**\r\n * # Quaternions\r\n */\r\nconst FMath = require(\"./fmath\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 7,
+            "file_path": "lib/quot.js",
+            "start_line": 7,
+            "text": "const Vec = require(\"./vec\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 8,
+            "file_path": "lib/quot.js",
+            "start_line": 8,
+            "text": "const LERP_THRESHOLD = 0.99;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 11,
+            "file_path": "lib/quot.js",
+            "start_line": 9,
+            "text": "function ident() {\r\n    return [[0, 0, 0], 1];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 12,
+            "file_path": "lib/quot.js",
+            "start_line": 12,
+            "text": "exports.ident = ident;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 15,
+            "file_path": "lib/quot.js",
+            "start_line": 13,
+            "text": "function lenSqr([vec, w]) {\r\n    return Vec.lenSqr(vec) + (w * w);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 16,
+            "file_path": "lib/quot.js",
+            "start_line": 16,
+            "text": "exports.lenSqr = lenSqr;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 19,
+            "file_path": "lib/quot.js",
+            "start_line": 17,
+            "text": "function len(quat) {\r\n    return Math.sqrt(lenSqr(quat));\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 20,
+            "file_path": "lib/quot.js",
+            "start_line": 20,
+            "text": "exports.len = len;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 23,
+            "file_path": "lib/quot.js",
+            "start_line": 21,
+            "text": "function isNorm(quat) {\r\n    return FMath.approxEquals(lenSqr(quat), 1, 0.001);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 24,
+            "file_path": "lib/quot.js",
+            "start_line": 24,
+            "text": "exports.isNorm = isNorm;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 28,
+            "file_path": "lib/quot.js",
+            "start_line": 25,
+            "text": "function norm(quat) {\r\n    let l = len(quat);\r\n    return [Vec.div(quat[0], l), quat[1] / l];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 29,
+            "file_path": "lib/quot.js",
+            "start_line": 29,
+            "text": "exports.norm = norm;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 37,
+            "file_path": "lib/quot.js",
+            "start_line": 30,
+            "text": "function fromAxisAngle(axis, angle) {\r\n    let lensqr = Vec.lenSqr(axis);\r\n    if (angle == 0 || lensqr == 0)\r\n        return ident();\r\n    let normaxis = lensqr == 1 ? axis : Vec.div(axis, Math.sqrt(lensqr));\r\n    let halfangle = angle / 2;\r\n    return [Vec.mul(normaxis, Math.sin(halfangle)), Math.cos(halfangle)];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 38,
+            "file_path": "lib/quot.js",
+            "start_line": 38,
+            "text": "exports.fromAxisAngle = fromAxisAngle;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 54,
+            "file_path": "lib/quot.js",
+            "start_line": 39,
+            "text": "function toMatrix([[x, y, z], w]) {\r\n    var xx = x * x;\r\n    var xy = x * y;\r\n    var xz = x * z;\r\n    var xw = x * w;\r\n    var yy = y * y;\r\n    var yz = y * z;\r\n    var yw = y * w;\r\n    var zz = z * z;\r\n    var zw = z * w;\r\n    return [3, 3,\r\n        1 - 2 * (yy + zz), 2 * (xy - zw), 2 * (xz + yw),\r\n        2 * (xy + zw), 1 - 2 * (xx + zz), 2 * (yz - xw),\r\n        2 * (xz - yw), 2 * (yz + xw), 1 - 2 * (xx + yy)\r\n    ];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 55,
+            "file_path": "lib/quot.js",
+            "start_line": 55,
+            "text": "exports.toMatrix = toMatrix;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 58,
+            "file_path": "lib/quot.js",
+            "start_line": 56,
+            "text": "function inv([vec, w]) {\r\n    return [vec, -w];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 59,
+            "file_path": "lib/quot.js",
+            "start_line": 59,
+            "text": "exports.inv = inv;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 62,
+            "file_path": "lib/quot.js",
+            "start_line": 60,
+            "text": "function conj([vec, w]) {\r\n    return [vec, w];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 63,
+            "file_path": "lib/quot.js",
+            "start_line": 63,
+            "text": "exports.conj = conj;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 70,
+            "file_path": "lib/quot.js",
+            "start_line": 64,
+            "text": "function mul([uv1, w1], [uv2, w2]) {\r\n    let vec = Vec.mul(uv1, w2);\r\n    Vec.add(vec, Vec.mul(uv2, w1), vec);\r\n    Vec.add(vec, Vec.cross(uv1, uv2), vec);\r\n    let w = w1 * w2 + Vec.dot(uv1, uv2);\r\n    return [vec, w];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 71,
+            "file_path": "lib/quot.js",
+            "start_line": 71,
+            "text": "exports.mul = mul;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 74,
+            "file_path": "lib/quot.js",
+            "start_line": 72,
+            "text": "function rotate(quat, vec) {\r\n    return mul(mul(quat, [vec, 0]), conj(quat))[0];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 75,
+            "file_path": "lib/quot.js",
+            "start_line": 75,
+            "text": "exports.rotate = rotate;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 78,
+            "file_path": "lib/quot.js",
+            "start_line": 76,
+            "text": "function lerp([uv1, w1], [uv2, w2], interPos) {\r\n    return norm([Vec.mix(uv1, uv2, interPos), FMath.mix(w1, w2, interPos)]);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 79,
+            "file_path": "lib/quot.js",
+            "start_line": 79,
+            "text": "exports.lerp = lerp;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 96,
+            "file_path": "lib/quot.js",
+            "start_line": 80,
+            "text": "function slerp([uv1, w1], [uv2, w2], interPos) {\r\n    let v1 = [...uv1, w1];\r\n    let v2 = [...uv2, w2];\r\n    let dot = Vec.dot(v1, v2);\r\n    if (dot > LERP_THRESHOLD)\r\n        Vec.mix(v1, v2, interPos, v1);\r\n    else {\r\n        let theta = Math.acos(dot) * interPos;\r\n        Vec.sub(v2, Vec.mul(v1, dot), v2);\r\n        Vec.norm(v2, v2);\r\n        Vec.mul(v1, Math.cos(theta), v1);\r\n        Vec.mul(v2, Math.sin(theta), v2);\r\n        Vec.add(v1, v2, v1);\r\n    }\r\n    let [x, y, z, w] = v1;\r\n    return [[x, y, z], w];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 97,
+            "file_path": "lib/quot.js",
+            "start_line": 97,
+            "text": "exports.slerp = slerp;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 100,
+            "file_path": "lib/quot.js",
+            "start_line": 98,
+            "text": "function equals(quat, other) {\r\n    return Vec.equals(quat[0], other[0]) && quat[1] == other[1];\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 101,
+            "file_path": "lib/quot.js",
+            "start_line": 101,
+            "text": "exports.equals = equals;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 104,
+            "file_path": "lib/quot.js",
+            "start_line": 102,
+            "text": "function toString(quat) {\r\n    return `[${Vec.toString(quat[0])} ${quat[1]}]`;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 105,
+            "file_path": "lib/quot.js",
+            "start_line": 105,
+            "text": "exports.toString = toString;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 105,
+            "file_path": "src/main/ets/lib/quot.ets",
+            "inferred_location": true,
+            "start_line": 2,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/quot.js",
+      "sourceLines": "2-105",
+      "targetFile": "src/main/ets/lib/quot.ets",
+      "targetLines": "2-105"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/quot.ets",
+      "lines": "2-105"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 34,
+    "cluster_ids": [
+      34
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 6,
+            "file_path": "lib/fmath.js",
+            "start_line": 3,
+            "text": "/**\r\n * Constants for factors of π.\r\n */\r\nexports.twoPI = Math.PI * 2;"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 3,
+          "file_path": "lib/fmath.js",
+          "start_line": 3,
+          "text": "exports.twoPI = Math.PI * 2;"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 1,
+            "text": "export const twoPI: number = Math.PI * 2;"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 28,
+            "file_path": "lib/fmath.js",
+            "start_line": 11,
+            "text": "/**\r\n * Compares two numbers for approximate equality. At most the arguments\r\n * can differ by the value specified by the epsilon parameter.\r\n * @param x First value.\r\n * @param y Second value.\r\n * @param epsilon Maximum allowed difference.\r\n */\r\nfunction approxEquals(x, y, epsilon = 0.000001) {\r\n    if (x === y)\r\n        return true;\r\n    let absX = Math.abs(x);\r\n    let absY = Math.abs(y);\r\n    let diff = Math.abs(x - y);\r\n    if (x * y == 0)\r\n        return diff < (epsilon * epsilon);\r\n    else\r\n        return diff / (absX + absY) < epsilon;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 18,
+          "file_path": "lib/fmath.js",
+          "start_line": 8,
+          "text": "function approxEquals(x, y, epsilon = 0.000001) {\r\n    if (x === y)\r\n        return true;\r\n    let absX = Math.abs(x);\r\n    let absY = Math.abs(y);\r\n    let diff = Math.abs(x - y);\r\n    if (x * y == 0)\r\n        return diff < (epsilon * epsilon);\r\n    else\r\n        return diff / (absX + absY) < epsilon;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 17,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 7,
+            "text": "export function approxEquals(x: number, y: number, epsilon: number = 0.000001): boolean {\n    if (x === y)\n        return true;\n    let absX: number = Math.abs(x);\n    let absY: number = Math.abs(y);\n    let diff: number = Math.abs(x - y);\n    if (x * y == 0)\n        return diff < (epsilon * epsilon);\n    else\n        return diff / (absX + absY) < epsilon;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/fmath.js",
+      "sourceLines": "3-28",
+      "targetFile": "src/main/ets/lib/fmath.ets",
+      "targetLines": "1-17"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/fmath.ets",
+      "lines": "1-17"
+    },
+    "matched_errors": [
+      {
+        "endLine": 10,
+        "filePath": "library/src/main/ets/lib/fmath.ets",
+        "info": "\"import\" statements after other statements are not allowed (arkts-no-misplaced-imports)",
+        "startColumn": 1,
+        "startLine": 10
+      },
+      {
+        "endLine": 10,
+        "filePath": "library/src/main/ets/lib/fmath.ets",
+        "info": "Duplicate identifier 'FMath'.",
+        "startColumn": 13,
+        "startLine": 10
+      }
+    ],
+    "status": "遗留问题"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 35,
+    "cluster_ids": [
+      35
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 28,
+            "file_path": "lib/fmath.js",
+            "start_line": 11,
+            "text": "/**\r\n * Compares two numbers for approximate equality. At most the arguments\r\n * can differ by the value specified by the epsilon parameter.\r\n * @param x First value.\r\n * @param y Second value.\r\n * @param epsilon Maximum allowed difference.\r\n */\r\nfunction approxEquals(x, y, epsilon = 0.000001) {\r\n    if (x === y)\r\n        return true;\r\n    let absX = Math.abs(x);\r\n    let absY = Math.abs(y);\r\n    let diff = Math.abs(x - y);\r\n    if (x * y == 0)\r\n        return diff < (epsilon * epsilon);\r\n    else\r\n        return diff / (absX + absY) < epsilon;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 18,
+          "file_path": "lib/fmath.js",
+          "start_line": 8,
+          "text": "function approxEquals(x, y, epsilon = 0.000001) {\r\n    if (x === y)\r\n        return true;\r\n    let absX = Math.abs(x);\r\n    let absY = Math.abs(y);\r\n    let diff = Math.abs(x - y);\r\n    if (x * y == 0)\r\n        return diff < (epsilon * epsilon);\r\n    else\r\n        return diff / (absX + absY) < epsilon;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 17,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 7,
+            "text": "export function approxEquals(x: number, y: number, epsilon: number = 0.000001): boolean {\n    if (x === y)\n        return true;\n    let absX: number = Math.abs(x);\n    let absY: number = Math.abs(y);\n    let diff: number = Math.abs(x - y);\n    if (x * y == 0)\n        return diff < (epsilon * epsilon);\n    else\n        return diff / (absX + absY) < epsilon;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 36,
+            "file_path": "lib/fmath.js",
+            "start_line": 30,
+            "text": "/**\r\n * Return the decimal part of a number. The integer part will be zero.\r\n * @param x The input number.\r\n */\r\nfunction fract(x) {\r\n    return x - Math.floor(x);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 22,
+          "file_path": "lib/fmath.js",
+          "start_line": 20,
+          "text": "function fract(x) {\r\n    return x - Math.floor(x);\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 21,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 19,
+            "text": "export function fract(x: number): number {\n    return x - Math.floor(x);\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 49,
+            "file_path": "lib/fmath.js",
+            "start_line": 38,
+            "text": "/**\r\n * Clamp a number into a specified range. Values outside the range\r\n * will be clamped to lower and upper bounds respectively.\r\n * @param x The input number.\r\n * @param min Minimum value of the output range.\r\n * @param max Maximum value of the output range.\r\n */\r\nfunction clamp(x, min, max) {\r\n    return x < min ? min :\r\n        x > max ? max :\r\n            x;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 28,
+          "file_path": "lib/fmath.js",
+          "start_line": 24,
+          "text": "function clamp(x, min, max) {\r\n    return x < min ? min :\r\n        x > max ? max :\r\n            x;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 27,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 23,
+            "text": "export function clamp(x: number, min: number, max: number): number {\n    return x < min ? min :\n        x > max ? max :\n            x;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 40,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 37,
+            "text": "export function smoothStep(edgeLower: number, edgeUpper: number, value: number): number {\n    let t: number = clamp((value - edgeLower) / (edgeUpper - edgeLower), 0, 1);\n    return t * t * (3 - (2 * t));\n}"
+          },
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 61,
+            "file_path": "lib/fmath.js",
+            "start_line": 51,
+            "text": "/**\r\n * Calculate a linear interpolation between two values corresponding\r\n * to input positions 0 and 1. By specifying a interpolated position\r\n * < 0 or > 1 you can extrapolate backwards and forwards.\r\n * @param start The value of the linear function at position 0.\r\n * @param end The value of the linear function at position 1.\r\n * @param interPos The interpolated position.\r\n */\r\nfunction mix(start, end, interPos) {\r\n    return start + (interPos * (end - start));\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 32,
+          "file_path": "lib/fmath.js",
+          "start_line": 30,
+          "text": "function mix(start, end, interPos) {\r\n    return start + (interPos * (end - start));\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 31,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 29,
+            "text": "export function mix(start: number, end: number, interPos: number): number {\n    return start + (interPos * (end - start));\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 71,
+            "file_path": "lib/fmath.js",
+            "start_line": 63,
+            "text": "/**\r\n * Return zero if the input value is smaller than the edge value, and\r\n * one if it is greater.\r\n * @param value The input value.\r\n * @param edge The edge value after which the result flips from 0 to 1.\r\n */\r\nfunction step(value, edge) {\r\n    return value < edge ? 0 : 1;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 36,
+          "file_path": "lib/fmath.js",
+          "start_line": 34,
+          "text": "function step(edge, value) {\r\n    return value < edge ? 0 : 1;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 35,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 33,
+            "text": "export function step(edge: number, value: number): number {\n    return value < edge ? 0 : 1;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 90,
+            "file_path": "lib/fmath.js",
+            "start_line": 73,
+            "text": "/**\r\n * Return a value in range [0, 1] depending on where the input value is\r\n * compared to two edge values. If the input value is smaller than the\r\n * lower edge, the result is zero. Conversely, if the input value is\r\n * greater than the upper edge, the result is one. If the input value is\r\n * between the lower and the upper edge, the result is a quadratic (smooth)\r\n * interpolation in range of (0, 1). If lower and upper edge are the same,\r\n * the result is binary like in the {@link step} function,\r\n * @param value The input value.\r\n * @param edgeLower The lower edge value below which the result is zero.\r\n * @param edgeUpper The upper edge value after which the result is one.\r\n */\r\nfunction smoothStep(value, edgeLower, edgeUpper) {\r\n    if (edgeLower == edgeUpper)\r\n        return step(value, edgeLower);\r\n    let t = clamp((value - edgeLower) / (edgeUpper - edgeLower), 0, 1);\r\n    return t * t * (3 - (2 * t));\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 41,
+          "file_path": "lib/fmath.js",
+          "start_line": 38,
+          "text": "function smoothStep(edgeLower, edgeUpper, value) {\r\n    let t = clamp((value - edgeLower) / (edgeUpper - edgeLower), 0, 1);\r\n    return t * t * (3 - (2 * t));\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 40,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 37,
+            "text": "export function smoothStep(edgeLower: number, edgeUpper: number, value: number): number {\n    let t: number = clamp((value - edgeLower) / (edgeUpper - edgeLower), 0, 1);\n    return t * t * (3 - (2 * t));\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/fmath.js",
+      "sourceLines": "8-90",
+      "targetFile": "src/main/ets/lib/fmath.ets",
+      "targetLines": "7-40"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/fmath.ets",
+      "lines": "7-40"
+    },
+    "matched_errors": [
+      {
+        "endLine": 10,
+        "filePath": "library/src/main/ets/lib/fmath.ets",
+        "info": "\"import\" statements after other statements are not allowed (arkts-no-misplaced-imports)",
+        "startColumn": 1,
+        "startLine": 10
+      },
+      {
+        "endLine": 10,
+        "filePath": "library/src/main/ets/lib/fmath.ets",
+        "info": "Duplicate identifier 'FMath'.",
+        "startColumn": 13,
+        "startLine": 10
+      }
+    ],
+    "status": "遗留问题"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 36,
+    "cluster_ids": [
+      36
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 4,
+            "file_path": "lib/mat.js",
+            "start_line": 4,
+            "text": "const Vec = require(\"./vec\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 7,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "inferred_location": true,
+            "start_line": 4,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 7,
+            "file_path": "lib/mat.js",
+            "start_line": 7,
+            "text": "const invalidElementCount = \"There must be (rows × cols) elements in the array\";"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [
+          {
+            "end_line": 7,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "inferred_location": true,
+            "start_line": 4,
+            "text": ""
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "4-7",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "4-7"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "4-7"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 37,
+    "cluster_ids": [
+      37
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 27,
+            "file_path": "lib/mat.js",
+            "start_line": 23,
+            "text": "function fromArray(rows, cols, array) {\r\n    if (array.length != rows * cols)\r\n        throw RangeError(invalidElementCount);\r\n    return [rows, cols, ...array];\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 23,
+          "file_path": "lib/mat.js",
+          "start_line": 21,
+          "text": "function fromArray(rows, cols, array) {\r\n    return [rows, cols, ...array];\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 28,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 26,
+            "text": "export function fromArray(rows: number, cols: number, array: number[]): Matrix {\n    return [rows, cols, ...array];\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 38,
+            "file_path": "lib/mat.js",
+            "start_line": 29,
+            "text": "function redim(m, rows, cols, pad = 0) {\r\n    let res = new Array(rows * cols + 2);\r\n    res[0] = rows;\r\n    res[1] = cols;\r\n    let r = m[0];\r\n    for (let i = 0; i < cols; ++i)\r\n        for (let j = 0; j < rows; ++j)\r\n            res[i * rows + j + 2] = [i * r + j + 2] || pad;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 39,
+            "file_path": "lib/mat.js",
+            "start_line": 39,
+            "text": "exports.redim = redim;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "21-39",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "26-28"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "26-28"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 38,
+    "cluster_ids": [
+      38
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 94,
+            "file_path": "lib/mat.js",
+            "start_line": 85,
+            "text": "function rotationX(dim, angle) {\r\n    let res = identity(dim);\r\n    let sina = Math.sin(angle);\r\n    let cosa = Math.cos(angle);\r\n    res[dim + 3] = cosa;\r\n    res[dim + 4] = sina;\r\n    res[2 * dim + 3] = -sina;\r\n    res[2 * dim + 4] = cosa;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 67,
+          "file_path": "lib/mat.js",
+          "start_line": 56,
+          "text": "function rotationX(dim, angle) {\r\n    if (dim < 3)\r\n        throw RangeError(\"The matrix dimension must be at least 3.\");\r\n    let res = identity(dim);\r\n    let sina = Math.sin(angle);\r\n    let cosa = Math.cos(angle);\r\n    res[dim + 3] = cosa;\r\n    res[dim + 4] = sina;\r\n    res[2 * dim + 3] = -sina;\r\n    res[2 * dim + 4] = cosa;\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 72,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 61,
+            "text": "export function rotationX(dim: number, angle: number): Matrix {\n    if (dim < 3)\n        throw RangeError(\"The matrix dimension must be at least 3.\");\n    let res: Matrix = identity(dim);\n    let sina: number = Math.sin(angle);\n    let cosa: number = Math.cos(angle);\n    res[dim + 3] = cosa;\n    res[dim + 4] = sina;\n    res[2 * dim + 3] = -sina;\n    res[2 * dim + 4] = cosa;\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 105,
+            "file_path": "lib/mat.js",
+            "start_line": 96,
+            "text": "function rotationY(dim, angle) {\r\n    let res = identity(dim);\r\n    let sina = Math.sin(angle);\r\n    let cosa = Math.cos(angle);\r\n    res[2] = cosa;\r\n    res[4] = -sina;\r\n    res[2 * dim + 2] = sina;\r\n    res[2 * dim + 4] = cosa;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 80,
+          "file_path": "lib/mat.js",
+          "start_line": 69,
+          "text": "function rotationY(dim, angle) {\r\n    if (dim < 3)\r\n        throw RangeError(\"The matrix dimension must be at least 3.\");\r\n    let res = identity(dim);\r\n    let sina = Math.sin(angle);\r\n    let cosa = Math.cos(angle);\r\n    res[2] = cosa;\r\n    res[4] = -sina;\r\n    res[2 * dim + 2] = sina;\r\n    res[2 * dim + 4] = cosa;\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 85,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 74,
+            "text": "export function rotationY(dim: number, angle: number): Matrix {\n    if (dim < 3)\n        throw RangeError(\"The matrix dimension must be at least 3.\");\n    let res: Matrix = identity(dim);\n    let sina: number = Math.sin(angle);\n    let cosa: number = Math.cos(angle);\n    res[2] = cosa;\n    res[4] = -sina;\n    res[2 * dim + 2] = sina;\n    res[2 * dim + 4] = cosa;\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "56-105",
+      "targetFile": "src/main/ets/lib/mat.ets",
+      "targetLines": "61-85"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets",
+      "lines": "61-85"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 39,
+    "cluster_ids": [
+      39
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 335,
+            "file_path": "lib/mat.js",
+            "start_line": 327,
+            "text": "function equals(mat, other) {\r\n    if (mat[0] != other[0] || mat[1] != other[1])\r\n        return false;\r\n    let len = mat.length;\r\n    for (let i = 0; i < len; ++i)\r\n        if (mat[i] != other[i])\r\n            return false;\r\n    return true;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 315,
+          "file_path": "lib/mat.js",
+          "start_line": 309,
+          "text": "function equals(mat, other) {\r\n    let len = mat.length;\r\n    for (let i = 0; i < len; ++i)\r\n        if (mat[i] != other[i])\r\n            return false;\r\n    return true;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 324,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 318,
+            "text": "export function equals(mat: Matrix, other: Matrix): boolean {\n    let len: number = mat.length;\n    for (let i = 0; i < len; ++i)\n        if (mat[i] != other[i])\n            return false;\n    return true;\n}"
+          },
+          {
+            "end_line": 196,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 183,
+            "text": "/**\n * Checks if the first vector is same as the second one.\n * @param v1 First vector\n * @param v2 Second vector\n */\nexport function equals(v1: Vector, v2: Vector): boolean {\n    let len: number = v1.length;\n    if (len != v2.length)\n        return false;\n    for (let i = 0; i < len; ++i)\n        if (v1[i] != v2[i])\n            return false;\n    return true;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/mat.js",
+      "sourceLines": "309-335",
+      "targetFile": "src/main/ets/lib/mat.ets, src/main/ets/lib/vec.ets",
+      "targetLines": "183-324"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/mat.ets, src/main/ets/lib/vec.ets",
+      "lines": "183-324"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 40,
+    "cluster_ids": [
+      40
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 42,
+            "file_path": "lib/vec.js",
+            "start_line": 29,
+            "text": "/**\r\n * Return a copy of the input vector in different dimension. Resizes the\r\n * vector and fills possible new components with the specified padding value.\r\n * @param vec The input vector.\r\n * @param dim The dimension of the new vector.\r\n * @param pad The value used to pad the new vector, if dimension is greater\r\n * than originally.\r\n */\r\nfunction redim(vec, dim, pad = 1) {\r\n    let res = new Array(dim);\r\n    for (let i = 0; i < dim; ++i)\r\n        res[i] = vec[i] || pad;\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 41,
+          "file_path": "lib/vec.js",
+          "start_line": 28,
+          "text": "/**\r\n * Return a copy of the input vector but with different dimension.\r\n * @param vec The input vector.\r\n * @param dim The dimension of the new vector.\r\n * @param pad The value used to pad the new vector, if dimension is greater\r\n * than originally.\r\n */\r\nfunction redim(vec, dim, pad = 1) {\r\n    let len = vec.length;\r\n    let res = new Array(dim);\r\n    for (let i = 0; i < dim; ++i)\r\n        res[i] = i < len ? vec[i] : pad;\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 46,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 33,
+            "text": "/**\n * Return a copy of the input vector but with different dimension.\n * @param vec The input vector.\n * @param dim The dimension of the new vector.\n * @param pad The value used to pad the new vector, if dimension is greater\n * than originally.\n */\nexport function redim(vec: Vector, dim: number, pad: number = 1): Vector {\n    let len: number = vec.length;\n    let res: Vector = new Array(dim);\n    for (let i = 0; i < dim; ++i)\n        res[i] = i < len ? vec[i] : pad;\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 1,
+            "text": "import { Vector, x, y, z, norm, inv, cross, redim } from \"./vec\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 49,
+            "file_path": "lib/vec.js",
+            "start_line": 44,
+            "text": "/**\r\n * Returns the vector's dimension, i.e. its number of components.\r\n */\r\nfunction dimension(vec) {\r\n    return vec.length;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 48,
+          "file_path": "lib/vec.js",
+          "start_line": 43,
+          "text": "/**\r\n * Returns the vector dimension, i.e. number of components.\r\n */\r\nfunction dimension(v) {\r\n    return v.length;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 53,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 48,
+            "text": "/**\n * Returns the vector dimension, i.e. number of components.\n */\nexport function dimension(v: Vector): number {\n    return v.length;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 65,
+            "file_path": "lib/vec.js",
+            "start_line": 51,
+            "text": "/**\r\n * Return one or more components of the vector in arbitrary order. The components\r\n * returned depend on the dimensions specified in the coords argument. Note that\r\n * the same component can occur multiple times in coords. So, it is valid to call\r\n * the function like this:\r\n *\r\n * swizzle ([x, x, y])\r\n */\r\nfunction swizzle(vec, ...coords) {\r\n    let len = coords.length;\r\n    let res = new Array(len);\r\n    for (let i = 0; i < len; ++i)\r\n        res[i] = vec[coords[i]];\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 64,
+          "file_path": "lib/vec.js",
+          "start_line": 50,
+          "text": "/**\r\n * Return one or more components of the vector in arbitrary order. The components\r\n * returned depend on the dimensions specified in the coords argument. Note that\r\n * the same component can occur multiple times in coords. So, it is valid to call\r\n * the function like this:\r\n *\r\n * swizzle ([x, x, y])\r\n */\r\nfunction swizzle(v, ...coords) {\r\n    let len = coords.length;\r\n    let res = new Array(len);\r\n    for (let i = 0; i < len; ++i)\r\n        res[i] = v[coords[i]];\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 69,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 55,
+            "text": "/**\n * Return one or more components of the vector in arbitrary order. The components\n * returned depend on the dimensions specified in the coords argument. Note that\n * the same component can occur multiple times in coords. So, it is valid to call\n * the function like this:\n *\n * swizzle ([x, x, y])\n */\nexport function swizzle(v: Vector, ...coords: number[]): Vector {\n    let len: number = coords.length;\n    let res: Vector = new Array(len);\n    for (let i = 0; i < len; ++i)\n        res[i] = v[coords[i]];\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/vec.js",
+      "sourceLines": "28-65",
+      "targetFile": "src/main/ets/lib/vec.ets",
+      "targetLines": "33-69"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/vec.ets",
+      "lines": "33-69"
+    },
+    "matched_errors": [],
+    "status": "修复完成"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 41,
+    "cluster_ids": [
+      41
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 65,
+            "file_path": "lib/vec.js",
+            "start_line": 51,
+            "text": "/**\r\n * Return one or more components of the vector in arbitrary order. The components\r\n * returned depend on the dimensions specified in the coords argument. Note that\r\n * the same component can occur multiple times in coords. So, it is valid to call\r\n * the function like this:\r\n *\r\n * swizzle ([x, x, y])\r\n */\r\nfunction swizzle(vec, ...coords) {\r\n    let len = coords.length;\r\n    let res = new Array(len);\r\n    for (let i = 0; i < len; ++i)\r\n        res[i] = vec[coords[i]];\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 64,
+          "file_path": "lib/vec.js",
+          "start_line": 50,
+          "text": "/**\r\n * Return one or more components of the vector in arbitrary order. The components\r\n * returned depend on the dimensions specified in the coords argument. Note that\r\n * the same component can occur multiple times in coords. So, it is valid to call\r\n * the function like this:\r\n *\r\n * swizzle ([x, x, y])\r\n */\r\nfunction swizzle(v, ...coords) {\r\n    let len = coords.length;\r\n    let res = new Array(len);\r\n    for (let i = 0; i < len; ++i)\r\n        res[i] = v[coords[i]];\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 69,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 55,
+            "text": "/**\n * Return one or more components of the vector in arbitrary order. The components\n * returned depend on the dimensions specified in the coords argument. Note that\n * the same component can occur multiple times in coords. So, it is valid to call\n * the function like this:\n *\n * swizzle ([x, x, y])\n */\nexport function swizzle(v: Vector, ...coords: number[]): Vector {\n    let len: number = coords.length;\n    let res: Vector = new Array(len);\n    for (let i = 0; i < len; ++i)\n        res[i] = v[coords[i]];\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 78,
+            "file_path": "lib/vec.js",
+            "start_line": 67,
+            "text": "/**\r\n * Return the lenght of a vector squared. This is faster to calculate than the\r\n * actual length since taking the square root is omitted. The value is useful\r\n * for comparing vectors' magnitudes.\r\n */\r\nfunction lenSqr(vec) {\r\n    let res = 0;\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        res += vec[i] * vec[i];\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 76,
+          "file_path": "lib/vec.js",
+          "start_line": 66,
+          "text": "/**\r\n * The lenght of the vector squared. Faster to calculate than the actual length,\r\n * and useful for comparing vector magnitudes.\r\n */\r\nfunction lenSqr(v) {\r\n    let res = 0;\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        res += v[i] * v[i];\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 81,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 71,
+            "text": "/**\n * The lenght of the vector squared. Faster to calculate than the actual length,\n * and useful for comparing vector magnitudes.\n */\nexport function lenSqr(v: Vector): number {\n    let res: number = 0;\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        res += v[i] * v[i];\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 88,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 83,
+            "text": "/**\n * Length of the vector.\n */\nexport function len(v: Vector): number {\n    return Math.sqrt(lenSqr(v));\n}"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 85,
+            "file_path": "lib/vec.js",
+            "start_line": 80,
+            "text": "/**\r\n * Return the length of a vector.\r\n */\r\nfunction len(vec) {\r\n    return Math.sqrt(lenSqr(vec));\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 83,
+          "file_path": "lib/vec.js",
+          "start_line": 78,
+          "text": "/**\r\n * Length of the vector.\r\n */\r\nfunction len(v) {\r\n    return Math.sqrt(lenSqr(v));\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 88,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 83,
+            "text": "/**\n * Length of the vector.\n */\nexport function len(v: Vector): number {\n    return Math.sqrt(lenSqr(v));\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 46,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 33,
+            "text": "/**\n * Return a copy of the input vector but with different dimension.\n * @param vec The input vector.\n * @param dim The dimension of the new vector.\n * @param pad The value used to pad the new vector, if dimension is greater\n * than originally.\n */\nexport function redim(vec: Vector, dim: number, pad: number = 1): Vector {\n    let len: number = vec.length;\n    let res: Vector = new Array(dim);\n    for (let i = 0; i < dim; ++i)\n        res[i] = i < len ? vec[i] : pad;\n    return res;\n}"
+          },
+          {
+            "end_line": 69,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 55,
+            "text": "/**\n * Return one or more components of the vector in arbitrary order. The components\n * returned depend on the dimensions specified in the coords argument. Note that\n * the same component can occur multiple times in coords. So, it is valid to call\n * the function like this:\n *\n * swizzle ([x, x, y])\n */\nexport function swizzle(v: Vector, ...coords: number[]): Vector {\n    let len: number = coords.length;\n    let res: Vector = new Array(len);\n    for (let i = 0; i < len; ++i)\n        res[i] = v[coords[i]];\n    return res;\n}"
+          },
+          {
+            "end_line": 81,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 71,
+            "text": "/**\n * The lenght of the vector squared. Faster to calculate than the actual length,\n * and useful for comparing vector magnitudes.\n */\nexport function lenSqr(v: Vector): number {\n    let res: number = 0;\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        res += v[i] * v[i];\n    return res;\n}"
+          },
+          {
+            "end_line": 100,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 90,
+            "text": "/**\n * Invert a vector.\n * @param v Vector to be inverted.\n * @param out Result vector.\n */\nexport function inv(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = -v[i];\n    return out;\n}"
+          },
+          {
+            "end_line": 117,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 102,
+            "text": "/**\n * Add the second vector to the first one componentwise.\n * @param v Input vector.\n * @param other Vector or number to be added.\n * @param out Result vector.\n */\nexport function add(v: Vector, other: Vector | number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    if (typeof other === 'number')\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] + other;\n    else\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] + other[i];\n    return out;\n}"
+          },
+          {
+            "end_line": 134,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 119,
+            "text": "/**\n * Subtract the second vector from the first one componentwise.\n * @param v Input vector.\n * @param other Vector or number to be subtracted.\n * @param out Result vector.\n */\nexport function sub(v: Vector, other: Vector | number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    if (typeof other === 'number')\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] - other;\n    else\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] - other[i];\n    return out;\n}"
+          },
+          {
+            "end_line": 151,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 136,
+            "text": "/**\n * Multiply the first vector with the second one componentwise.\n * @param v Input vector.\n * @param other Multiplier vector or number.\n * @param out Result vector.\n */\nexport function mul(v: Vector, other: Vector | number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    if (typeof other === 'number')\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] * other;\n    else\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] * other[i];\n    return out;\n}"
+          },
+          {
+            "end_line": 168,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 153,
+            "text": "/**\n * Divide the first vector by the second one componentwise.\n * @param v Input vector.\n * @param other Divider vector or number.\n * @param out Result vector.\n */\nexport function div(v: Vector, other: Vector | number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    if (typeof other === 'number')\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] / other;\n    else\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] / other[i];\n    return out;\n}"
+          },
+          {
+            "end_line": 181,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 170,
+            "text": "/**\n * Normalize a vector.\n */\nexport function norm(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let l: number = len(v);\n    if (l == 0)\n        throw RangeError(\"Cannot normalize zero vector\");\n    let vlen: number = v.length;\n    for (let i = 0; i < vlen; ++i)\n        out[i] = v[i] / l;\n    return out;\n}"
+          },
+          {
+            "end_line": 196,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 183,
+            "text": "/**\n * Checks if the first vector is same as the second one.\n * @param v1 First vector\n * @param v2 Second vector\n */\nexport function equals(v1: Vector, v2: Vector): boolean {\n    let len: number = v1.length;\n    if (len != v2.length)\n        return false;\n    for (let i = 0; i < len; ++i)\n        if (v1[i] != v2[i])\n            return false;\n    return true;\n}"
+          },
+          {
+            "end_line": 212,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 198,
+            "text": "/**\n * Checks if the first vector is approximately same as the second one.\n * @param v1 First vector\n * @param v2 Second vector\n * @param epsilon The maximum allowed difference of any component.\n */\nexport function approxEquals(v1: Vector, v2: Vector, epsilon?: number): boolean {\n    let len: number = v1.length;\n    if (len != v2.length)\n        return false;\n    for (let i = 0; i < len; ++i)\n        if (!FMath.approxEquals(v1[i], v2[i], epsilon))\n            return false;\n    return true;\n}"
+          },
+          {
+            "end_line": 225,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 214,
+            "text": "/**\n * Return the dot product of two vectors.\n * @param v Input vector.\n * @param other Other vector of the dot product.\n */\nexport function dot(v: Vector, other: Vector): number {\n    let res: number = 0;\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        res += v[i] * other[i];\n    return res;\n}"
+          },
+          {
+            "end_line": 252,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 242,
+            "text": "/**\n * Replace components of the vector with their absolute values.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function abs(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.abs(v[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 264,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 254,
+            "text": "/**\n * Run the components of the vector through Math.floor function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function floor(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.floor(v[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 276,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 266,
+            "text": "/**\n * Run the components of the vector through Math.ceil function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function ceil(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.ceil(v[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 288,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 278,
+            "text": "/**\n * Run the components of the vector through Math.round function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function round(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.round(v[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 300,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 290,
+            "text": "/**\n * Run the components of the vector through FMath.fract function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function fract(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.fract(v[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 313,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 302,
+            "text": "/**\n * Calculate the minimum of two vectors componentwise.\n * @param v The input vector.\n * @param other The vector to compare with.\n * @param out Result vector.\n */\nexport function min(v: Vector, other: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.min(v[i], other[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 326,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 315,
+            "text": "/**\n * Calculate the maximum of two vectors componentwise.\n * @param v The input vector.\n * @param other The vector to compare with.\n * @param out Result vector.\n */\nexport function max(v: Vector, other: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.max(v[i], other[i]);\n    return out;\n}"
+          },
+          {
+            "end_line": 340,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 328,
+            "text": "/**\n * Clamp the components of a vector to a given range.\n * @param v The input vector.\n * @param min Minimum component value.\n * @param max Maximum component value.\n * @param out Result vector.\n */\nexport function clamp(v: Vector, min: number, max: number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.clamp(v[i], min, max);\n    return out;\n}"
+          },
+          {
+            "end_line": 354,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 342,
+            "text": "/**\n * Calculate the interpolated vector in a given position [0, 1].\n * @param v The input vector.\n * @param other The vector to be interpolated to.\n * @param interPos The position between 0 and 1, zero representing v and one other.\n * @param out Result vector.\n */\nexport function mix(v: Vector, other: Vector, interPos: number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.mix(v[i], other[i], interPos);\n    return out;\n}"
+          },
+          {
+            "end_line": 368,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 356,
+            "text": "/**\n * Return a vector of zeros and ones depending if the input vector components are\n * greater or less than the edge value.\n * @param v The input vector.\n * @param edge The edge to which the components are compared.\n * @param out Result vector.\n */\nexport function step(v: Vector, edge: number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.step(v[i], edge);\n    return out;\n}"
+          },
+          {
+            "end_line": 386,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 370,
+            "text": "/**\n * Return a vector with components in range [0, 1] depending on how close the\n * input vector values are to the lower and upper edge value. If a component is\n * less that lower edge it gets value 0. Conversely, if it is greater than the\n * upper edge, it gets value 1. If a component is between lower and upper edge,\n * its value is smoothly interpolated between zero and one.\n * @param v The input vector.\n * @param edgeLower The lower edge to which the components are compared.\n * @param edgeUpper The upper edge to which the components are compared.\n * @param out Result vector.\n */\nexport function smoothStep(v: Vector, edgeLower: number, edgeUpper: number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.smoothStep(v[i], edgeLower, edgeUpper);\n    return out;\n}"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 97,
+            "file_path": "lib/vec.js",
+            "start_line": 87,
+            "text": "/**\r\n * Invert a vector, i.e. flip the signs of all its components.\r\n * @param vec Vector to be inverted.\r\n * @param out Result vector.\r\n */\r\nfunction inv(vec, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = -vec[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 95,
+          "file_path": "lib/vec.js",
+          "start_line": 85,
+          "text": "/**\r\n * Invert a vector.\r\n * @param v Vector to be inverted.\r\n * @param out Result vector.\r\n */\r\nfunction inv(v, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = -v[i];\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 100,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 90,
+            "text": "/**\n * Invert a vector.\n * @param v Vector to be inverted.\n * @param out Result vector.\n */\nexport function inv(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = -v[i];\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 1,
+            "text": "import { Vector, x, y, z, norm, inv, cross, redim } from \"./vec\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 131,
+            "file_path": "lib/vec.js",
+            "start_line": 116,
+            "text": "/**\r\n * Subtract a vector or scalar from the input vector componentwise.\r\n * @param vec Input vector.\r\n * @param other Vector or scalar to be subtracted.\r\n * @param out Result vector.\r\n */\r\nfunction sub(vec, other, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] - other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] - other[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 112,
+          "file_path": "lib/vec.js",
+          "start_line": 97,
+          "text": "/**\r\n * Add the second vector to the first one componentwise.\r\n * @param v Input vector.\r\n * @param other Vector or number to be added.\r\n * @param out Result vector.\r\n */\r\nfunction add(v, other, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] + other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] + other[i];\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 145,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 133,
+            "text": "export function add(mat: Matrix, other: Matrix | number, out: Matrix = create(mat[0], mat[1])): Matrix {\n    let len: number = mat.length;\n    if (typeof other === \"number\")\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] + other;\n    else {\n        if (mat[0] != other[0] || mat[1] != other[1])\n            throw RangeError(\"Matrices must have same dimensions.\");\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] + other[i];\n    }\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 165,
+            "file_path": "lib/vec.js",
+            "start_line": 150,
+            "text": "/**\r\n * Divide the input vector by another vector or scalar componentwise.\r\n * @param vec Input vector.\r\n * @param other Divider vector or number.\r\n * @param out Result vector.\r\n */\r\nfunction div(vec, other, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] / other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] / other[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 129,
+          "file_path": "lib/vec.js",
+          "start_line": 114,
+          "text": "/**\r\n * Subtract the second vector from the first one componentwise.\r\n * @param v Input vector.\r\n * @param other Vector or number to be subtracted.\r\n * @param out Result vector.\r\n */\r\nfunction sub(v, other, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] - other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] - other[i];\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 159,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 147,
+            "text": "export function sub(mat: Matrix, other: Matrix | number, out: Matrix = create(mat[0], mat[1])): Matrix {\n    let len: number = mat.length;\n    if (typeof other === \"number\")\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] - other;\n    else {\n        if (mat[0] != other[0] || mat[1] != other[1])\n            throw RangeError(\"Matrices must have same dimensions.\");\n        for (let i = 2; i < len; ++i)\n            out[i] = mat[i] - other[i];\n    }\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 114,
+            "file_path": "lib/vec.js",
+            "start_line": 99,
+            "text": "/**\r\n * Add a vector or scalar to the input vector componentwise.\r\n * @param vec Input vector.\r\n * @param other Vector or scalar to be added.\r\n * @param out Result vector.\r\n */\r\nfunction add(vec, other, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] + other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] + other[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 146,
+          "file_path": "lib/vec.js",
+          "start_line": 131,
+          "text": "/**\r\n * Multiply the first vector with the second one componentwise.\r\n * @param v Input vector.\r\n * @param other Multiplier vector or number.\r\n * @param out Result vector.\r\n */\r\nfunction mul(v, other, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] * other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] * other[i];\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 188,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 161,
+            "text": "export function mul(mat: Matrix, other: Matrix | number): Matrix {\n    if (typeof other === \"number\") {\n        let len: number = mat.length;\n        let res: Matrix = create(mat[0], mat[1]);\n        for (let i = 2; i < len; ++i)\n            res[i] = mat[i] * other;\n        return res;\n    }\n    else {\n        let n: number = mat[0];\n        let m: number = mat[1];\n        let q: number = other[0];\n        let p: number = other[1];\n        if (m !== q)\n            throw RangeError(`Cannot multiply ${n}x${m} matrix with ${q}x${p} matrix.`);\n        let res: Matrix = create(n, p);\n        // Iterate through rows and columns\n        for (let i = 0; i < n; ++i)\n            for (let j = 0; j < p; ++j) {\n                // Sum up rows from this with columns from other matrix.\n                let val: number = 0;\n                for (let k = 0; k < m; ++k)\n                    val += mat[k * n + i + 2] * other[j * q + k + 2];\n                res[j * n + i + 2] = val;\n            }\n        return res;\n    }\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 197,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 190,
+            "text": "export function transform(mat: Matrix, vec: Vector): Vector {\n    let cols: number = mat[1];\n    let len: number = vec.length;\n    if (len < cols)\n        vec = redim(vec, cols);\n    let vecm: Matrix = [cols, 1, ...vec];\n    return mul(mat, vecm).slice(2);\n}"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 148,
+            "file_path": "lib/vec.js",
+            "start_line": 133,
+            "text": "/**\r\n * Multiply the input vector componentwise with another vector or scalar.\r\n * @param vec Input vector.\r\n * @param other Multiplier vector or scalar.\r\n * @param out Result vector.\r\n */\r\nfunction mul(vec, other, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] * other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = vec[i] * other[i];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 163,
+          "file_path": "lib/vec.js",
+          "start_line": 148,
+          "text": "/**\r\n * Divide the first vector by the second one componentwise.\r\n * @param v Input vector.\r\n * @param other Divider vector or number.\r\n * @param out Result vector.\r\n */\r\nfunction div(v, other, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    if (typeof other === 'number')\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] / other;\r\n    else\r\n        for (let i = 0; i < len; ++i)\r\n            out[i] = v[i] / other[i];\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 168,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 153,
+            "text": "/**\n * Divide the first vector by the second one componentwise.\n * @param v Input vector.\n * @param other Divider vector or number.\n * @param out Result vector.\n */\nexport function div(v: Vector, other: Vector | number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    if (typeof other === 'number')\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] / other;\n    else\n        for (let i = 0; i < len; ++i)\n            out[i] = v[i] / other[i];\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 178,
+            "file_path": "lib/vec.js",
+            "start_line": 167,
+            "text": "/**\r\n * Normalize a vector by dividing its components by its length. If the\r\n * vector's lenght is zero, meaning that all of its components are zero, then\r\n * the function throws an error.\r\n */\r\nfunction norm(vec, out = new Array(vec.length)) {\r\n    let l = len(vec);\r\n    let vlen = vec.length;\r\n    for (let i = 0; i < vlen; ++i)\r\n        out[i] = vec[i] / l;\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 176,
+          "file_path": "lib/vec.js",
+          "start_line": 165,
+          "text": "/**\r\n * Normalize a vector.\r\n */\r\nfunction norm(v, out = new Array(v.length)) {\r\n    let l = len(v);\r\n    if (l == 0)\r\n        throw RangeError(\"Cannot normalize zero vector\");\r\n    let vlen = v.length;\r\n    for (let i = 0; i < vlen; ++i)\r\n        out[i] = v[i] / l;\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 181,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 170,
+            "text": "/**\n * Normalize a vector.\n */\nexport function norm(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let l: number = len(v);\n    if (l == 0)\n        throw RangeError(\"Cannot normalize zero vector\");\n    let vlen: number = v.length;\n    for (let i = 0; i < vlen; ++i)\n        out[i] = v[i] / l;\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 1,
+            "text": "import { Vector, x, y, z, norm, inv, cross, redim } from \"./vec\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 192,
+            "file_path": "lib/vec.js",
+            "start_line": 180,
+            "text": "/**\r\n * Checks if two vectors are equal, i.e. they have the same dimension and\r\n * exactly same component values.\r\n * @param vec1 First vector\r\n * @param vec2 Second vector\r\n */\r\nfunction equals(vec1, vec2) {\r\n    let len = vec1.length;\r\n    for (let i = 0; i < len; ++i)\r\n        if (vec1[i] != vec2[i])\r\n            return false;\r\n    return true;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 191,
+          "file_path": "lib/vec.js",
+          "start_line": 178,
+          "text": "/**\r\n * Checks if the first vector is same as the second one.\r\n * @param v1 First vector\r\n * @param v2 Second vector\r\n */\r\nfunction equals(v1, v2) {\r\n    let len = v1.length;\r\n    if (len != v2.length)\r\n        return false;\r\n    for (let i = 0; i < len; ++i)\r\n        if (v1[i] != v2[i])\r\n            return false;\r\n    return true;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 324,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 318,
+            "text": "export function equals(mat: Matrix, other: Matrix): boolean {\n    let len: number = mat.length;\n    for (let i = 0; i < len; ++i)\n        if (mat[i] != other[i])\n            return false;\n    return true;\n}"
+          },
+          {
+            "end_line": 196,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 183,
+            "text": "/**\n * Checks if the first vector is same as the second one.\n * @param v1 First vector\n * @param v2 Second vector\n */\nexport function equals(v1: Vector, v2: Vector): boolean {\n    let len: number = v1.length;\n    if (len != v2.length)\n        return false;\n    for (let i = 0; i < len; ++i)\n        if (v1[i] != v2[i])\n            return false;\n    return true;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 208,
+            "file_path": "lib/vec.js",
+            "start_line": 194,
+            "text": "/**\r\n * Checks if two vectors are approximately equal. They must have the same\r\n * dimension, but their components can deviate by the amount specified in the\r\n * epsilon parameter.\r\n * @param vec1 First vector\r\n * @param vec2 Second vector\r\n * @param epsilon The maximum allowed difference of any component.\r\n */\r\nfunction approxEquals(vec1, vec2, epsilon) {\r\n    let len = vec1.length;\r\n    for (let i = 0; i < len; ++i)\r\n        if (!FMath.approxEquals(vec1[i], vec2[i], epsilon))\r\n            return false;\r\n    return true;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 207,
+          "file_path": "lib/vec.js",
+          "start_line": 193,
+          "text": "/**\r\n * Checks if the first vector is approximately same as the second one.\r\n * @param v1 First vector\r\n * @param v2 Second vector\r\n * @param epsilon The maximum allowed difference of any component.\r\n */\r\nfunction approxEquals(v1, v2, epsilon) {\r\n    let len = v1.length;\r\n    if (len != v2.length)\r\n        return false;\r\n    for (let i = 0; i < len; ++i)\r\n        if (!FMath.approxEquals(v1[i], v2[i], epsilon))\r\n            return false;\r\n    return true;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 17,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 7,
+            "text": "export function approxEquals(x: number, y: number, epsilon: number = 0.000001): boolean {\n    if (x === y)\n        return true;\n    let absX: number = Math.abs(x);\n    let absY: number = Math.abs(y);\n    let diff: number = Math.abs(x - y);\n    if (x * y == 0)\n        return diff < (epsilon * epsilon);\n    else\n        return diff / (absX + absY) < epsilon;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 222,
+            "file_path": "lib/vec.js",
+            "start_line": 210,
+            "text": "/**\r\n * Return the dot product of two vectors. The vectors must have the same dimension,\r\n * otherwise an error is thrown. The result of the dot product is a scalar.\r\n * @param vec Input vector.\r\n * @param other Other vector of the dot product.\r\n */\r\nfunction dot(vec, other) {\r\n    let res = 0;\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        res += vec[i] * other[i];\r\n    return res;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 220,
+          "file_path": "lib/vec.js",
+          "start_line": 209,
+          "text": "/**\r\n * Return the dot product of two vectors.\r\n * @param v Input vector.\r\n * @param other Other vector of the dot product.\r\n */\r\nfunction dot(v, other) {\r\n    let res = 0;\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        res += v[i] * other[i];\r\n    return res;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 225,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 214,
+            "text": "/**\n * Return the dot product of two vectors.\n * @param v Input vector.\n * @param other Other vector of the dot product.\n */\nexport function dot(v: Vector, other: Vector): number {\n    let res: number = 0;\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        res += v[i] * other[i];\n    return res;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 235,
+            "file_path": "lib/vec.js",
+            "start_line": 224,
+            "text": "/**\r\n * Return the cross product of two vectors. The vectors must be 3-dimensional.\r\n * @param vec Input vector.\r\n * @param other The other vector of the cross product.\r\n * @param out Result vector.\r\n */\r\nfunction cross(vec, other, out = new Array(3)) {\r\n    out[exports.x] = vec[exports.y] * other[exports.z] - vec[exports.z] * other[exports.y];\r\n    out[exports.y] = vec[exports.z] * other[exports.x] - vec[exports.x] * other[exports.z];\r\n    out[exports.z] = vec[exports.x] * other[exports.y] - vec[exports.y] * other[exports.x];\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 235,
+          "file_path": "lib/vec.js",
+          "start_line": 222,
+          "text": "/**\r\n * Return the cross product of two vectors. The vectors must be 3-dimensional.\r\n * @param v Input vector.\r\n * @param other The other vector of the cross product.\r\n * @param out Result vector.\r\n */\r\nfunction cross(v, other, out = new Array(v.length)) {\r\n    if (v.length != 3 || other.length != 3)\r\n        throw RangeError(`Both vectors must 3-dimensional.`);\r\n    out[exports.x] = v[exports.y] * other[exports.z] - v[exports.z] * other[exports.y];\r\n    out[exports.y] = v[exports.z] * other[exports.x] - v[exports.x] * other[exports.z];\r\n    out[exports.z] = v[exports.x] * other[exports.y] - v[exports.y] * other[exports.x];\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 240,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 227,
+            "text": "/**\n * Return the cross product of two vectors. The vectors must be 3-dimensional.\n * @param v Input vector.\n * @param other The other vector of the cross product.\n * @param out Result vector.\n */\nexport function cross(v: Vector, other: Vector, out: Vector = new Array(v.length)): Vector {\n    if (v.length != 3 || other.length != 3)\n        throw RangeError(`Both vectors must 3-dimensional.`);\n    out[x] = v[y] * other[z] - v[z] * other[y];\n    out[y] = v[z] * other[x] - v[x] * other[z];\n    out[z] = v[x] * other[y] - v[y] * other[x];\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 1,
+            "text": "import { Vector, x, y, z, norm, inv, cross, redim } from \"./vec\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 315,
+            "file_path": "lib/vec.js",
+            "start_line": 303,
+            "text": "/**\r\n * Clamp the components of a vector to a given range.\r\n * @param vec The input vector.\r\n * @param min Minimum component value.\r\n * @param max Maximum component value.\r\n * @param out Result vector.\r\n */\r\nfunction clamp(vec, min, max, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.clamp(vec[i], min, max);\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 247,
+          "file_path": "lib/vec.js",
+          "start_line": 237,
+          "text": "/**\r\n * Replace components of the vector with their absolute values.\r\n * @param v Input vector.\r\n * @param out Result vector.\r\n */\r\nfunction abs(v, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.abs(v[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 252,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 242,
+            "text": "/**\n * Replace components of the vector with their absolute values.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function abs(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.abs(v[i]);\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 251,
+            "file_path": "lib/vec.js",
+            "start_line": 245,
+            "text": "/**\r\n * Run the components of the vector through the {@link Math.floor} function.\r\n * @param vec Input vector.\r\n */\r\nfunction floor(vec) {\r\n    return vec.map(Math.floor);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 259,
+          "file_path": "lib/vec.js",
+          "start_line": 249,
+          "text": "/**\r\n * Run the components of the vector through Math.floor function.\r\n * @param v Input vector.\r\n * @param out Result vector.\r\n */\r\nfunction floor(v, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.floor(v[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 264,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 254,
+            "text": "/**\n * Run the components of the vector through Math.floor function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function floor(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.floor(v[i]);\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 243,
+            "file_path": "lib/vec.js",
+            "start_line": 237,
+            "text": "/**\r\n * Run the components of the vector through the {@link Math.abs} function.\r\n * @param vec Input vector.\r\n */\r\nfunction abs(vec) {\r\n    return vec.map(Math.abs);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 271,
+          "file_path": "lib/vec.js",
+          "start_line": 261,
+          "text": "/**\r\n * Run the components of the vector through Math.ceil function.\r\n * @param v Input vector.\r\n * @param out Result vector.\r\n */\r\nfunction ceil(v, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.ceil(v[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 276,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 266,
+            "text": "/**\n * Run the components of the vector through Math.ceil function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function ceil(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.ceil(v[i]);\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 267,
+            "file_path": "lib/vec.js",
+            "start_line": 261,
+            "text": "/**\r\n * Run the components of the vector through the {@link Math.round} function.\r\n * @param vec Input vector.\r\n */\r\nfunction round(vec) {\r\n    return vec.map(Math.round);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 283,
+          "file_path": "lib/vec.js",
+          "start_line": 273,
+          "text": "/**\r\n * Run the components of the vector through Math.round function.\r\n * @param v Input vector.\r\n * @param out Result vector.\r\n */\r\nfunction round(v, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.round(v[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 288,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 278,
+            "text": "/**\n * Run the components of the vector through Math.round function.\n * @param v Input vector.\n * @param out Result vector.\n */\nexport function round(v: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.round(v[i]);\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 275,
+            "file_path": "lib/vec.js",
+            "start_line": 269,
+            "text": "/**\r\n * Run the components of the vector through the {@link FMath.fract} function.\r\n * @param vec Input vector.\r\n */\r\nfunction fract(vec) {\r\n    return vec.map(FMath.fract);\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 295,
+          "file_path": "lib/vec.js",
+          "start_line": 285,
+          "text": "/**\r\n * Run the components of the vector through FMath.fract function.\r\n * @param v Input vector.\r\n * @param out Result vector.\r\n */\r\nfunction fract(v, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.fract(v[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 21,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 19,
+            "text": "export function fract(x: number): number {\n    return x - Math.floor(x);\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 288,
+            "file_path": "lib/vec.js",
+            "start_line": 277,
+            "text": "/**\r\n * Calculate the minimum of two vectors componentwise.\r\n * @param vec The input vector.\r\n * @param other The vector to compare with.\r\n * @param out Result vector.\r\n */\r\nfunction min(vec, other, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.min(vec[i], other[i]);\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 308,
+          "file_path": "lib/vec.js",
+          "start_line": 297,
+          "text": "/**\r\n * Calculate the minimum of two vectors componentwise.\r\n * @param v The input vector.\r\n * @param other The vector to compare with.\r\n * @param out Result vector.\r\n */\r\nfunction min(v, other, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.min(v[i], other[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 313,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 302,
+            "text": "/**\n * Calculate the minimum of two vectors componentwise.\n * @param v The input vector.\n * @param other The vector to compare with.\n * @param out Result vector.\n */\nexport function min(v: Vector, other: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.min(v[i], other[i]);\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 340,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 328,
+            "text": "/**\n * Clamp the components of a vector to a given range.\n * @param v The input vector.\n * @param min Minimum component value.\n * @param max Maximum component value.\n * @param out Result vector.\n */\nexport function clamp(v: Vector, min: number, max: number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.clamp(v[i], min, max);\n    return out;\n}"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 329,
+            "file_path": "lib/vec.js",
+            "start_line": 317,
+            "text": "/**\r\n * Calculate the interpolated vector in a given position [0, 1].\r\n * @param vec The input vector.\r\n * @param other The vector to be interpolated to.\r\n * @param interPos The position between 0 and 1, zero representing v and one other.\r\n * @param out Result vector.\r\n */\r\nfunction mix(vec, other, interPos, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.mix(vec[i], other[i], interPos);\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 321,
+          "file_path": "lib/vec.js",
+          "start_line": 310,
+          "text": "/**\r\n * Calculate the maximum of two vectors componentwise.\r\n * @param v The input vector.\r\n * @param other The vector to compare with.\r\n * @param out Result vector.\r\n */\r\nfunction max(v, other, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.max(v[i], other[i]);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 326,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 315,
+            "text": "/**\n * Calculate the maximum of two vectors componentwise.\n * @param v The input vector.\n * @param other The vector to compare with.\n * @param out Result vector.\n */\nexport function max(v: Vector, other: Vector, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = Math.max(v[i], other[i]);\n    return out;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 340,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 328,
+            "text": "/**\n * Clamp the components of a vector to a given range.\n * @param v The input vector.\n * @param min Minimum component value.\n * @param max Maximum component value.\n * @param out Result vector.\n */\nexport function clamp(v: Vector, min: number, max: number, out: Vector = new Array(v.length)): Vector {\n    let len: number = v.length;\n    for (let i = 0; i < len; ++i)\n        out[i] = FMath.clamp(v[i], min, max);\n    return out;\n}"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 343,
+            "file_path": "lib/vec.js",
+            "start_line": 331,
+            "text": "/**\r\n * Return a vector of zeros and ones depending if the input vector components are\r\n * greater or less than the edge value.\r\n * @param vec The input vector.\r\n * @param edge The edge to which the components are compared.\r\n * @param out Result vector.\r\n */\r\nfunction step(vec, edge, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.step(vec[i], edge);\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 335,
+          "file_path": "lib/vec.js",
+          "start_line": 323,
+          "text": "/**\r\n * Clamp the components of a vector to a given range.\r\n * @param v The input vector.\r\n * @param min Minimum component value.\r\n * @param max Maximum component value.\r\n * @param out Result vector.\r\n */\r\nfunction clamp(v, min, max, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.clamp(v[i], min, max);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 27,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 23,
+            "text": "export function clamp(x: number, min: number, max: number): number {\n    return x < min ? min :\n        x > max ? max :\n            x;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 40,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 37,
+            "text": "export function smoothStep(edgeLower: number, edgeUpper: number, value: number): number {\n    let t: number = clamp((value - edgeLower) / (edgeUpper - edgeLower), 0, 1);\n    return t * t * (3 - (2 * t));\n}"
+          },
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 301,
+            "file_path": "lib/vec.js",
+            "start_line": 290,
+            "text": "/**\r\n * Calculate the maximum of two vectors componentwise.\r\n * @param vec The input vector.\r\n * @param other The vector to compare with.\r\n * @param out Result vector.\r\n */\r\nfunction max(vec, other, out = new Array(vec.length)) {\r\n    let len = vec.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = Math.max(vec[i], other[i]);\r\n    return out;\r\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 349,
+          "file_path": "lib/vec.js",
+          "start_line": 337,
+          "text": "/**\r\n * Calculate the interpolated vector in a given position [0, 1].\r\n * @param v The input vector.\r\n * @param other The vector to be interpolated to.\r\n * @param interPos The position between 0 and 1, zero representing v and one other.\r\n * @param out Result vector.\r\n */\r\nfunction mix(v, other, interPos, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.mix(v[i], other[i], interPos);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 31,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 29,
+            "text": "export function mix(start: number, end: number, interPos: number): number {\n    return start + (interPos * (end - start));\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [],
+        "npm_code_before": {
+          "end_line": 363,
+          "file_path": "lib/vec.js",
+          "start_line": 351,
+          "text": "/**\r\n * Return a vector of zeros and ones depending if the input vector components are\r\n * greater or less than the edge value.\r\n * @param v The input vector.\r\n * @param edge The edge to which the components are compared.\r\n * @param out Result vector.\r\n */\r\nfunction step(v, edge, out = new Array(v.length)) {\r\n    let len = v.length;\r\n    for (let i = 0; i < len; ++i)\r\n        out[i] = FMath.step(v[i], edge);\r\n    return out;\r\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 35,
+            "file_path": "src/main/ets/lib/fmath.ets",
+            "start_line": 33,
+            "text": "export function step(edge: number, value: number): number {\n    return value < edge ? 0 : 1;\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 3,
+            "file_path": "src/main/ets/lib/mat.ets",
+            "start_line": 3,
+            "text": "import * as FMath from \"./fmath\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/vec.ets",
+            "start_line": 1,
+            "text": "import * as FMath from \"./fmath\";"
+          }
+        ]
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 259,
+            "file_path": "lib/vec.js",
+            "start_line": 253,
+            "text": "/**\r\n * Run the components of the vector through the {@link Math.ceil} function.\r\n * @param vec Input vector.\r\n */\r\nfunction ceil(vec) {\r\n    return vec.map(Math.ceil);\r\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/vec.js",
+      "sourceLines": "50-363",
+      "targetFile": "src/main/ets/lib/fmath.ets, src/main/ets/lib/mat.ets, src/main/ets/lib/vec.ets",
+      "targetLines": "7-326"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/fmath.ets, src/main/ets/lib/mat.ets, src/main/ets/lib/vec.ets",
+      "lines": "7-326"
+    },
+    "matched_errors": [
+      {
+        "endLine": 10,
+        "filePath": "library/src/main/ets/lib/fmath.ets",
+        "info": "\"import\" statements after other statements are not allowed (arkts-no-misplaced-imports)",
+        "startColumn": 1,
+        "startLine": 10
+      },
+      {
+        "endLine": 10,
+        "filePath": "library/src/main/ets/lib/fmath.ets",
+        "info": "Duplicate identifier 'FMath'.",
+        "startColumn": 13,
+        "startLine": 10
+      },
+      {
+        "endLine": 149,
+        "filePath": "library/src/main/ets/lib/mat.ets",
+        "info": "Cannot redeclare exported variable 'add'.",
+        "startColumn": 17,
+        "startLine": 149
+      },
+      {
+        "endLine": 149,
+        "filePath": "library/src/main/ets/lib/mat.ets",
+        "info": "Duplicate function implementation.",
+        "startColumn": 17,
+        "startLine": 149
+      }
+    ],
+    "status": "遗留问题"
+  }
+]

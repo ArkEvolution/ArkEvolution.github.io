@@ -1,0 +1,10 @@
+{
+  "taskId": "qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask",
+  "recordedAt": "2026-05-14T16:08:05.805Z",
+  "metadata": {
+    "name": "qulity",
+    "npmOriginalVersion": "2.0.0",
+    "npmTargetVersion": "2.2.0",
+    "ohpmOriginalVersion": "OHPM"
+  }
+}

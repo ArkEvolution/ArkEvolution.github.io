@@ -1,0 +1,10 @@
+{
+  "taskId": "axios_v1.3.4_to_v1.3.5__axios_vohpm_upgradeTask",
+  "recordedAt": "2026-05-13T05:45:52.582Z",
+  "metadata": {
+    "name": "axios",
+    "npmOriginalVersion": "1.3.4",
+    "npmTargetVersion": "1.3.5",
+    "ohpmOriginalVersion": "ohpm"
+  }
+}

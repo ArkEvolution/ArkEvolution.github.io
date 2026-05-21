@@ -1,0 +1,10 @@
+{
+  "taskId": "lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask",
+  "recordedAt": "2026-05-14T13:29:54.898Z",
+  "metadata": {
+    "name": "lamath",
+    "npmOriginalVersion": "2.0.0",
+    "npmTargetVersion": "3.0.0",
+    "ohpmOriginalVersion": "OHPM"
+  }
+}

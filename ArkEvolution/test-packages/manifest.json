@@ -1,0 +1,328 @@
+{
+  "packages": [
+    {
+      "id": "alfador",
+      "label": "alfador",
+      "folder": "alfador",
+      "name": "alfador",
+      "npmLink": "https://www.npmjs.com/package/alfador",
+      "npmRepoLink": "https://github.com/kbirk/alfador",
+      "npmOriginalVersion": "0.5.0",
+      "npmTargetVersion": "0.6.0",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/alfador",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/alfador",
+      "ohpmOriginalVersion": "OHPM",
+      "mock": {
+        "recorded": true,
+        "taskId": "alfador_v0.5.0_to_v0.6.0__alfador_vOHPM_upgradeTask",
+        "recordedAt": "2026-05-14T16:00:57.115Z",
+        "logsUrl": "/test-packages/alfador/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/alfador/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/alfador/mock/evolution-log.json",
+        "resultUrl": "/test-packages/alfador/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "alfador-0.5.0.zip",
+          "url": "/test-packages/alfador/alfador-0.5.0.zip"
+        },
+        "npmTarget": {
+          "name": "alfador-0.6.0.zip",
+          "url": "/test-packages/alfador/alfador-0.6.0.zip"
+        },
+        "ohpmOriginal": {
+          "name": "alfador-OHPM.zip",
+          "url": "/test-packages/alfador/alfador-OHPM.zip"
+        }
+      }
+    },
+    {
+      "id": "axios",
+      "label": "axios",
+      "folder": "axios",
+      "name": "axios",
+      "npmLink": "https://www.npmjs.com/package/axios",
+      "npmRepoLink": "https://github.com/axios/axios",
+      "npmOriginalVersion": "1.3.4",
+      "npmTargetVersion": "1.3.5",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/ohos_axios",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/ohos_axios",
+      "ohpmOriginalVersion": "ohpm",
+      "mock": {
+        "recorded": true,
+        "taskId": "axios_v1.3.4_to_v1.3.5__axios_vohpm_upgradeTask",
+        "recordedAt": "2026-05-13T05:45:52.582Z",
+        "logsUrl": "/test-packages/axios/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/axios/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/axios/mock/evolution-log.json",
+        "resultUrl": "/test-packages/axios/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "axios-1.3.4.zip",
+          "url": "/test-packages/axios/axios-1.3.4.zip"
+        },
+        "npmTarget": {
+          "name": "axios-1.3.5.zip",
+          "url": "/test-packages/axios/axios-1.3.5.zip"
+        },
+        "ohpmOriginal": {
+          "name": "ohos_axios-ohpm.zip",
+          "url": "/test-packages/axios/ohos_axios-ohpm.zip"
+        }
+      }
+    },
+    {
+      "id": "emath",
+      "label": "emath",
+      "folder": "emath",
+      "name": "emath",
+      "npmLink": "https://www.npmjs.com/package/emath",
+      "npmRepoLink": "https://github.com/qianduanXIAOHAOZI/emath",
+      "npmOriginalVersion": "1.3.1",
+      "npmTargetVersion": "1.5.0",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/emath",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/emath",
+      "ohpmOriginalVersion": "OHPM",
+      "mock": {
+        "recorded": true,
+        "taskId": "emath_v1.3.1_to_v1.5.0__emath_vOHPM_upgradeTask",
+        "recordedAt": "2026-05-14T13:50:32.545Z",
+        "logsUrl": "/test-packages/emath/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/emath/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/emath/mock/evolution-log.json",
+        "resultUrl": "/test-packages/emath/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "emath-1.3.1.zip",
+          "url": "/test-packages/emath/emath-1.3.1.zip"
+        },
+        "npmTarget": {
+          "name": "emath-1.5.0.zip",
+          "url": "/test-packages/emath/emath-1.5.0.zip"
+        },
+        "ohpmOriginal": {
+          "name": "emath-OHPM.zip",
+          "url": "/test-packages/emath/emath-OHPM.zip"
+        }
+      }
+    },
+    {
+      "id": "infers",
+      "label": "infers",
+      "folder": "infers",
+      "name": "infers",
+      "npmLink": "https://www.npmjs.com/package/infers",
+      "npmRepoLink": "https://github.com/ounana/infers",
+      "npmOriginalVersion": "1.3.3",
+      "npmTargetVersion": "1.3.4",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/infers",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/infers",
+      "ohpmOriginalVersion": "OHPM",
+      "mock": {
+        "recorded": true,
+        "taskId": "infers_v1.3.3_to_v1.3.4__infers_vOHPM_upgradeTask",
+        "recordedAt": "2026-05-13T15:10:30.815Z",
+        "logsUrl": "/test-packages/infers/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/infers/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/infers/mock/evolution-log.json",
+        "resultUrl": "/test-packages/infers/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "infers-1.3.3.zip",
+          "url": "/test-packages/infers/infers-1.3.3.zip"
+        },
+        "npmTarget": {
+          "name": "infers-1.3.4.zip",
+          "url": "/test-packages/infers/infers-1.3.4.zip"
+        },
+        "ohpmOriginal": {
+          "name": "infers-OHPM.zip",
+          "url": "/test-packages/infers/infers-OHPM.zip"
+        }
+      }
+    },
+    {
+      "id": "is-number",
+      "label": "is-number",
+      "folder": "is-number",
+      "name": "is-number",
+      "npmLink": "https://www.npmjs.com/package/is-number",
+      "npmRepoLink": "https://github.com/jonschlinkert/is-number",
+      "npmOriginalVersion": "7.0.0",
+      "npmTargetVersion": "7.0.1",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/is-number",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/is-number",
+      "ohpmOriginalVersion": "ohpm",
+      "mock": {
+        "recorded": true,
+        "taskId": "is-number_v7.0.0_to_v7.0.1__is-number_vohpm_upgradeTask",
+        "recordedAt": "2026-05-12T12:17:35.499Z",
+        "logsUrl": "/test-packages/is-number/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/is-number/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/is-number/mock/evolution-log.json",
+        "resultUrl": ""
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "is-number-7.0.0.zip",
+          "url": "/test-packages/is-number/is-number-7.0.0.zip"
+        },
+        "npmTarget": {
+          "name": "is-number-7.0.1.zip",
+          "url": "/test-packages/is-number/is-number-7.0.1.zip"
+        },
+        "ohpmOriginal": {
+          "name": "is-number-ohpm.zip",
+          "url": "/test-packages/is-number/is-number-ohpm.zip"
+        }
+      }
+    },
+    {
+      "id": "lamath",
+      "label": "lamath",
+      "folder": "lamath",
+      "name": "lamath",
+      "npmLink": "https://www.npmjs.com/package/lamath",
+      "npmRepoLink": "https://github.com/johtela/lamath",
+      "npmOriginalVersion": "2.0.0",
+      "npmTargetVersion": "3.0.0",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/lamath",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/lamath",
+      "ohpmOriginalVersion": "OHPM",
+      "mock": {
+        "recorded": true,
+        "taskId": "lamath_v2.0.0_to_v3.0.0__lamath_vOHPM_upgradeTask",
+        "recordedAt": "2026-05-14T13:29:54.898Z",
+        "logsUrl": "/test-packages/lamath/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/lamath/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/lamath/mock/evolution-log.json",
+        "resultUrl": "/test-packages/lamath/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "lamath-2.0.0.zip",
+          "url": "/test-packages/lamath/lamath-2.0.0.zip"
+        },
+        "npmTarget": {
+          "name": "lamath-3.0.0.zip",
+          "url": "/test-packages/lamath/lamath-3.0.0.zip"
+        },
+        "ohpmOriginal": {
+          "name": "lamath-OHPM.zip",
+          "url": "/test-packages/lamath/lamath-OHPM.zip"
+        }
+      }
+    },
+    {
+      "id": "meta-math",
+      "label": "meta-math",
+      "folder": "meta-math",
+      "name": "meta-math",
+      "npmLink": "https://www.npmjs.com/package/meta-math",
+      "npmRepoLink": "https://github.com/tenjou/meta-math",
+      "npmOriginalVersion": "0.1.7",
+      "npmTargetVersion": "0.2.0",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/meta-math",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/meta-math",
+      "ohpmOriginalVersion": "ohpm",
+      "mock": {
+        "recorded": true,
+        "taskId": "meta-math_v0.1.7_to_v0.2.0__meta-math_vohpm_upgradeTask",
+        "recordedAt": "2026-05-14T15:50:30.487Z",
+        "logsUrl": "/test-packages/meta-math/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/meta-math/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/meta-math/mock/evolution-log.json",
+        "resultUrl": "/test-packages/meta-math/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "meta-math-0.1.7.zip",
+          "url": "/test-packages/meta-math/meta-math-0.1.7.zip"
+        },
+        "npmTarget": {
+          "name": "meta-math-0.2.0.zip",
+          "url": "/test-packages/meta-math/meta-math-0.2.0.zip"
+        },
+        "ohpmOriginal": {
+          "name": "meta-math-ohpm.zip",
+          "url": "/test-packages/meta-math/meta-math-ohpm.zip"
+        }
+      }
+    },
+    {
+      "id": "pako",
+      "label": "pako",
+      "folder": "pako",
+      "name": "pako",
+      "npmLink": "https://www.npmjs.com/package/pako",
+      "npmRepoLink": "https://github.com/nodeca/pako",
+      "npmOriginalVersion": "2.0.4",
+      "npmTargetVersion": "2.1.0",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/pako",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/pako",
+      "ohpmOriginalVersion": "ohpm",
+      "mock": {
+        "recorded": true,
+        "taskId": "pako_v2.0.4_to_v2.1.0__pako_vohpm_upgradeTask",
+        "recordedAt": "2026-05-13T06:49:05.990Z",
+        "logsUrl": "/test-packages/pako/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/pako/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/pako/mock/evolution-log.json",
+        "resultUrl": "/test-packages/pako/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "pako-2.0.4.zip",
+          "url": "/test-packages/pako/pako-2.0.4.zip"
+        },
+        "npmTarget": {
+          "name": "pako-2.1.0.zip",
+          "url": "/test-packages/pako/pako-2.1.0.zip"
+        },
+        "ohpmOriginal": {
+          "name": "pako_ohpm.zip",
+          "url": "/test-packages/pako/pako_ohpm.zip"
+        }
+      }
+    },
+    {
+      "id": "qulity",
+      "label": "qulity",
+      "folder": "qulity",
+      "name": "qulity",
+      "npmLink": "https://www.npmjs.com/package/qulity",
+      "npmRepoLink": "https://github.com/QSmally/Qulity",
+      "npmOriginalVersion": "2.0.0",
+      "npmTargetVersion": "2.2.0",
+      "ohpmLink": "https://ohpm.openharmony.cn/#/en/detail/qulity",
+      "ohpmRepoLink": "https://gitee.com/ArkTSCentralRepository/qulity",
+      "ohpmOriginalVersion": "OHPM",
+      "mock": {
+        "recorded": true,
+        "taskId": "qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask",
+        "recordedAt": "2026-05-14T16:08:05.805Z",
+        "logsUrl": "/test-packages/qulity/mock/logs.json",
+        "upgradeReportUrl": "/test-packages/qulity/mock/upgrade-report.json",
+        "evolutionLogUrl": "/test-packages/qulity/mock/evolution-log.json",
+        "resultUrl": "/test-packages/qulity/mock/result.zip"
+      },
+      "archives": {
+        "npmOriginal": {
+          "name": "qulity-2.0.0.zip",
+          "url": "/test-packages/qulity/qulity-2.0.0.zip"
+        },
+        "npmTarget": {
+          "name": "qulity-2.2.0.zip",
+          "url": "/test-packages/qulity/qulity-2.2.0.zip"
+        },
+        "ohpmOriginal": {
+          "name": "qulity-OHPM.zip",
+          "url": "/test-packages/qulity/qulity-OHPM.zip"
+        }
+      }
+    }
+  ]
+}

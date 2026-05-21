@@ -1,0 +1,10 @@
+{
+  "taskId": "pako_v2.0.4_to_v2.1.0__pako_vohpm_upgradeTask",
+  "recordedAt": "2026-05-13T06:49:05.990Z",
+  "metadata": {
+    "name": "pako",
+    "npmOriginalVersion": "2.0.4",
+    "npmTargetVersion": "2.1.0",
+    "ohpmOriginalVersion": "ohpm"
+  }
+}

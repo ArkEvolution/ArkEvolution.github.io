@@ -1,0 +1,386 @@
+[
+  {
+    "answers": [
+      "export function calculateSum(a, b, mode) {\n    return a + b;\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 38,
+          "npm_file_path": "index.js",
+          "npm_start_line": 36,
+          "ohpm_end_line": 40,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 38,
+          "type": "modification"
+        },
+        "npm_code_after": "export function calculateSum(a, b, mode) {\r\n    return a + b;\r\n}",
+        "npm_code_before": "export function calculateSum(a, b = 1) {\r\n    return Number(a) + b;\r\n}",
+        "ohpm_code_before": [
+          "export function calculateSum(a, b = 1，c:any) {\r\n    return Number(a) + b;\r\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "36-38",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "38-40"
+    }
+  },
+  {
+    "answers": [
+      "import { readFileSync, writeFile, promises as fsPromises } from \"fs\";"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import { readFileSync, writeFile, promises as fsPromises } from \"fs\";"
+        ],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 14,
+          "npm_file_path": "index.js",
+          "npm_start_line": 13,
+          "ohpm_end_line": 12,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 11,
+          "type": "modification"
+        },
+        "npm_code_after": "import { Worker, parentPort } from \"worker_threads\";",
+        "npm_code_before": "import { Worker, parentPort } from \"worker_threads1\";",
+        "ohpm_code_before": [
+          "import { Worker, parentPort } from \"worker_threads\";"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "13-14",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "11-12"
+    }
+  },
+  {
+    "answers": [
+      "import { Worker, parentPort } from \"worker_threads\";"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import { Worker, parentPort } from \"worker_threads\";"
+        ],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 16,
+          "npm_file_path": "index.js",
+          "npm_start_line": 15,
+          "ohpm_end_line": 14,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 13,
+          "type": "modification"
+        },
+        "npm_code_after": "import https, { Agent } from \"https\";",
+        "npm_code_before": "import https, { Agent } from \"https1\";",
+        "ohpm_code_before": [
+          "import https, { Agent } from \"https\";"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "15-16",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "13-14"
+    }
+  },
+  {
+    "answers": [
+      "// URL 处理\n\n// CommonJS 风格（很多老包这样写）\nconst fs2 = require(\"fs\");"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 22,
+          "npm_file_path": "index.js",
+          "npm_start_line": 22,
+          "ohpm_end_line": 20,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 20,
+          "type": "modification"
+        },
+        "npm_code_after": "                // URL 处理\r\n\r\n// CommonJS 风格（很多老包这样写）\r\nconst fs2 = require(\"fs\");",
+        "npm_code_before": "                // URL ����\r\n\r\n// CommonJS ��񣨺ܶ��ϰ�����д��\r\nconst fs2 = require(\"fs\");",
+        "ohpm_code_before": [
+          "                // URL 处理\r\n\r\n// CommonJS 风格（很多老包这样写）\r\nconst fs2 = require(\"fs\");"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "22-22",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "20-20"
+    }
+  },
+  {
+    "answers": [
+      "import { URL, URLSearchParams } from \"url\";"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 19,
+          "npm_file_path": "index.js",
+          "npm_start_line": 18,
+          "ohpm_end_line": 17,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 16,
+          "type": "modification"
+        },
+        "npm_code_after": "import { URL, URLSearchParams } from \"url\";",
+        "npm_code_before": "import { URL, URLSearchParams } from \"url1\";",
+        "ohpm_code_before": [
+          "import { URL, URLSearchParams } from \"url\";"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "18-19",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "16-17"
+    }
+  },
+  {
+    "answers": [
+      "import { readFileSync, writeFile, promises as fsPromises } from \"fs\";"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 12,
+          "npm_file_path": "index.js",
+          "npm_start_line": 11,
+          "ohpm_end_line": 10,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 9,
+          "type": "modification"
+        },
+        "npm_code_after": "import { readFileSync, writeFile, promises as fsPromises } from \"fs\";",
+        "npm_code_before": "import { readFileSync, writeFile, promises as fsPromises } from \"fs1\";",
+        "ohpm_code_before": [
+          "import { readFileSync, writeFile, promises as fsPromises } from \"fs\";"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "11-12",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "9-10"
+    }
+  },
+  {
+    "answers": [
+      "/**\n * 这个文件演示了合法的 TypeScript 代码，\n * 但包含了多个 ArkTS (HarmonyOS) 不支持的动态特性。\n */\n\ninterface BaseConfig {\n  id: number;\n  // 1. ArkTS 不支持使用 [key: string]: any 这种动态索引签名来规避类型检查\n  [key: string]: any;\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 48,
+          "npm_file_path": "index.js",
+          "npm_start_line": 39,
+          "ohpm_end_line": 52,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 43,
+          "type": "modification"
+        },
+        "npm_code_after": "/**\r\n * 这个文件演示了合法的 TypeScript 代码，\r\n * 但包含了多个 ArkTS (HarmonyOS) 不支持的动态特性。\r\n */\r\n\r\ninterface BaseConfig {\r\n    id: number;\r\n    // 1. ArkTS 不支持使用 [key: string]: any 这种动态索引签名来规避类型检查\r\n    [key: string]: any;\r\n}",
+        "npm_code_before": "/**\r\n * ����ļ���ʾ�˺Ϸ��� TypeScript ���룬\r\n * �������˶�� ArkTS (HarmonyOS) ��֧�ֵĶ�̬���ԡ�\r\n */\r\n\r\ninterface BaseConfig {\r\n    id: number;\r\n    // 1. ArkTS ��֧��ʹ�� [key: string]: any ���ֶ�̬����ǩ����������ͼ��\r\n    [key: string]: any;\r\n}",
+        "ohpm_code_before": [
+          "/**\r\n * 这个文件演示了合法的 TypeScript 代码，\r\n * 但包含了多个 ArkTS (HarmonyOS) 不支持的动态特性。\r\n */\r\n\r\ninterface BaseConfig {\r\n  id: number;\r\n  // 1. ArkTS 不支持使用 [key: string]: any 这种动态索引签名来规避类型检查\r\n  [key: string]: any;\r\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "39-48",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "43-52"
+    }
+  },
+  {
+    "answers": [
+      "// 测试调用\nconst initialDatas = { id: 1001, tempData: \"Should be deleted\" };"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "const result = processConfiguration(initialData, (item) => {\r\n  console.log(\"Processing item: \" + item.id);\r\n});"
+        ],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe code changes update variable names (e.g., `timestamp` to `timestamps`, `initialData` to `initialDatas`, `SystemConfig` to `Config`) and adjust related property names (`processed` to `processeds`) while preserving the overall logic and comments, likely to reflect a naming convention update or to fix inconsistencies in the example code.\n\n--- Intent 2 ---\nThe code changes update variable names (e.g., `timestamp` to `timestamps`, `initialData` to `initialDatas`, `SystemConfig` to `Config`) and adjust related property names (`processed` to `processeds`) to reflect a revised naming convention, while preserving the overall logic and comments about ArkTS limitations.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 99,
+          "npm_file_path": "index.js",
+          "npm_start_line": 99,
+          "ohpm_end_line": 103,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 103,
+          "type": "modification"
+        },
+        "npm_code_after": "// 测试调用\r\nconst initialDatas = { id: 1001, tempData: \"Should be deleted\" };",
+        "npm_code_before": "// ���Ե���\r\nconst initialData = { id: 1001, tempData: \"Should be deleted\" };",
+        "ohpm_code_before": [
+          "// 测试调用\r\nconst initialData = { id: 1001, tempData: \"Should be deleted\" };"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "99-99",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "103-103"
+    }
+  },
+  {
+    "answers": [
+      "const result = processConfiguration(initialDatas, (item) => {\r\n  console.log(\"Processing item: \" + item.id);\r\n});"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "console.log(\"Final timestamp: \" + result.timestamp);"
+        ],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe code changes update variable names (e.g., `timestamp` to `timestamps`, `initialData` to `initialDatas`, `SystemConfig` to `Config`) and adjust related property names (`processed` to `processeds`) while preserving the overall logic and comments, likely to reflect a naming convention update or to fix inconsistencies in the example code.\n\n--- Intent 2 ---\nThe code changes update variable names (e.g., `timestamp` to `timestamps`, `initialData` to `initialDatas`, `SystemConfig` to `Config`) and adjust related property names (`processed` to `processeds`) to reflect a revised naming convention, while preserving the overall logic and comments about ArkTS limitations.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 103,
+          "npm_file_path": "index.js",
+          "npm_start_line": 101,
+          "ohpm_end_line": 107,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 105,
+          "type": "modification"
+        },
+        "npm_code_after": "const result = processConfiguration(initialDatas, (item) => {\r\n    console.log(\"Processing item: \" + item.id);\r\n});",
+        "npm_code_before": "const result = processConfiguration(initialData, (item) => {\r\n    console.log(\"Processing item: \" + item.id);\r\n});",
+        "ohpm_code_before": [
+          "const result = processConfiguration(initialData, (item) => {\r\n  console.log(\"Processing item: \" + item.id);\r\n});"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "101-103",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "105-107"
+    }
+  },
+  {
+    "answers": [
+      "// TS2ArkTS: originStartLine=8, originStartColumn=1\nexport default function main(num: number | string, s: string): boolean {\n  // 1. 如果是 number 类型，直接用 Number.isFinite 检查\n  // Number.isFinite() 排除 NaN, Infinity, -Infinity\n  let a: string = s;\n  if (typeof num === 'number') {\n    return Number.isFinite(num);\n  }\n\n  // 2. 如果是字符串，且非空/非空白\n  if (typeof num === 'string' && num.trim() !== '') {\n    // 尝试转换为数字 (+num) 并检查是否为有限数字\n    let parsedNum: number = parseFloat(num);\n    return Number.isFinite(parsedNum);\n    // 注意：不再需要 isFinite 的兼容处理\n  }\n\n  return false;\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 2 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 3 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 4 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also removing the MIT license header comment.\n\n--- Intent 5 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" → \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also adding comments and minor code cleanup.\n\n--- Intent 6 ---\nThe changes update import paths to remove erroneous suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 7 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly instead of the `num - num === 0` check, and change `calculateSum` to accept three parameters without default values while removing the `Number()` conversion.\n\n--- Intent 8 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n--- Intent 9 ---\nThe changes update import paths to remove version suffixes (e.g., \"fs1\" to \"fs\"), modify the `a` function to accept an additional parameter and use `Number.isFinite` directly, and change `calculateSum` to accept three parameters without default values, while also cleaning up comments and code formatting.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 34,
+          "npm_file_path": "index.js",
+          "npm_start_line": 26,
+          "ohpm_end_line": 35,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 25,
+          "type": "modification"
+        },
+        "npm_code_after": "export function a(num,s) {\r\n  // 1. 如果是 number 类型，直接用 Number.isFinite 检查\r\n  // Number.isFinite() 排除 NaN, Infinity, -Infinity\r\n    var a =s ;\r\n  if (typeof num === 'number') {\r\n    return Number.isFinite(num);\r\n  }\r\n  \r\n  // 2. 如果是字符串，且非空/非空白\r\n  if (typeof num === 'string' && num.trim() !== '') {\r\n    // 尝试转换为数字 (+num) 并检查是否为有限数字\r\n    return Number.isFinite(+num); \r\n    // 注意：不再需要 isFinite 的兼容处理\r\n  }\r\n  \r\n  return false;\r\n}",
+        "npm_code_before": "export function a(num) {\r\n  if (typeof num === 'number') {\r\n    return num - num === 0;\r\n  }\r\n  if (typeof num === 'string' && num.trim() !== '') {\r\n    return Number.isFinite ? Number.isFinite(+num) : isFinite(+num);\r\n  }\r\n  return false;\r\n}",
+        "ohpm_code_before": [
+          "// TS2ArkTS: originStartLine=8, originStartColumn=1\r\nexport default function main(num: number | string): boolean {\r\n  if (typeof num === 'number') {\r\n    return num - num === 0;\r\n  }\r\n  if (typeof num === 'string' && num.trim() !== '') {\r\n    let parsedNum: number = parseFloat(num);\r\n    return Number.isFinite ? Number.isFinite(parsedNum) : isFinite(parsedNum);\r\n  }\r\n  return false;\r\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "26-34",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "25-35"
+    }
+  },
+  {
+    "answers": [
+      "/**\n * 一个通用的配置处理函数\n * @param config 输入配置\n * @param modifier 修改器函数\n */\nfunction processConfiguration<T extends object>(config: T, modifier: (item: any) => void): T & { timestamps: number } {\n  \n  // 2. ArkTS 不支持 'any' 类型，要求严格类型\n  let mutableConfig: any = { ...config };\n\n  // 3. ArkTS 不支持在运行时动态向对象添加属性 (改变对象布局)\n  // 在标准 TS 中，因为 mutableConfig 是 any，所以这是合法的\n  mutableConfig.timestamps = Date.now();\n  mutableConfig.processeds = true;\n\n  // 执行修改器\n  modifier(mutableConfig);\n\n  // 4. ArkTS 不支持 'delete' 操作符 (改变对象布局)\n  if (mutableConfig.tempData) {\n    delete mutableConfig.tempData;\n  }\n\n  // 5. ArkTS 对 Class 使用“标称类型系统(Nominal Typing)”，而 TS 使用“结构化类型系统(Structural Typing)”\n  // 在 TS 中，只要对象结构匹配，字面量可以赋值给类类型。\n  // 在 ArkTS 中，必须显式使用 new SystemConfig()，不能用字面量冒充 Class。\n  const sysConfig: Config = {\n    id: 1,\n    name: \"System\",\n    version: \"2.0\",\n    print: () => { console.log(\"Mock print\"); }\n  };\n\n  // 6. ArkTS 在运行时对类型断言和反射支持有限\n  // 这种基于 any 的直接返回和交叉类型推断在 ArkTS 中可能导致推断失败或编译错误\n  return mutableConfig;\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "const result = processConfiguration(initialData, (item) => {\r\n  console.log(\"Processing item: \" + item.id);\r\n});"
+        ],
+        "intent": "--- MERGED INTENT ---\nCombined intent from multiple clusters:\n\n--- Intent 1 ---\nThe code changes update variable names (e.g., `timestamp` to `timestamps`, `initialData` to `initialDatas`, `SystemConfig` to `Config`) and adjust related property names (`processed` to `processeds`) while preserving the overall logic and comments, likely to reflect a naming convention update or to fix inconsistencies in the example code.\n\n--- Intent 2 ---\nThe code changes update variable names (e.g., `timestamp` to `timestamps`, `initialData` to `initialDatas`, `SystemConfig` to `Config`) and adjust related property names (`processed` to `processeds`) to reflect a revised naming convention, while preserving the overall logic and comments about ArkTS limitations.\n\n",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 96,
+          "npm_file_path": "index.js",
+          "npm_start_line": 60,
+          "ohpm_end_line": 100,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 64,
+          "type": "modification"
+        },
+        "npm_code_after": "/**\r\n * 一个通用的配置处理函数\r\n * @param config 输入配置\r\n * @param modifier 修改器函数\r\n */\r\nfunction processConfiguration<T extends object>(config: T, modifier: (item: any) => void): T & { timestamps: number } {\r\n\r\n    // 2. ArkTS 不支持 'any' 类型，要求严格类型\r\n    let mutableConfig: any = { ...config };\r\n\r\n    // 3. ArkTS 不支持在运行时动态向对象添加属性 (改变对象布局)\r\n    // 在标准 TS 中，因为 mutableConfig 是 any，所以这是合法的\r\n    mutableConfig.timestamps = Date.now();\r\n    mutableConfig.processeds = true;\r\n\r\n    // 执行修改器\r\n    modifier(mutableConfig);\r\n\r\n    // 4. ArkTS 不支持 'delete' 操作符 (改变对象布局)\r\n    if (mutableConfig.tempData) {\r\n        delete mutableConfig.tempData;\r\n    }\r\n\r\n    // 5. ArkTS 对 Class 使用“标称类型系统(Nominal Typing)”，而 TS 使用“结构化类型系统(Structural Typing)”\r\n    // 在 TS 中，只要对象结构匹配，字面量可以赋值给类类型。\r\n    // 在 ArkTS 中，必须显式使用 new SystemConfig()，不能用字面量冒充 Class。\r\n    const sysConfig: Config = {\r\n        id: 1,\r\n        name: \"System\",\r\n        version: \"2.0\",\r\n        print: () => { console.log(\"Mock print\"); }\r\n    };\r\n\r\n    // 6. ArkTS 在运行时对类型断言和反射支持有限\r\n    // 这种基于 any 的直接返回和交叉类型推断在 ArkTS 中可能导致推断失败或编译错误\r\n    return mutableConfig;\r\n}",
+        "npm_code_before": "/**\r\n * һ��ͨ�õ����ô�������\r\n * @param config ��������\r\n * @param modifier �޸�������\r\n */\r\nfunction processConfiguration<T extends object>(config: T, modifier: (item: any) => void): T & { timestamp: number } {\r\n\r\n    // 2. ArkTS ��֧�� 'any' ���ͣ�Ҫ���ϸ�����\r\n    let mutableConfig: any = { ...config };\r\n\r\n    // 3. ArkTS ��֧��������ʱ��̬������������� (�ı���󲼾�)\r\n    // �ڱ�׼ TS �У���Ϊ mutableConfig �� any���������ǺϷ���\r\n    mutableConfig.timestamp = Date.now();\r\n    mutableConfig.processed = true;\r\n\r\n    // ִ���޸���\r\n    modifier(mutableConfig);\r\n\r\n    // 4. ArkTS ��֧�� 'delete' ������ (�ı���󲼾�)\r\n    if (mutableConfig.tempData) {\r\n        delete mutableConfig.tempData;\r\n    }\r\n\r\n    // 5. ArkTS �� Class ʹ�á��������ϵͳ(Nominal Typing)������ TS ʹ�á��ṹ������ϵͳ(Structural Typing)��\r\n    // �� TS �У�ֻҪ����ṹƥ�䣬���������Ը�ֵ�������͡�\r\n    // �� ArkTS �У�������ʽʹ�� new SystemConfig()��������������ð�� Class��\r\n    const sysConfig: SystemConfig = {\r\n        id: 1,\r\n        name: \"System\",\r\n        version: \"2.0\",\r\n        print: () => { console.log(\"Mock print\"); }\r\n    };\r\n\r\n    // 6. ArkTS ������ʱ�����Ͷ��Ժͷ���֧������\r\n    // ���ֻ��� any ��ֱ�ӷ��غͽ��������ƶ��� ArkTS �п��ܵ����ƶ�ʧ�ܻ�������\r\n    return mutableConfig;\r\n}",
+        "ohpm_code_before": [
+          "/**\r\n * 一个通用的配置处理函数\r\n * @param config 输入配置\r\n * @param modifier 修改器函数\r\n */\r\nfunction processConfiguration<T extends object>(config: T, modifier: (item: any) => void): T & { timestamp: number } {\r\n  \r\n  // 2. ArkTS 不支持 'any' 类型，要求严格类型\r\n  let mutableConfig: any = { ...config };\r\n\r\n  // 3. ArkTS 不支持在运行时动态向对象添加属性 (改变对象布局)\r\n  // 在标准 TS 中，因为 mutableConfig 是 any，所以这是合法的\r\n  mutableConfig.timestamp = Date.now();\r\n  mutableConfig.processed = true;\r\n\r\n  // 执行修改器\r\n  modifier(mutableConfig);\r\n\r\n  // 4. ArkTS 不支持 'delete' 操作符 (改变对象布局)\r\n  if (mutableConfig.tempData) {\r\n    delete mutableConfig.tempData;\r\n  }\r\n\r\n  // 5. ArkTS 对 Class 使用“标称类型系统(Nominal Typing)”，而 TS 使用“结构化类型系统(Structural Typing)”\r\n  // 在 TS 中，只要对象结构匹配，字面量可以赋值给类类型。\r\n  // 在 ArkTS 中，必须显式使用 new SystemConfig()，不能用字面量冒充 Class。\r\n  const sysConfig: SystemConfig = {\r\n    id: 1,\r\n    name: \"System\",\r\n    version: \"2.0\",\r\n    print: () => { console.log(\"Mock print\"); }\r\n  };\r\n\r\n  // 6. ArkTS 在运行时对类型断言和反射支持有限\r\n  // 这种基于 any 的直接返回和交叉类型推断在 ArkTS 中可能导致推断失败或编译错误\r\n  return mutableConfig;\r\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "60-96",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "64-100"
+    }
+  }
+]

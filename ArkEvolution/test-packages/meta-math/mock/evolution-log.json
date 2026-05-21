@@ -1,0 +1,728 @@
+[
+  {
+    "answers": [
+      "const radians = function(degrees) {\r\n\treturn degrees * Math.PI / 180\r\n}",
+      "const degrees = function(radians) {\r\n\treturn radians * 180 / Math.PI\r\n}"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added utility functions for angle conversion between radians and degrees, and exported them alongside the existing EPSILON constant.",
+        "metadata": {
+          "npm_end_line": 4,
+          "npm_file_path": "src/Common.js",
+          "npm_start_line": 2,
+          "ohpm_file_path": "src/main/ets/src/Common.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "const radians = function(degrees) {\r\n\treturn degrees * Math.PI / 180\r\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added utility functions for angle conversion between radians and degrees, and exported them alongside the existing EPSILON constant.",
+        "metadata": {
+          "npm_end_line": 8,
+          "npm_file_path": "src/Common.js",
+          "npm_start_line": 6,
+          "ohpm_file_path": "src/main/ets/src/Common.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "const degrees = function(radians) {\r\n\treturn radians * 180 / Math.PI\r\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Common.js",
+      "sourceLines": "2-8",
+      "targetFile": "src/main/ets/src/Common.ets",
+      "targetLines": "N/A"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Common.ets",
+      "lines": "N/A"
+    }
+  },
+  {
+    "answers": [
+      "class Matrix3\r\n{\r\n\tconstructor(matrix)\r\n\t{\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(9)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[4] = 1.0\r\n\t\t\tthis.m[8] = 1.0\r\n\t\t}\r\n\t}\r\n\r\n\tcopy(src) {\r\n\t\tthis.m.set(src.m)\r\n\t}\r\n\r\n\tclone() {\r\n\t\tconst m = new Matrix3(this.m)\r\n\t\treturn m\r\n\t}\r\n\r\n\tset(matrix) {\r\n\t\tthis.m.assing(matrix)\r\n\t}\r\n\r\n\tidentity()\r\n\t{\r\n\t\tthis.m[0] = 1.0\r\n\t\tthis.m[1] = 0.0\r\n\t\tthis.m[2] = 0.0\r\n\r\n\t\tthis.m[3] = 0.0\r\n\t\tthis.m[4] = 1.0\r\n\t\tthis.m[5] = 0.0\r\n\r\n\t\tthis.m[6] = 0.0\r\n\t\tthis.m[7] = 0.0\r\n\t\tthis.m[8] = 1.0\r\n\t}\r\n\r\n\ttranslate(x, y)\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\t\tconst a20 = this.m[6]\r\n\t\tconst a21 = this.m[7]\r\n\t\tconst a22 = this.m[8]\r\n\r\n\t\tthis.m[0] = a00\r\n\t\tthis.m[1] = a01\r\n\t\tthis.m[2] = a02\r\n\r\n\t\tthis.m[3] = a10\r\n\t\tthis.m[4] = a11\r\n\t\tthis.m[5] = a12\r\n\r\n\t\tthis.m[6] = x * a00 + y * a10 + a20\r\n\t\tthis.m[7] = x * a01 + y * a11 + a21\r\n\t\tthis.m[8] = x * a02 + y * a12 + a22\r\n\t}\r\n\r\n\trotate(rad)\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\r\n\t\tconst s = Math.sin(rad)\r\n\t\tconst c = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = c * a00 + s * a10\r\n\t\tthis.m[1] = c * a01 + s * a11\r\n\t\tthis.m[2] = c * a02 + s * a12\r\n\r\n\t\tthis.m[3] = c * a10 - s * a00\r\n\t\tthis.m[4] = c * a11 - s * a01\r\n\t\tthis.m[5] = c * a12 - s * a02\r\n\t}\r\n\r\n\tscale(x, y)\r\n\t{\r\n\t\tthis.m[0] *= x\r\n\t\tthis.m[1] *= x\r\n\t\tthis.m[2] *= x\r\n\r\n\t\tthis.m[3] *= y\r\n\t\tthis.m[4] *= y\r\n\t\tthis.m[5] *= y\r\n\t}\r\n\r\n\tmul(src)\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\t\tconst a20 = this.m[6]\r\n\t\tconst a21 = this.m[7]\r\n\t\tconst a22 = this.m[8]\r\n\r\n\t\tconst b00 = src.m[0]\r\n\t\tconst b01 = src.m[1]\r\n\t\tconst b02 = src.m[2]\r\n\t\tconst b10 = src.m[3]\r\n\t\tconst b11 = src.m[4]\r\n\t\tconst b12 = src.m[5]\r\n\t\tconst b20 = src.m[6]\r\n\t\tconst b21 = src.m[7]\r\n\t\tconst b22 = src.m[8]\r\n\r\n\t\tthis.m[0] = b00 * a00 + b01 * a10 + b02 * a20\r\n\t\tthis.m[1] = b00 * a01 + b01 * a11 + b02 * a21\r\n\t\tthis.m[2] = b00 * a02 + b01 * a12 + b02 * a22\r\n\r\n\t\tthis.m[3] = b10 * a00 + b11 * a10 + b12 * a20\r\n\t\tthis.m[4] = b10 * a01 + b11 * a11 + b12 * a21\r\n\t\tthis.m[5] = b10 * a02 + b11 * a12 + b12 * a22\r\n\r\n\t\tthis.m[6] = b20 * a00 + b21 * a10 + b22 * a20\r\n\t\tthis.m[7] = b20 * a01 + b21 * a11 + b22 * a21\r\n\t\tthis.m[8] = b20 * a02 + b21 * a12 + b22 * a22\r\n\t}\r\n\r\n\ttranspose()\r\n\t{\r\n\t\tconst m01 = this.m[1]\r\n\t\tconst m02 = this.m[2]\r\n\t\tconst m12 = this.m[5]\r\n\r\n\t\tthis.m[1] = this.m[3]\r\n\t\tthis.m[2] = this.m[6]\r\n\t\tthis.m[3] = m01\r\n\t\tthis.m[5] = this.m[7]\r\n\t\tthis.m[6] = m02\r\n\t\tthis.m[7] = m12\r\n\t}\r\n\r\n\tinvert()\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\t\tconst a20 = this.m[6]\r\n\t\tconst a21 = this.m[7]\r\n\t\tconst a22 = this.m[8]\r\n\r\n\t\tconst b01 = a22 * a11 - a12 * a21\r\n\t\tconst b11 = -a22 * a10 + a12 * a20\r\n\t\tconst b21 = a21 * a10 - a11 * a20\r\n\r\n\t\tlet det = a00 * b01 + a01 * b11 + a02 * b21\r\n\r\n\t\tif(!det) {\r\n\t\t\tthis.identity()\r\n\t\t\treturn\r\n\t\t}\r\n\r\n\t\tdet = 1.0 / det\r\n\r\n\t\tthis.m[0] = b01 * det\r\n\t\tthis.m[1] = (-a22 * a01 + a02 * a21) * det\r\n\t\tthis.m[2] = (a12 * a01 - a02 * a11) * det\r\n\t\tthis.m[3] = b11 * det\r\n\t\tthis.m[4] = (a22 * a00 - a02 * a20) * det\r\n\t\tthis.m[5] = (-a12 * a00 + a02 * a10) * det\r\n\t\tthis.m[6] = b21 * det\r\n\t\tthis.m[7] = (-a21 * a00 + a01 * a20) * det\r\n\t\tthis.m[8] = (a11 * a00 - a01 * a10) * det\r\n\t}\r\n\r\n\tnormalFromMatrix4(src)\r\n\t{\r\n\t\tconst a00 = src.m[0]\r\n\t\tconst a01 = src.m[1]\r\n\t\tconst a02 = src.m[2]\r\n\t\tconst a03 = src.m[3]\r\n\t\tconst a10 = src.m[4]\r\n\t\tconst a11 = src.m[5]\r\n\t\tconst a12 = src.m[6]\r\n\t\tconst a13 = src.m[7]\r\n\t\tconst a20 = src.m[8]\r\n\t\tconst a21 = src.m[9]\r\n\t\tconst a22 = src.m[10]\r\n\t\tconst a23 = src.m[11]\r\n\t\tconst a30 = src.m[12]\r\n\t\tconst a31 = src.m[13]\r\n\t\tconst a32 = src.m[14]\r\n\t\tconst a33 = src.m[15]\r\n\r\n\t\tconst b00 = a00 * a11 - a01 * a10\r\n\t\tconst b01 = a00 * a12 - a02 * a10\r\n\t\tconst b02 = a00 * a13 - a03 * a10\r\n\t\tconst b03 = a01 * a12 - a02 * a11\r\n\t\tconst b04 = a01 * a13 - a03 * a11\r\n\t\tconst b05 = a02 * a13 - a03 * a12\r\n\t\tconst b06 = a20 * a31 - a21 * a30\r\n\t\tconst b07 = a20 * a32 - a22 * a30\r\n\t\tconst b08 = a20 * a33 - a23 * a30\r\n\t\tconst b09 = a21 * a32 - a22 * a31\r\n\t\tconst b10 = a21 * a33 - a23 * a31\r\n\t\tconst b11 = a22 * a33 - a23 * a32\r\n\r\n\t\tlet det = (b00 * b11) - (b01 * b10) + (b02 * b09) + (b03 * b08) - (b04 * b07) + (b05 * b06)\r\n\r\n\t\tif(!det) {\r\n\t\t\tthis.identity()\r\n\t\t\treturn\r\n\t\t}\r\n\r\n\t\tdet = 1.0 / det\r\n\r\n\t\tthis.m[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det\r\n\t\tthis.m[1] = (a12 * b08 - a10 * b11 - a13 * b07) * det\r\n\t\tthis.m[2] = (a10 * b10 - a11 * b08 + a13 * b06) * det\r\n\r\n\t\tthis.m[3] = (a02 * b10 - a01 * b11 - a03 * b09) * det\r\n\t\tthis.m[4] = (a00 * b11 - a02 * b08 + a03 * b07) * det\r\n\t\tthis.m[5] = (a01 * b08 - a00 * b10 - a03 * b06) * det\r\n\r\n\t\tthis.m[6] = (a31 * b05 - a32 * b04 + a33 * b03) * det\r\n\t\tthis.m[7] = (a32 * b02 - a30 * b05 - a33 * b01) * det\r\n\t\tthis.m[8] = (a30 * b04 - a31 * b02 + a33 * b00) * det\r\n\t}\r\n\r\n\tfromMatrix4(src)\r\n\t{\r\n\t\tthis.m[0] = src.m[0]\r\n\t\tthis.m[1] = src.m[1]\r\n\t\tthis.m[2] = src.m[2]\r\n\t\tthis.m[3] = src.m[4]\r\n\t\tthis.m[4] = src.m[5]\r\n\t\tthis.m[5] = src.m[6]\r\n\t\tthis.m[6] = src.m[8]\r\n\t\tthis.m[7] = src.m[9]\r\n\t\tthis.m[8] = src.m[10]\r\n\t}\r\n\r\n\tfromQuaternion(q)\r\n\t{\r\n\t\tconst x = q.x\r\n\t\tconst y = q.y\r\n\t\tconst z = q.z\r\n\t\tconst w = q.w\r\n\r\n\t\tconst x2 = x + x\r\n\t\tconst y2 = y + y\r\n\t\tconst z2 = z + z\r\n\r\n\t\tconst xx = x * x2\r\n\t\tconst yx = y * x2\r\n\t\tconst yy = y * y2\r\n\t\tconst zx = z * x2\r\n\t\tconst zy = z * y2\r\n\t\tconst zz = z * z2\r\n\t\tconst wx = w * x2\r\n\t\tconst wy = w * y2\r\n\t\tconst wz = w * z2\r\n\r\n\t\tthis.m[0] = 1 - yy - zz\r\n\t\tthis.m[3] = yx - wz\r\n\t\tthis.m[6] = zx + wy\r\n\r\n\t\tthis.m[1] = yx + wz\r\n\t\tthis.m[4] = 1 - xx - zz\r\n\t\tthis.m[7] = zy - wx\r\n\r\n\t\tthis.m[2] = zx - wy\r\n\t\tthis.m[5] = zy + wx\r\n\t\tthis.m[8] = 1 - xx - yy\r\n\t}\r\n\r\n\tprint()\r\n\t{\r\n\t\treturn `Matrix3(${this.m[0]}, ${this.m[1]}, ${this.m[2]},\r\n         ${this.m[3]}, ${this.m[4]}, ${this.m[5]},\r\n         ${this.m[6]}, ${this.m[7]}, ${this.m[8]})`\r\n\t}\r\n}",
+      "export default Matrix3"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added a complete `Matrix3` class implementation with 3x3 matrix operations including construction, copy, clone, identity, translation, rotation, scaling, multiplication, transpose, inversion, and conversion from 4x4 matrices and quaternions.",
+        "metadata": {
+          "npm_end_line": 294,
+          "npm_file_path": "src/Matrix3.js",
+          "npm_start_line": 2,
+          "type": "addition"
+        },
+        "npm_code_after": "class Matrix3\r\n{\r\n\tconstructor(matrix)\r\n\t{\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(9)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[4] = 1.0\r\n\t\t\tthis.m[8] = 1.0\r\n\t\t}\r\n\t}\r\n\r\n\tcopy(src) {\r\n\t\tthis.m.set(src.m)\r\n\t}\r\n\r\n\tclone() {\r\n\t\tconst m = new Matrix3(this.m)\r\n\t\treturn m\r\n\t}\r\n\r\n\tset(matrix) {\r\n\t\tthis.m.assing(matrix)\r\n\t}\r\n\r\n\tidentity()\r\n\t{\r\n\t\tthis.m[0] = 1.0\r\n\t\tthis.m[1] = 0.0\r\n\t\tthis.m[2] = 0.0\r\n\r\n\t\tthis.m[3] = 0.0\r\n\t\tthis.m[4] = 1.0\r\n\t\tthis.m[5] = 0.0\r\n\r\n\t\tthis.m[6] = 0.0\r\n\t\tthis.m[7] = 0.0\r\n\t\tthis.m[8] = 1.0\r\n\t}\r\n\r\n\ttranslate(x, y)\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\t\tconst a20 = this.m[6]\r\n\t\tconst a21 = this.m[7]\r\n\t\tconst a22 = this.m[8]\r\n\r\n\t\tthis.m[0] = a00\r\n\t\tthis.m[1] = a01\r\n\t\tthis.m[2] = a02\r\n\r\n\t\tthis.m[3] = a10\r\n\t\tthis.m[4] = a11\r\n\t\tthis.m[5] = a12\r\n\r\n\t\tthis.m[6] = x * a00 + y * a10 + a20\r\n\t\tthis.m[7] = x * a01 + y * a11 + a21\r\n\t\tthis.m[8] = x * a02 + y * a12 + a22\r\n\t}\r\n\r\n\trotate(rad)\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\r\n\t\tconst s = Math.sin(rad)\r\n\t\tconst c = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = c * a00 + s * a10\r\n\t\tthis.m[1] = c * a01 + s * a11\r\n\t\tthis.m[2] = c * a02 + s * a12\r\n\r\n\t\tthis.m[3] = c * a10 - s * a00\r\n\t\tthis.m[4] = c * a11 - s * a01\r\n\t\tthis.m[5] = c * a12 - s * a02\r\n\t}\r\n\r\n\tscale(x, y)\r\n\t{\r\n\t\tthis.m[0] *= x\r\n\t\tthis.m[1] *= x\r\n\t\tthis.m[2] *= x\r\n\r\n\t\tthis.m[3] *= y\r\n\t\tthis.m[4] *= y\r\n\t\tthis.m[5] *= y\r\n\t}\r\n\r\n\tmul(src)\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\t\tconst a20 = this.m[6]\r\n\t\tconst a21 = this.m[7]\r\n\t\tconst a22 = this.m[8]\r\n\r\n\t\tconst b00 = src.m[0]\r\n\t\tconst b01 = src.m[1]\r\n\t\tconst b02 = src.m[2]\r\n\t\tconst b10 = src.m[3]\r\n\t\tconst b11 = src.m[4]\r\n\t\tconst b12 = src.m[5]\r\n\t\tconst b20 = src.m[6]\r\n\t\tconst b21 = src.m[7]\r\n\t\tconst b22 = src.m[8]\r\n\r\n\t\tthis.m[0] = b00 * a00 + b01 * a10 + b02 * a20\r\n\t\tthis.m[1] = b00 * a01 + b01 * a11 + b02 * a21\r\n\t\tthis.m[2] = b00 * a02 + b01 * a12 + b02 * a22\r\n\r\n\t\tthis.m[3] = b10 * a00 + b11 * a10 + b12 * a20\r\n\t\tthis.m[4] = b10 * a01 + b11 * a11 + b12 * a21\r\n\t\tthis.m[5] = b10 * a02 + b11 * a12 + b12 * a22\r\n\r\n\t\tthis.m[6] = b20 * a00 + b21 * a10 + b22 * a20\r\n\t\tthis.m[7] = b20 * a01 + b21 * a11 + b22 * a21\r\n\t\tthis.m[8] = b20 * a02 + b21 * a12 + b22 * a22\r\n\t}\r\n\r\n\ttranspose()\r\n\t{\r\n\t\tconst m01 = this.m[1]\r\n\t\tconst m02 = this.m[2]\r\n\t\tconst m12 = this.m[5]\r\n\r\n\t\tthis.m[1] = this.m[3]\r\n\t\tthis.m[2] = this.m[6]\r\n\t\tthis.m[3] = m01\r\n\t\tthis.m[5] = this.m[7]\r\n\t\tthis.m[6] = m02\r\n\t\tthis.m[7] = m12\r\n\t}\r\n\r\n\tinvert()\r\n\t{\r\n\t\tconst a00 = this.m[0]\r\n\t\tconst a01 = this.m[1]\r\n\t\tconst a02 = this.m[2]\r\n\t\tconst a10 = this.m[3]\r\n\t\tconst a11 = this.m[4]\r\n\t\tconst a12 = this.m[5]\r\n\t\tconst a20 = this.m[6]\r\n\t\tconst a21 = this.m[7]\r\n\t\tconst a22 = this.m[8]\r\n\r\n\t\tconst b01 = a22 * a11 - a12 * a21\r\n\t\tconst b11 = -a22 * a10 + a12 * a20\r\n\t\tconst b21 = a21 * a10 - a11 * a20\r\n\r\n\t\tlet det = a00 * b01 + a01 * b11 + a02 * b21\r\n\r\n\t\tif(!det) {\r\n\t\t\tthis.identity()\r\n\t\t\treturn\r\n\t\t}\r\n\r\n\t\tdet = 1.0 / det\r\n\r\n\t\tthis.m[0] = b01 * det\r\n\t\tthis.m[1] = (-a22 * a01 + a02 * a21) * det\r\n\t\tthis.m[2] = (a12 * a01 - a02 * a11) * det\r\n\t\tthis.m[3] = b11 * det\r\n\t\tthis.m[4] = (a22 * a00 - a02 * a20) * det\r\n\t\tthis.m[5] = (-a12 * a00 + a02 * a10) * det\r\n\t\tthis.m[6] = b21 * det\r\n\t\tthis.m[7] = (-a21 * a00 + a01 * a20) * det\r\n\t\tthis.m[8] = (a11 * a00 - a01 * a10) * det\r\n\t}\r\n\r\n\tnormalFromMatrix4(src)\r\n\t{\r\n\t\tconst a00 = src.m[0]\r\n\t\tconst a01 = src.m[1]\r\n\t\tconst a02 = src.m[2]\r\n\t\tconst a03 = src.m[3]\r\n\t\tconst a10 = src.m[4]\r\n\t\tconst a11 = src.m[5]\r\n\t\tconst a12 = src.m[6]\r\n\t\tconst a13 = src.m[7]\r\n\t\tconst a20 = src.m[8]\r\n\t\tconst a21 = src.m[9]\r\n\t\tconst a22 = src.m[10]\r\n\t\tconst a23 = src.m[11]\r\n\t\tconst a30 = src.m[12]\r\n\t\tconst a31 = src.m[13]\r\n\t\tconst a32 = src.m[14]\r\n\t\tconst a33 = src.m[15]\r\n\r\n\t\tconst b00 = a00 * a11 - a01 * a10\r\n\t\tconst b01 = a00 * a12 - a02 * a10\r\n\t\tconst b02 = a00 * a13 - a03 * a10\r\n\t\tconst b03 = a01 * a12 - a02 * a11\r\n\t\tconst b04 = a01 * a13 - a03 * a11\r\n\t\tconst b05 = a02 * a13 - a03 * a12\r\n\t\tconst b06 = a20 * a31 - a21 * a30\r\n\t\tconst b07 = a20 * a32 - a22 * a30\r\n\t\tconst b08 = a20 * a33 - a23 * a30\r\n\t\tconst b09 = a21 * a32 - a22 * a31\r\n\t\tconst b10 = a21 * a33 - a23 * a31\r\n\t\tconst b11 = a22 * a33 - a23 * a32\r\n\r\n\t\tlet det = (b00 * b11) - (b01 * b10) + (b02 * b09) + (b03 * b08) - (b04 * b07) + (b05 * b06)\r\n\r\n\t\tif(!det) {\r\n\t\t\tthis.identity()\r\n\t\t\treturn\r\n\t\t}\r\n\r\n\t\tdet = 1.0 / det\r\n\r\n\t\tthis.m[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det\r\n\t\tthis.m[1] = (a12 * b08 - a10 * b11 - a13 * b07) * det\r\n\t\tthis.m[2] = (a10 * b10 - a11 * b08 + a13 * b06) * det\r\n\r\n\t\tthis.m[3] = (a02 * b10 - a01 * b11 - a03 * b09) * det\r\n\t\tthis.m[4] = (a00 * b11 - a02 * b08 + a03 * b07) * det\r\n\t\tthis.m[5] = (a01 * b08 - a00 * b10 - a03 * b06) * det\r\n\r\n\t\tthis.m[6] = (a31 * b05 - a32 * b04 + a33 * b03) * det\r\n\t\tthis.m[7] = (a32 * b02 - a30 * b05 - a33 * b01) * det\r\n\t\tthis.m[8] = (a30 * b04 - a31 * b02 + a33 * b00) * det\r\n\t}\r\n\r\n\tfromMatrix4(src)\r\n\t{\r\n\t\tthis.m[0] = src.m[0]\r\n\t\tthis.m[1] = src.m[1]\r\n\t\tthis.m[2] = src.m[2]\r\n\t\tthis.m[3] = src.m[4]\r\n\t\tthis.m[4] = src.m[5]\r\n\t\tthis.m[5] = src.m[6]\r\n\t\tthis.m[6] = src.m[8]\r\n\t\tthis.m[7] = src.m[9]\r\n\t\tthis.m[8] = src.m[10]\r\n\t}\r\n\r\n\tfromQuaternion(q)\r\n\t{\r\n\t\tconst x = q.x\r\n\t\tconst y = q.y\r\n\t\tconst z = q.z\r\n\t\tconst w = q.w\r\n\r\n\t\tconst x2 = x + x\r\n\t\tconst y2 = y + y\r\n\t\tconst z2 = z + z\r\n\r\n\t\tconst xx = x * x2\r\n\t\tconst yx = y * x2\r\n\t\tconst yy = y * y2\r\n\t\tconst zx = z * x2\r\n\t\tconst zy = z * y2\r\n\t\tconst zz = z * z2\r\n\t\tconst wx = w * x2\r\n\t\tconst wy = w * y2\r\n\t\tconst wz = w * z2\r\n\r\n\t\tthis.m[0] = 1 - yy - zz\r\n\t\tthis.m[3] = yx - wz\r\n\t\tthis.m[6] = zx + wy\r\n\r\n\t\tthis.m[1] = yx + wz\r\n\t\tthis.m[4] = 1 - xx - zz\r\n\t\tthis.m[7] = zy - wx\r\n\r\n\t\tthis.m[2] = zx - wy\r\n\t\tthis.m[5] = zy + wx\r\n\t\tthis.m[8] = 1 - xx - yy\r\n\t}\r\n\r\n\tprint()\r\n\t{\r\n\t\treturn `Matrix3(${this.m[0]}, ${this.m[1]}, ${this.m[2]},\r\n         ${this.m[3]}, ${this.m[4]}, ${this.m[5]},\r\n         ${this.m[6]}, ${this.m[7]}, ${this.m[8]})`\r\n\t}\r\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added a complete `Matrix3` class implementation with 3x3 matrix operations including construction, copy, clone, identity, translation, rotation, scaling, multiplication, transpose, inversion, and conversion from 4x4 matrices and quaternions.",
+        "metadata": {
+          "npm_end_line": 296,
+          "npm_file_path": "src/Matrix3.js",
+          "npm_start_line": 296,
+          "type": "addition"
+        },
+        "npm_code_after": "export default Matrix3",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix3.js",
+      "sourceLines": "2-296",
+      "targetFile": "src/main/ets/src/Matrix3.ets",
+      "targetLines": "2-296"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Matrix3.ets",
+      "lines": "2-296"
+    }
+  },
+  {
+    "answers": [
+      "export { radians, degrees, EPSILON };"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "export { EPSILON };"
+        ],
+        "intent": "Added utility functions for angle conversion between radians and degrees, and exported them alongside the existing EPSILON constant.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 6,
+          "npm_file_path": "src/Common.js",
+          "npm_start_line": 4,
+          "ohpm_end_line": 3,
+          "ohpm_file_path": "src/main/ets/src/Common.ets",
+          "ohpm_start_line": 3,
+          "type": "modification"
+        },
+        "npm_code_after": "export {\r\n\tradians,\r\n\tdegrees,\r\n\tEPSILON\r\n}",
+        "npm_code_before": "export {\r\n\tEPSILON\r\n}",
+        "ohpm_code_before": [
+          "export { EPSILON };"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Common.js",
+      "sourceLines": "4-6",
+      "targetFile": "src/main/ets/src/Common.ets",
+      "targetLines": "3-3"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Common.ets",
+      "lines": "3-3"
+    }
+  },
+  {
+    "answers": [
+      "export default class Matrix4 {\n  private m: Float32Array;\n\n  constructor(matrix?: Float32Array) {\n    if (matrix) {\n      this.m = new Float32Array(matrix);\n    } else {\n      this.m = new Float32Array(16);\n      this.m[0] = 1.0;\n      this.m[5] = 1.0;\n      this.m[10] = 1.0;\n      this.m[15] = 1.0;\n    }\n  }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Matrix4 class to accept an optional array in the constructor, changed `clone()` to return a new Matrix4 instance, added a `set()` method, fixed the `scale()` method to properly scale all components, updated `lookAt()` to accept vector objects, renamed `inverse()` to `invert()` with identity fallback on failure, and added a `print()` method for debugging.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 11,
+          "npm_file_path": "src/Matrix4.js",
+          "npm_start_line": 3,
+          "ohpm_end_line": 3,
+          "ohpm_file_path": "library/src/main/ets/src/Matrix4.ets",
+          "ohpm_start_line": 3,
+          "type": "modification"
+        },
+        "npm_code_after": "class Matrix4\n\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(16)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[5] = 1.0\r\n\t\t\tthis.m[10] = 1.0\r\n\t\t\tthis.m[15] = 1.0\r\n\t\t}",
+        "npm_code_before": "export default class Matrix4\n\r\n\t\tthis.m = new Float32Array(16);\n\r\n\t\tthis.m[0] = 1.0;\n\r\n\t\tthis.m[5] = 1.0;\n\r\n\t\tthis.m[10] = 1.0;\n\r\n\t\tthis.m[15] = 1.0;",
+        "ohpm_code_before": [
+          "export default class Matrix4"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix4.js",
+      "sourceLines": "3-11",
+      "targetFile": "library/src/main/ets/src/Matrix4.ets",
+      "targetLines": "3-3"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/src/Matrix4.ets",
+      "lines": "3-3"
+    }
+  },
+  {
+    "answers": [
+      "class Matrix4 {\n  private m: Float32Array;\n\n  constructor(matrix?: Float32Array) {\n    if (matrix) {\n      this.m = new Float32Array(matrix);\n    } else {\n      this.m = new Float32Array(16);\n      this.m[0] = 1.0;\n      this.m[5] = 1.0;\n      this.m[10] = 1.0;\n      this.m[15] = 1.0;\n    }\n  }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Matrix4 class to accept an optional array in the constructor, changed `clone()` to return a new Matrix4 instance, added a `set()` method, fixed the `scale()` method to properly scale all components, updated `lookAt()` to accept vector objects, renamed `inverse()` to `invert()` with identity fallback on failure, and added a `print()` method for debugging.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 11,
+          "npm_file_path": "src/Matrix4.js",
+          "npm_start_line": 3,
+          "ohpm_end_line": 7,
+          "ohpm_file_path": "library/src/main/ets/src/Matrix4.ets",
+          "ohpm_start_line": 7,
+          "type": "modification"
+        },
+        "npm_code_after": "class Matrix4\n\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(16)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[5] = 1.0\r\n\t\t\tthis.m[10] = 1.0\r\n\t\t\tthis.m[15] = 1.0\r\n\t\t}",
+        "npm_code_before": "export default class Matrix4\n\r\n\t\tthis.m = new Float32Array(16);\n\r\n\t\tthis.m[0] = 1.0;\n\r\n\t\tthis.m[5] = 1.0;\n\r\n\t\tthis.m[10] = 1.0;\n\r\n\t\tthis.m[15] = 1.0;",
+        "ohpm_code_before": [
+          "\n        this.m = new Float32Array(16);"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix4.js",
+      "sourceLines": "3-11",
+      "targetFile": "library/src/main/ets/src/Matrix4.ets",
+      "targetLines": "7-7"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/src/Matrix4.ets",
+      "lines": "7-7"
+    }
+  },
+  {
+    "answers": [
+      "class Matrix4 {\n  private m: Float32Array;\n\n  constructor(matrix?: Float32Array) {\n    if (matrix) {\n      this.m = new Float32Array(matrix);\n    } else {\n      this.m = new Float32Array(16);\n      this.m[0] = 1.0;\n      this.m[5] = 1.0;\n      this.m[10] = 1.0;\n      this.m[15] = 1.0;\n    }\n  }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Matrix4 class to accept an optional array in the constructor, changed `clone()` to return a new Matrix4 instance, added a `set()` method, fixed the `scale()` method to properly scale all components, updated `lookAt()` to accept vector objects, renamed `inverse()` to `invert()` with identity fallback on failure, and added a `print()` method for debugging.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 11,
+          "npm_file_path": "src/Matrix4.js",
+          "npm_start_line": 3,
+          "ohpm_end_line": 9,
+          "ohpm_file_path": "library/src/main/ets/src/Matrix4.ets",
+          "ohpm_start_line": 9,
+          "type": "modification"
+        },
+        "npm_code_after": "class Matrix4\n\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(16)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[5] = 1.0\r\n\t\t\tthis.m[10] = 1.0\r\n\t\t\tthis.m[15] = 1.0\r\n\t\t}",
+        "npm_code_before": "export default class Matrix4\n\r\n\t\tthis.m = new Float32Array(16);\n\r\n\t\tthis.m[0] = 1.0;\n\r\n\t\tthis.m[5] = 1.0;\n\r\n\t\tthis.m[10] = 1.0;\n\r\n\t\tthis.m[15] = 1.0;",
+        "ohpm_code_before": [
+          "\n        this.m[5] = 1.0;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix4.js",
+      "sourceLines": "3-11",
+      "targetFile": "library/src/main/ets/src/Matrix4.ets",
+      "targetLines": "9-9"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/src/Matrix4.ets",
+      "lines": "9-9"
+    }
+  },
+  {
+    "answers": [
+      "const EPSILON = 0.000001;\n\nfunction radians(degrees: number): number {\n  return degrees * Math.PI / 180;\n}\n\nfunction degrees(radians: number): number {\n  return radians * 180 / Math.PI;\n}\n\nexport { radians, degrees, EPSILON };"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "export { EPSILON };"
+        ],
+        "intent": "Added utility functions for angle conversion between radians and degrees, and exported them alongside the existing EPSILON constant.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 6,
+          "npm_file_path": "src/Common.js",
+          "npm_start_line": 4,
+          "ohpm_end_line": 1,
+          "ohpm_file_path": "src/main/ets/src/Common.ets",
+          "ohpm_start_line": 1,
+          "type": "modification"
+        },
+        "npm_code_after": "export {\r\n\tradians,\r\n\tdegrees,\r\n\tEPSILON\r\n}",
+        "npm_code_before": "export {\r\n\tEPSILON\r\n}",
+        "ohpm_code_before": [
+          "const EPSILON = 0.000001;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Common.js",
+      "sourceLines": "4-6",
+      "targetFile": "src/main/ets/src/Common.ets",
+      "targetLines": "1-1"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Common.ets",
+      "lines": "1-1"
+    }
+  },
+  {
+    "answers": [
+      "class Matrix4 {\n  private m: Float32Array;\n\n  constructor(matrix?: Float32Array) {\n    if (matrix) {\n      this.m = new Float32Array(matrix);\n    } else {\n      this.m = new Float32Array(16);\n      this.m[0] = 1.0;\n      this.m[5] = 1.0;\n      this.m[10] = 1.0;\n      this.m[15] = 1.0;\n    }\n  }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Matrix4 class to accept an optional array in the constructor, changed `clone()` to return a new Matrix4 instance, added a `set()` method, fixed the `scale()` method to properly scale all components, updated `lookAt()` to accept vector objects, renamed `inverse()` to `invert()` with identity fallback on failure, and added a `print()` method for debugging.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 11,
+          "npm_file_path": "src/Matrix4.js",
+          "npm_start_line": 3,
+          "ohpm_end_line": 10,
+          "ohpm_file_path": "library/src/main/ets/src/Matrix4.ets",
+          "ohpm_start_line": 10,
+          "type": "modification"
+        },
+        "npm_code_after": "class Matrix4\n\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(16)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[5] = 1.0\r\n\t\t\tthis.m[10] = 1.0\r\n\t\t\tthis.m[15] = 1.0\r\n\t\t}",
+        "npm_code_before": "export default class Matrix4\n\r\n\t\tthis.m = new Float32Array(16);\n\r\n\t\tthis.m[0] = 1.0;\n\r\n\t\tthis.m[5] = 1.0;\n\r\n\t\tthis.m[10] = 1.0;\n\r\n\t\tthis.m[15] = 1.0;",
+        "ohpm_code_before": [
+          "\n        this.m[10] = 1.0;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix4.js",
+      "sourceLines": "3-11",
+      "targetFile": "library/src/main/ets/src/Matrix4.ets",
+      "targetLines": "10-10"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/src/Matrix4.ets",
+      "lines": "10-10"
+    }
+  },
+  {
+    "answers": [
+      "class Matrix4 {\n  private m: number[];\n\n  constructor(matrix?: number[]) {\n    if (matrix) {\n      this.m = new Array<number>(16);\n      for (let i = 0; i < 16; i++) {\n        this.m[i] = matrix[i];\n      }\n    } else {\n      this.m = new Array<number>(16);\n      this.m[0] = 1.0;\n      this.m[5] = 1.0;\n      this.m[10] = 1.0;\n      this.m[15] = 1.0;\n    }\n  }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Matrix4 class to accept an optional array in the constructor, changed `clone()` to return a new Matrix4 instance, added a `set()` method, fixed the `scale()` method to properly scale all components, updated `lookAt()` to accept vector objects, renamed `inverse()` to `invert()` with identity fallback on failure, and added a `print()` method for debugging.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 11,
+          "npm_file_path": "src/Matrix4.js",
+          "npm_start_line": 3,
+          "ohpm_end_line": 11,
+          "ohpm_file_path": "library/src/main/ets/src/Matrix4.ets",
+          "ohpm_start_line": 11,
+          "type": "modification"
+        },
+        "npm_code_after": "class Matrix4\n\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(16)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[5] = 1.0\r\n\t\t\tthis.m[10] = 1.0\r\n\t\t\tthis.m[15] = 1.0\r\n\t\t}",
+        "npm_code_before": "export default class Matrix4\n\r\n\t\tthis.m = new Float32Array(16);\n\r\n\t\tthis.m[0] = 1.0;\n\r\n\t\tthis.m[5] = 1.0;\n\r\n\t\tthis.m[10] = 1.0;\n\r\n\t\tthis.m[15] = 1.0;",
+        "ohpm_code_before": [
+          "\n        this.m[15] = 1.0;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix4.js",
+      "sourceLines": "3-11",
+      "targetFile": "library/src/main/ets/src/Matrix4.ets",
+      "targetLines": "11-11"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/src/Matrix4.ets",
+      "lines": "11-11"
+    }
+  },
+  {
+    "answers": [
+      "class Matrix4 {\n  private m: number[];\n\n  constructor(matrix?: number[]) {\n    if (matrix) {\n      this.m = new Array<number>(16);\n      for (let i = 0; i < 16; i++) {\n        this.m[i] = matrix[i];\n      }\n    } else {\n      this.m = new Array<number>(16);\n      this.m[0] = 1.0;\n      this.m[5] = 1.0;\n      this.m[10] = 1.0;\n      this.m[15] = 1.0;\n    }\n  }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Refactored the Matrix4 class to accept an optional array in the constructor, changed `clone()` to return a new Matrix4 instance, added a `set()` method, fixed the `scale()` method to properly scale all components, updated `lookAt()` to accept vector objects, renamed `inverse()` to `invert()` with identity fallback on failure, and added a `print()` method for debugging.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 11,
+          "npm_file_path": "src/Matrix4.js",
+          "npm_start_line": 3,
+          "ohpm_end_line": 8,
+          "ohpm_file_path": "library/src/main/ets/src/Matrix4.ets",
+          "ohpm_start_line": 8,
+          "type": "modification"
+        },
+        "npm_code_after": "class Matrix4\n\r\n\t\tif(matrix) {\r\n\t\t\tthis.m = new Float32Array(matrix)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.m = new Float32Array(16)\r\n\t\t\tthis.m[0] = 1.0\r\n\t\t\tthis.m[5] = 1.0\r\n\t\t\tthis.m[10] = 1.0\r\n\t\t\tthis.m[15] = 1.0\r\n\t\t}",
+        "npm_code_before": "export default class Matrix4\n\r\n\t\tthis.m = new Float32Array(16);\n\r\n\t\tthis.m[0] = 1.0;\n\r\n\t\tthis.m[5] = 1.0;\n\r\n\t\tthis.m[10] = 1.0;\n\r\n\t\tthis.m[15] = 1.0;",
+        "ohpm_code_before": [
+          "\n        this.m[0] = 1.0;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Matrix4.js",
+      "sourceLines": "3-11",
+      "targetFile": "library/src/main/ets/src/Matrix4.ets",
+      "targetLines": "8-8"
+    },
+    "location": {
+      "filePath": "library/src/main/ets/src/Matrix4.ets",
+      "lines": "8-8"
+    }
+  },
+  {
+    "answers": [
+      "export default { AABB, Circle, Matrix4, Random, Vector2, Vector3, Quaternion, radians, degrees, EPSILON } as ESObject;"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added imports for `radians` and `degrees` utility functions from Common module, and removed a large commented-out `setDirection` method from the Quaternion class to clean up dead code.\n\nAdded a `fromArray` method to Vector2 for populating the vector from an array, and imported `radians` and `degrees` utility functions from Common while removing trailing semicolons for consistent code style.\n\nAdded import of `radians` and `degrees` utility functions, and modified the `set` method to allow single-argument calls that set all components to the same value.\n\nAdded import of `radians` and `degrees` utility functions from Common module, and performed minor code formatting cleanup (removing semicolons) across the Circle class methods.\n\n & Added utility functions for angle conversion (radians/degrees) to the module exports.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 2,
+          "npm_end_line": 21,
+          "npm_file_path": "index.js",
+          "npm_start_line": 11,
+          "ohpm_end_line": 10,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 10,
+          "type": "modification"
+        },
+        "npm_code_after": "export default { \r\n\tAABB, \r\n\tCircle, \r\n\tMatrix3, \r\n\tMatrix4, \r\n\tRandom, \r\n\tVector2, \r\n\tVector3, \r\n\tQuaternion,\r\n\tradians,\r\n\tdegrees,\r\n\tEPSILON\r\n}",
+        "npm_code_before": "export default { \r\n\tAABB, \r\n\tCircle, \r\n\tMatrix3, \r\n\tMatrix4, \r\n\tRandom, \r\n\tVector2, \r\n\tVector3, \r\n\tQuaternion,\r\n\tEPSILON\r\n}",
+        "ohpm_code_before": [
+          "export default { AABB, Circle, Matrix4, Random, Vector2, Vector3, Quaternion, EPSILON } as ESObject;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "11-21",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "10-10"
+    },
+    "location": {
+      "filePath": "src/main/ets/index.ets",
+      "lines": "10-10"
+    }
+  },
+  {
+    "answers": [
+      "import { radians, degrees, EPSILON } from \"./src/Common\";"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added imports for `radians` and `degrees` utility functions from Common module, and removed a large commented-out `setDirection` method from the Quaternion class to clean up dead code.\n\nAdded a `fromArray` method to Vector2 for populating the vector from an array, and imported `radians` and `degrees` utility functions from Common while removing trailing semicolons for consistent code style.\n\nAdded import of `radians` and `degrees` utility functions, and modified the `set` method to allow single-argument calls that set all components to the same value.\n\nAdded import of `radians` and `degrees` utility functions from Common module, and performed minor code formatting cleanup (removing semicolons) across the Circle class methods.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 9,
+          "npm_file_path": "index.js",
+          "npm_start_line": 9,
+          "ohpm_end_line": 8,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "ohpm_start_line": 8,
+          "type": "modification"
+        },
+        "npm_code_after": "import { radians, degrees, EPSILON } from \"./src/Common\"",
+        "npm_code_before": "import { EPSILON } from \"./src/Common\"",
+        "ohpm_code_before": [
+          "import { EPSILON } from \"./src/Common\";"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "9-9",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "8-8"
+    },
+    "location": {
+      "filePath": "src/main/ets/index.ets",
+      "lines": "8-8"
+    }
+  },
+  {
+    "answers": [
+      "// TS2ArkTS-SessionId-32\nexport default class Random {\n    constructor() {\n        this.seed = 0\n        this.a = 0\n        this.m = 0\n        this.q = 0\n        this.r = 0\n        this.oneOverM = 0\n\n        this.init()\n    }\n\n    init(): void {\n        this.setSeed(Math.random(), true)\n    }\n\n    generate(): number {\n        const hi = Math.floor(this.seed / this.q)\n        const lo = this.seed % this.q\n        const test = this.a * lo - this.r * hi\n\n        if (test > 0) {\n            this.seed = test\n        }\n        else {\n            this.seed = test + this.m\n        }\n\n        return (this.seed * this.oneOverM)\n    }\n\n    number(min: ESObject, max: ESObject): number {\n        const number = this.generate()\n        return Math.round((max - min) * number + min)\n    }\n\n    numberF(min: ESObject, max: ESObject): ESObject {\n        const number = this.generate()\n        return ((max - min) * number + min)\n    }\n\n    setSeed(seed: ESObject, useTime: ESObject): void {\n        if (useTime !== undefined) {\n            useTime = true\n        }\n\n        if (useTime === true) {\n            const date = new Date()\n            this.seed = seed + (date.getSeconds() * 0xFFFFFF) + (date.getMinutes() * 0xFFFF)\n        }\n        else {\n            this.seed = seed\n        }\n\n        this.a = 48271\n        this.m = 2147483647\n        this.q = Math.floor(this.m / this.a)\n        this.r = this.m % this.a\n        this.oneOverM = 1.0 / this.m\n    }\n\n    seed: number\n    a: number\n    m: number\n    q: number\n    r: number\n    oneOverM: number\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import Random from \"./src/Random\";"
+        ],
+        "intent": "The code changes are purely stylistic, removing semicolons from all statements while preserving identical functionality and logic.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 66,
+          "npm_file_path": "src/Random.js",
+          "npm_start_line": 2,
+          "ohpm_end_line": 70,
+          "ohpm_file_path": "src/main/ets/src/Random.ets",
+          "ohpm_start_line": 2,
+          "type": "modification"
+        },
+        "npm_code_after": "export default class Random\r\n{\r\n\tconstructor()\r\n\t{\r\n\t\tthis.seed = 0\r\n\t\tthis.a = 0\r\n\t\tthis.m = 0\r\n\t\tthis.q = 0\r\n\t\tthis.r = 0\r\n\t\tthis.oneOverM = 0\r\n\r\n\t\tthis.init()\r\n\t}\r\n\r\n\tinit() {\r\n\t\tthis.setSeed(Math.random(), true)\r\n\t}\r\n\r\n\tgenerate()\r\n\t{\r\n\t\tconst hi = Math.floor(this.seed / this.q)\r\n\t\tconst lo = this.seed % this.q\r\n\t\tconst test = this.a * lo - this.r * hi\r\n\r\n\t\tif(test > 0) {\r\n\t\t\tthis.seed = test\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.seed = test + this.m\r\n\t\t}\r\n\r\n\t\treturn (this.seed * this.oneOverM)\r\n\t}\r\n\r\n\tnumber(min, max) {\r\n\t\tconst number = this.generate()\r\n\t\treturn Math.round((max - min) * number + min)\r\n\t}\r\n\r\n\tnumberF(min, max) {\r\n\t\tconst number = this.generate()\r\n\t\treturn ((max - min) * number + min)\r\n\t}\r\n\r\n\tsetSeed(seed, useTime)\r\n\t{\r\n\t\tif(useTime !== undefined) {\r\n\t\t\tuseTime = true\r\n\t\t}\r\n\r\n\t\tif(useTime === true) {\r\n\t\t\tconst date = new Date()\r\n\t\t\tthis.seed = seed + (date.getSeconds() * 0xFFFFFF) + (date.getMinutes() * 0xFFFF)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.seed = seed\r\n\t\t}\r\n\r\n\t\tthis.a = 48271\r\n\t\tthis.m = 2147483647\r\n\t\tthis.q = Math.floor(this.m / this.a)\r\n\t\tthis.r = this.m % this.a\r\n\t\tthis.oneOverM = 1.0 / this.m\r\n\t}\r\n}",
+        "npm_code_before": "export default class Random\r\n{\r\n\tconstructor()\r\n\t{\r\n\t\tthis.seed = 0;\r\n\t\tthis.a = 0;\r\n\t\tthis.m = 0;\r\n\t\tthis.q = 0;\r\n\t\tthis.r = 0;\r\n\t\tthis.oneOverM = 0;\r\n\r\n\t\tthis.init();\t\t\r\n\t}\r\n\r\n\tinit() {\r\n\t\tthis.setSeed(Math.random(), true);\r\n\t}\r\n\r\n\tgenerate()\r\n\t{\r\n\t\tconst hi = Math.floor(this.seed / this.q);\r\n\t\tconst lo = this.seed % this.q;\r\n\t\tconst test = this.a * lo - this.r * hi;\r\n\r\n\t\tif(test > 0) {\r\n\t\t\tthis.seed = test;\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.seed = test + this.m;\r\n\t\t}\r\n\r\n\t\treturn (this.seed * this.oneOverM);\r\n\t}\r\n\r\n\tnumber(min, max) {\r\n\t\tconst number = this.generate();\r\n\t\treturn Math.round((max - min) * number + min);\r\n\t}\r\n\r\n\tnumberF(min, max) {\r\n\t\tconst number = this.generate();\r\n\t\treturn ((max - min) * number + min);\r\n\t}\r\n\r\n\tsetSeed(seed, useTime)\r\n\t{\r\n\t\tif(useTime !== undefined) {\r\n\t\t\tuseTime = true;\r\n\t\t}\r\n\r\n\t\tif(useTime === true) {\r\n\t\t\tconst date = new Date();\r\n\t\t\tthis.seed = seed + (date.getSeconds() * 0xFFFFFF) + (date.getMinutes() * 0xFFFF);\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.seed = seed;\r\n\t\t}\r\n\r\n\t\tthis.a = 48271;\r\n\t\tthis.m = 2147483647;\r\n\t\tthis.q = Math.floor(this.m / this.a);\r\n\t\tthis.r = this.m % this.a;\r\n\t\tthis.oneOverM = 1.0 / this.m;\r\n\t}\r\n}",
+        "ohpm_code_before": [
+          "// TS2ArkTS-SessionId-32\nexport default class Random {\n    constructor() {\n        this.seed = 0;\n        this.a = 0;\n        this.m = 0;\n        this.q = 0;\n        this.r = 0;\n        this.oneOverM = 0;\n\n        this.init();\n    }\n\n    init(): void {\n        this.setSeed(Math.random(), true);\n    }\n\n    generate(): number {\n        const hi = Math.floor(this.seed / this.q);\n        const lo = this.seed % this.q;\n        const test = this.a * lo - this.r * hi;\n\n        if (test > 0) {\n            this.seed = test;\n        }\n        else {\n            this.seed = test + this.m;\n        }\n\n        return (this.seed * this.oneOverM);\n    }\n\n    number(min: ESObject, max: ESObject): number {\n        const number = this.generate();\n        return Math.round((max - min) * number + min);\n    }\n\n    numberF(min: ESObject, max: ESObject): ESObject {\n        const number = this.generate();\n        return ((max - min) * number + min);\n    }\n\n    setSeed(seed: ESObject, useTime: ESObject): void {\n        if (useTime !== undefined) {\n            useTime = true;\n        }\n\n        if (useTime === true) {\n            const date = new Date();\n            this.seed = seed + (date.getSeconds() * 0xFFFFFF) + (date.getMinutes() * 0xFFFF);\n        }\n        else {\n            this.seed = seed;\n        }\n\n        this.a = 48271;\n        this.m = 2147483647;\n        this.q = Math.floor(this.m / this.a);\n        this.r = this.m % this.a;\n        this.oneOverM = 1.0 / this.m;\n    }\n\n    seed: number;\n    a: number;\n    m: number;\n    q: number;\n    r: number;\n    oneOverM: number;\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Random.js",
+      "sourceLines": "2-66",
+      "targetFile": "src/main/ets/src/Random.ets",
+      "targetLines": "2-70"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Random.ets",
+      "lines": "2-70"
+    }
+  },
+  {
+    "answers": [
+      "import { radians, degrees } from \"./Common\";\n// TS2ArkTS-SessionId-17\nexport default class Circle {\n    constructor(x: ESObject, y: ESObject, radius: ESObject) {\n        this.x = x;\n        this.y = y;\n        this.radius = radius;\n        this.minX = (x as number) - (radius as number);\n        this.minY = (y as number) - (radius as number);\n        this.maxX = (x as number) + (radius as number);\n        this.maxY = (y as number) + (radius as number);\n    }\n\n    position(x: ESObject, y: ESObject): void {\n        this.x = x;\n        this.y = y;\n        this.minX = (x as number) - (this.radius as number);\n        this.minY = (y as number) - (this.radius as number);\n        this.maxX = (x as number) + (this.radius as number);\n        this.maxY = (y as number) + (this.radius as number);\n    }\n\n    move(addX: ESObject, addY: ESObject): void {\n        this.x = (this.x as number) + (addX as number);\n        this.y = (this.y as number) + (addY as number);\n        this.minX = (this.minX as number) + (addX as number);\n        this.minY = (this.minY as number) + (addY as number);\n        this.maxX = (this.maxX as number) + (addX as number);\n        this.maxY = (this.maxY as number) + (addY as number);\n    }\n\n    vsPoint(x: ESObject, y: ESObject): boolean {\n        return (((this.x as number) - (x as number)) * 2) + (((this.y as number) - (y as number)) * 2) <= ((this.radius as number) * 2);\n    }\n\n    vsAABB(aabb: ESObject): void {\n\n    }\n\n    vsCircle(circle: ESObject): boolean {\n        const dx = (circle as Record<string, ESObject>).x as number - (this.x as number);\n        const dy = (circle as Record<string, ESObject>).y as number - (this.y as number);\n        const radii = (this.radius as number) + ((circle as Record<string, ESObject>).radius as number);\n\n        if ((dx * dx) + (dy * dy) < (radii * radii)) {\n            return true;\n        }\n\n        return false;\n    }\n\n    overlapCircle(circle: ESObject): 0 | 1 | 2 {\n        const distance = Math.sqrt(((this.x as number) - ((circle as Record<string, ESObject>).x as number)) * ((this.y as number) - ((circle as Record<string, ESObject>).y as number)));\n\n        if (distance > ((this.radius as number) + ((circle as Record<string, ESObject>).radius as number))) {\n            return 0;\n        }\n        // Overlap:\n        else if (distance <= Math.abs((this.radius as number) + ((circle as Record<string, ESObject>).radius as number))) {\n            return 1;\n        }\n\n        return 2;\n    }\n\n    print(str: ESObject): void {\n        if (str) {\n            console.log(\"[\" + str + \"] x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius);\n        }\n        else {\n            console.log(\"x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius);\n        }\n    }\n\n    x: ESObject;\n    y: ESObject;\n    radius: ESObject;\n    minX: number;\n    minY: number;\n    maxX: ESObject;\n    maxY: ESObject;\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import Circle from \"./src/Circle\";"
+        ],
+        "intent": "Added import of `radians` and `degrees` utility functions from Common module, and performed minor code formatting cleanup (removing semicolons) across the Circle class methods.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 80,
+          "npm_file_path": "src/Circle.js",
+          "npm_start_line": 2,
+          "ohpm_end_line": 82,
+          "ohpm_file_path": "src/main/ets/src/Circle.ets",
+          "ohpm_start_line": 2,
+          "type": "modification"
+        },
+        "npm_code_after": "export default class Circle\r\n{\r\n\tconstructor()\r\n\t{\r\n\t\tthis.x = x\r\n\t\tthis.y = y\r\n\t\tthis.radius = radius\r\n\t\tthis.minX = x - radius\r\n\t\tthis.minY = y - radius\r\n\t\tthis.maxX = x + radius\r\n\t\tthis.maxY = y + radius\r\n\t}\r\n\r\n\tposition(x, y) {\r\n\t\tthis.x = x\r\n\t\tthis.y = y\r\n\t\tthis.minX = x - this.radius\r\n\t\tthis.minY = y - this.radius\r\n\t\tthis.maxX = x + this.radius\r\n\t\tthis.maxY = y + this.radius\r\n\t}\r\n\r\n\tmove(addX, addY) {\r\n\t\tthis.x += addX\r\n\t\tthis.y += addY\r\n\t\tthis.minX += addX\r\n\t\tthis.minY += addY\r\n\t\tthis.maxX += addX\r\n\t\tthis.maxY += addY\r\n\t}\r\n\r\n\tvsPoint(x, y) {\r\n\t\treturn ((this.x - x) * 2) + ((this.y - y) * 2) <= (radius * 2)\r\n\t}\r\n\r\n\tvsAABB(aabb) {\r\n\r\n\t}\r\n\r\n\tvsCircle(circle)\r\n\t{\r\n\t\tconst dx = circle.x - this.x\r\n\t\tconst dy = circle.y - this.y\r\n\t\tconst radii = this.radius + circle.radius\r\n\r\n\t\tif((dx * dx) + (dy * dy) < (radii * radii)) {\r\n\t\t\treturn true\r\n\t\t}\r\n\r\n\t\treturn false\r\n\t}\r\n\r\n\toverlapCircle(circle)\r\n\t{\r\n\t\tconst distance = Math.sqrt((this.x - circle.x) * (this.y - circle.y))\r\n\r\n\t\t// Does not contain:\r\n\t\tif(distance > (this.radius + circle.radius)) {\r\n\t\t\treturn 0\r\n\t\t}\r\n\t\t// Overlap:\r\n\t\telse if(distance <= Math.abs(this.radius + circle.radius)) {\r\n\t\t\treturn 1\r\n\t\t}\r\n\r\n\t\t// Contains\r\n\t\treturn 2\r\n\t}\r\n\r\n\tprint(str)\r\n\t{\r\n\t\tif(str) {\r\n\t\t\tconsole.log(\"[\" + str + \"] x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(\"x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius)\r\n\t\t}\r\n\t}\r\n}",
+        "npm_code_before": "export default class Circle\r\n{\r\n\tconstructor()\r\n\t{\r\n\t\tthis.x = x;\r\n\t\tthis.y = y;\r\n\t\tthis.radius = radius;\r\n\t\tthis.minX = x - radius;\r\n\t\tthis.minY = y - radius;\r\n\t\tthis.maxX = x + radius;\r\n\t\tthis.maxY = y + radius;\t\t\r\n\t}\r\n\r\n\tposition(x, y) {\r\n\t\tthis.x = x;\r\n\t\tthis.y = y;\r\n\t\tthis.minX = x - this.radius;\r\n\t\tthis.minY = y - this.radius;\r\n\t\tthis.maxX = x + this.radius;\r\n\t\tthis.maxY = y + this.radius;\r\n\t}\r\n\r\n\tmove(addX, addY) {\r\n\t\tthis.x += addX;\r\n\t\tthis.y += addY;\r\n\t\tthis.minX += addX;\r\n\t\tthis.minY += addY;\r\n\t\tthis.maxX += addX;\r\n\t\tthis.maxY += addY;\t\t\r\n\t}\r\n\r\n\tvsPoint(x, y) {\r\n\t\treturn ((this.x - x) * 2) + ((this.y - y) * 2) <= (radius * 2);\r\n\t}\r\n\r\n\tvsAABB(aabb) {\r\n\r\n\t}\r\n\r\n\tvsCircle(circle) \r\n\t{\r\n\t\tconst dx = circle.x - this.x;\r\n\t\tconst dy = circle.y - this.y;\r\n\t\tconst radii = this.radius + circle.radius;\r\n\r\n\t\tif((dx * dx) + (dy * dy) < (radii * radii)) {\r\n\t\t\treturn true;\r\n\t\t}\r\n\r\n\t\treturn false;\r\n\t}\r\n\r\n\toverlapCircle(circle) \r\n\t{\r\n\t\tconst distance = Math.sqrt((this.x - circle.x) * (this.y - circle.y));\r\n\r\n\t\t// Does not contain:\r\n\t\tif(distance > (this.radius + circle.radius)) {\r\n\t\t\treturn 0;\r\n\t\t}\r\n\t\t// Overlap:\r\n\t\telse if(distance <= Math.abs(this.radius + circle.radius)) {\r\n\t\t\treturn 1;\r\n\t\t}\r\n\t\t\r\n\t\t// Contains\r\n\t\treturn 2;\r\n\t}\r\n\r\n\tprint(str) \r\n\t{\r\n\t\tif(str) {\r\n\t\t\tconsole.log(\"[\" + str + \"] x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius);\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(\"x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius);\r\n\t\t}\r\n\t}\r\n}",
+        "ohpm_code_before": [
+          "// TS2ArkTS-SessionId-17\nexport default class Circle {\n    constructor(x: ESObject, y: ESObject, radius: ESObject) {\n        this.x = x;\n        this.y = y;\n        this.radius = radius;\n        this.minX = (x as number) - (radius as number);\n        this.minY = (y as number) - (radius as number);\n        this.maxX = (x as number) + (radius as number);\n        this.maxY = (y as number) + (radius as number);\n    }\n\n    position(x: ESObject, y: ESObject): void {\n        this.x = x;\n        this.y = y;\n        this.minX = (x as number) - (this.radius as number);\n        this.minY = (y as number) - (this.radius as number);\n        this.maxX = (x as number) + (this.radius as number);\n        this.maxY = (y as number) + (this.radius as number);\n    }\n\n    move(addX: ESObject, addY: ESObject): void {\n        this.x = (this.x as number) + (addX as number);\n        this.y = (this.y as number) + (addY as number);\n        this.minX = (this.minX as number) + (addX as number);\n        this.minY = (this.minY as number) + (addY as number);\n        this.maxX = (this.maxX as number) + (addX as number);\n        this.maxY = (this.maxY as number) + (addY as number);\n    }\n\n    vsPoint(x: ESObject, y: ESObject): boolean {\n        return (((this.x as number) - (x as number)) * 2) + (((this.y as number) - (y as number)) * 2) <= ((this.radius as number) * 2);\n    }\n\n    vsAABB(aabb: ESObject): void {\n\n    }\n\n    vsCircle(circle: ESObject): boolean {\n        const dx = (circle as Record<string, ESObject>).x as number - (this.x as number);\n        const dy = (circle as Record<string, ESObject>).y as number - (this.y as number);\n        const radii = (this.radius as number) + ((circle as Record<string, ESObject>).radius as number);\n\n        if ((dx * dx) + (dy * dy) < (radii * radii)) {\n            return true;\n        }\n\n        return false;\n    }\n\n    overlapCircle(circle: ESObject): 0 | 1 | 2 {\n        const distance = Math.sqrt(((this.x as number) - ((circle as Record<string, ESObject>).x as number)) * ((this.y as number) - ((circle as Record<string, ESObject>).y as number)));\n\n        if (distance > ((this.radius as number) + ((circle as Record<string, ESObject>).radius as number))) {\n            return 0;\n        }\n        // Overlap:\n        else if (distance <= Math.abs((this.radius as number) + ((circle as Record<string, ESObject>).radius as number))) {\n            return 1;\n        }\n\n        return 2;\n    }\n\n    print(str: ESObject): void {\n        if (str) {\n            console.log(\"[\" + str + \"] x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius);\n        }\n        else {\n            console.log(\"x:\", this.x, \"y:\", this.y, \"raidus:\", this.radius);\n        }\n    }\n\n    x: ESObject;\n    y: ESObject;\n    radius: ESObject;\n    minX: number;\n    minY: number;\n    maxX: ESObject;\n    maxY: ESObject;\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Circle.js",
+      "sourceLines": "2-80",
+      "targetFile": "src/main/ets/src/Circle.ets",
+      "targetLines": "2-82"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Circle.ets",
+      "lines": "2-82"
+    }
+  },
+  {
+    "answers": [
+      "export default class Vector2 {\n    x: number;\n    y: number;\n    v: Float32Array | null;\n\n    constructor(x?: number, y?: number) {\n        this.x = x || 0.0;\n        this.y = y || 0.0;\n        this.v = null;\n    }\n\n    reset(): void {\n        this.x = 0.0;\n        this.y = 0.0;\n    }\n\n    set(x: number, y: number): void {\n        this.x = x;\n        this.y = y;\n    }\n\n    add(x: number, y: number): void {\n        this.x += x;\n        this.y += y;\n    }\n\n    addScalar(value: number): void {\n        this.x += value;\n        this.y += value;\n    }\n\n    addValues(x: number, y: number): void {\n        this.x += x;\n        this.y += y;\n    }\n\n    addVec(vec: Vector2): void {\n        this.x += vec.x;\n        this.y += vec.y;\n    }\n\n    sub(x: number, y: number): void {\n        this.x -= x;\n        this.y -= y;\n    }\n\n    subScalar(value: number): void {\n        this.x -= value;\n        this.y -= value;\n    }\n\n    subValues(x: number, y: number): void {\n        this.x -= x;\n        this.y -= y;\n    }\n\n    subVec(vec: Vector2): void {\n        this.x -= vec.x;\n        this.y -= vec.y;\n    }\n\n    mul(x: number, y: number): void {\n        this.x *= x;\n        this.y *= y;\n    }\n\n    mulScalar(value: number): void {\n        this.x *= value;\n        this.y *= value;\n    }\n\n    mulValues(x: number, y: number): void {\n        this.x *= x;\n        this.y *= y;\n    }\n\n    mulVec(vec: Vector2): void {\n        this.x *= vec.x;\n        this.y *= vec.y;\n    }\n\n    div(x: number, y: number): void {\n        this.x /= x;\n        this.y /= y;\n    }\n\n    divScalar(value: number): void {\n        this.x /= value;\n        this.y /= value;\n    }\n\n    divValues(x: number, y: number): void {\n        this.x /= x;\n        this.y /= y;\n    }\n\n    divVec(vec: Vector2): void {\n        this.x /= vec.x;\n        this.y /= vec.y;\n    }\n\n    length(): number {\n        return Math.sqrt((this.x * this.x) + (this.y * this.y));\n    }\n\n    normalize(): void {\n        const length = Math.sqrt((this.x * this.x) + (this.y * this.y));\n\n        if (length > 0) {\n            this.x /= length;\n            this.y /= length;\n        } else {\n            this.x = 0;\n            this.y = 0;\n        }\n    }\n\n    dot(vec: Vector2): number {\n        return ((this.x * this.x) + (this.y * this.y));\n    }\n\n    truncate(max: number): void {\n        const length = Math.sqrt((this.x * this.x) + (this.y * this.y));\n\n        if (length > max) {\n            this.x *= max / length;\n            this.y *= max / length;\n        }\n    }\n\n    limit(max: number): void {\n        if (this.x > max) { this.x = max; }\n        else if (this.x < -max) { this.x = -max; }\n\n        if (this.y > max) { this.y = max; }\n        else if (this.y < -max) { this.y = -max; }\n    }\n\n    clamp(minX: number, minY: number, maxX: number, maxY: number): void {\n        this.x = Math.min(Math.max(this.x, minX), maxX);\n        this.y = Math.min(Math.max(this.y, minY), maxY);\n    }\n\n    lengthSq(): number {\n        return ((this.x * this.x) + (this.y * this.y));\n    }\n\n    heading(): number {\n        const angle = Math.atan2(-this.y, this.x);\n        return -angle + Math.PI * 0.5;\n    }\n\n    perp(): void {\n        const tmpX = this.x;\n        this.x = -this.y;\n        this.y = tmpX;\n    }\n\n    reflect(normal: Vector2): void {\n        const value = this.dot(normal);\n        this.x -= 2 * value * normal.x;\n        this.y -= 2 * value * normal.y;\n    }\n\n    toFloat32Array(): Float32Array {\n        if (!this.v) {\n            this.v = new Float32Array([this.x, this.y]);\n        } else {\n            this.v[0] = this.x;\n            this.v[1] = this.y;\n        }\n        return this.v;\n    }\n\n    fromArray(array: number[]): void {\n        this.x = array[0];\n        this.y = array[1];\n    }\n\n    print(str?: string): void {\n        if (str) {\n            console.log(`[vec \"${str}\"] x: ${this.x} y: ${this.y}`);\n        } else {\n            console.log(`[vec] x: ${this.x} y: ${this.y}`);\n        }\n    }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import Vector2 from \"./src/Vector2\";"
+        ],
+        "intent": "Added a `fromArray` method to Vector2 for populating the vector from an array, and imported `radians` and `degrees` utility functions from Common while removing trailing semicolons for consistent code style.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 191,
+          "npm_file_path": "src/Vector2.js",
+          "npm_start_line": 2,
+          "ohpm_end_line": 182,
+          "ohpm_file_path": "src/main/ets/src/Vector2.ets",
+          "ohpm_start_line": 1,
+          "type": "modification"
+        },
+        "npm_code_after": "export default class Vector2\r\n{\r\n\tconstructor(x, y) {\r\n\t\tthis.x = x || 0.0\r\n\t\tthis.y = y || 0.0\r\n\t\tthis.v = null\r\n\t}\r\n\r\n\treset() {\r\n\t\tthis.x = 0.0\r\n\t\tthis.y = 0.0\r\n\t}\r\n\r\n\tset(x, y) {\r\n\t\tthis.x = x\r\n\t\tthis.y = y\r\n\t}\r\n\r\n\tadd(x, y) {\r\n\t\tthis.x += x\r\n\t\tthis.y += y\r\n\t}\r\n\r\n\taddScalar(value) {\r\n\t\tthis.x += value\r\n\t\tthis.y += value\r\n\t}\r\n\r\n\taddValues(x, y) {\r\n\t\tthis.x += x\r\n\t\tthis.y += y\r\n\t}\r\n\r\n\taddVec(vec) {\r\n\t\tthis.x += vec.x\r\n\t\tthis.y += vec.y\r\n\t}\r\n\r\n\tsub(x, y) {\r\n\t\tthis.x -= x\r\n\t\tthis.y -= y\r\n\t}\r\n\r\n\tsubScalar(value) {\r\n\t\tthis.x -= value\r\n\t\tthis.y -= value\r\n\t}\r\n\r\n\tsubValues(x, y) {\r\n\t\tthis.x -= x\r\n\t\tthis.y -= y\r\n\t}\r\n\r\n\tsubVec(vec) {\r\n\t\tthis.x -= vec.x\r\n\t\tthis.y -= vec.y\r\n\t}\r\n\r\n\tmul(x, y) {\r\n\t\tthis.x *= x\r\n\t\tthis.y *= y\r\n\t}\r\n\r\n\tmulScalar(value) {\r\n\t\tthis.x -= value\r\n\t\tthis.y -= value\r\n\t}\r\n\r\n\tmulValues(x, y) {\r\n\t\tthis.x *= x\r\n\t\tthis.y *= y\r\n\t}\r\n\r\n\tmulVec(vec) {\r\n\t\tthis.x *= vec.x\r\n\t\tthis.y *= vec.y\r\n\t}\r\n\r\n\tdiv(x, y) {\r\n\t\tthis.x /= x\r\n\t\tthis.y /= y\r\n\t}\r\n\r\n\tdivScalar(value) {\r\n\t\tthis.x /= value\r\n\t\tthis.y /= value\r\n\t}\r\n\r\n\tdivValues(x, y) {\r\n\t\tthis.x /= x\r\n\t\tthis.y /= y\r\n\t}\r\n\r\n\tdivVec(vec) {\r\n\t\tthis.x /= vec.x\r\n\t\tthis.y /= vec.y\r\n\t}\r\n\r\n\tlength() {\r\n\t\treturn Math.sqrt((this.x * this.x) + (this.y * this.y))\r\n\t}\r\n\r\n\tnormalize()\r\n\t{\r\n\t\tconst length = Math.sqrt((this.x * this.x) + (this.y * this.y))\r\n\r\n\t\tif(length > 0) {\r\n\t\t\tthis.x/= length\r\n\t\t\tthis.y /= length\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.x = 0\r\n\t\t\tthis.y = 0\r\n\t\t}\r\n\t}\r\n\r\n\tdot(vec) {\r\n\t\treturn ((this.x * this.x) + (this.y * this.y))\r\n\t}\r\n\r\n\ttruncate(max)\r\n\t{\r\n\t\tconst length = Math.sqrt((this.x * this.x) + (this.y * this.y))\r\n\r\n\t\tif(length > max) {\r\n\t\t\tthis.x *= max / length\r\n\t\t\tthis.y *= max / length\r\n\t\t}\r\n\t}\r\n\r\n\tlimit(max)\r\n\t{\r\n\t\tif(this.x > max) { this.x = max }\r\n\t\telse if(this.x < -max) { this.x = -max }\r\n\r\n\t\tif(this.y > max) { this.y = max }\r\n\t\telse if(this.y < -max) { this.y = -max }\r\n\t}\r\n\r\n\tclamp(minX, minY, maxX, maxY) {\r\n\t\tthis.x = Math.min(Math.max(this.x, minX), maxX)\r\n\t\tthis.y = Math.min(Math.max(this.y, minY), maxY)\r\n\t}\r\n\r\n\tlengthSq() {\r\n\t\treturn ((this.x * this.x) + (this.y * this.y))\r\n\t}\r\n\r\n\theading() {\r\n\t\tconst constr = Math.atan2(-this.y, this.x)\r\n\t\treturn -angle + Math.PI * 0.5\r\n\t}\r\n\r\n\tperp()\r\n\t{\r\n\t\tconst tmpX = this.x\r\n\t\tthis.x = -this.y\r\n\t\tthis.y = tmpX\r\n\t}\r\n\r\n\treflect(normal)\r\n\t{\r\n\t\tconst value = this.dot(normal)\r\n\t\tthis.x -= 2 * value * normalx\r\n\t\tthis.y -= 2 * value * normaly\r\n\t}\r\n\r\n\ttoFloat32Array()\r\n\t{\r\n\t\tif(!this.v) {\r\n\t\t\tthis.v = new Float32Array([ this.x, this.y ])\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.v[0] = this.x\r\n\t\t\tthis.v[1] = this.y\r\n\t\t}\r\n\r\n\t\treturn this.v\r\n\t}\r\n\r\n\tfromArray(array) {\r\n\t\tthis.x = array[0]\r\n\t\tthis.y = array[1]\r\n\t}\r\n\r\n\tprint()\r\n\t{\r\n\t\tif(txt) {\r\n\t\t\tconsole.log(`${txt} x: ${x}, y: ${y}`)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(`x: ${x}, y: ${y}`)\r\n\t\t}\r\n\t}\r\n}",
+        "npm_code_before": "export default class Vector2\r\n{\r\n\tconstructor(x, y) {\r\n\t\tthis.x = x || 0.0;\r\n\t\tthis.y = y || 0.0;\r\n\t\tthis.v = null;\r\n\t}\r\n\r\n\treset() {\r\n\t\tthis.x = 0.0;\r\n\t\tthis.y = 0.0;\r\n\t}\r\n\r\n\tset(x, y) {\r\n\t\tthis.x = x;\r\n\t\tthis.y = y;\r\n\t}\r\n\r\n\tadd(x, y) {\r\n\t\tthis.x += x;\r\n\t\tthis.y += y;\r\n\t}\r\n\r\n\taddScalar(value) {\r\n\t\tthis.x += value;\r\n\t\tthis.y += value;\r\n\t}\r\n\r\n\taddValues(x, y) {\r\n\t\tthis.x += x;\r\n\t\tthis.y += y;\r\n\t}\r\n\r\n\taddVec(vec) {\r\n\t\tthis.x += vec.x;\r\n\t\tthis.y += vec.y;\r\n\t}\r\n\r\n\tsub(x, y) {\r\n\t\tthis.x -= x;\r\n\t\tthis.y -= y;\r\n\t}\r\n\r\n\tsubScalar(value) {\r\n\t\tthis.x -= value;\r\n\t\tthis.y -= value;\r\n\t}\r\n\r\n\tsubValues(x, y) {\r\n\t\tthis.x -= x;\r\n\t\tthis.y -= y;\r\n\t}\t\r\n\r\n\tsubVec(vec) {\r\n\t\tthis.x -= vec.x;\r\n\t\tthis.y -= vec.y;\r\n\t}\t\r\n\r\n\tmul(x, y) {\r\n\t\tthis.x *= x;\r\n\t\tthis.y *= y;\r\n\t}\r\n\r\n\tmulScalar(value) {\r\n\t\tthis.x -= value;\r\n\t\tthis.y -= value;\r\n\t}\r\n\r\n\tmulValues(x, y) {\r\n\t\tthis.x *= x;\r\n\t\tthis.y *= y;\r\n\t}\t\r\n\r\n\tmulVec(vec) {\r\n\t\tthis.x *= vec.x;\r\n\t\tthis.y *= vec.y;\r\n\t}\r\n\r\n\tdiv(x, y) {\r\n\t\tthis.x /= x;\r\n\t\tthis.y /= y;\r\n\t}\r\n\r\n\tdivScalar(value) {\r\n\t\tthis.x /= value;\r\n\t\tthis.y /= value;\r\n\t}\r\n\r\n\tdivValues(x, y) {\r\n\t\tthis.x /= x;\r\n\t\tthis.y /= y;\r\n\t}\t\r\n\r\n\tdivVec(vec) {\r\n\t\tthis.x /= vec.x;\r\n\t\tthis.y /= vec.y;\r\n\t}\r\n\r\n\tlength() {\r\n\t\treturn Math.sqrt((this.x * this.x) + (this.y * this.y));\r\n\t}\r\n\r\n\tnormalize()\r\n\t{\r\n\t\tconst length = Math.sqrt((this.x * this.x) + (this.y * this.y));\r\n\r\n\t\tif(length > 0) {\r\n\t\t\tthis.x/= length;\r\n\t\t\tthis.y /= length;\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.x = 0;\r\n\t\t\tthis.y = 0;\r\n\t\t}\r\n\t}\r\n\r\n\tdot(vec) {\r\n\t\treturn ((this.x * this.x) + (this.y * this.y));\r\n\t}\r\n\r\n\ttruncate(max)\r\n\t{\r\n\t\tconst length = Math.sqrt((this.x * this.x) + (this.y * this.y));\r\n\r\n\t\tif(length > max) {\r\n\t\t\tthis.x *= max / length;\r\n\t\t\tthis.y *= max / length;\r\n\t\t}\r\n\t}\r\n\r\n\tlimit(max)\r\n\t{\r\n\t\tif(this.x > max) { this.x = max; }\r\n\t\telse if(this.x < -max) { this.x = -max; }\r\n\r\n\t\tif(this.y > max) { this.y = max; }\r\n\t\telse if(this.y < -max) { this.y = -max; }\r\n\t}\r\n\r\n\tclamp(minX, minY, maxX, maxY) {\r\n\t\tthis.x = Math.min(Math.max(this.x, minX), maxX);\r\n\t\tthis.y = Math.min(Math.max(this.y, minY), maxY);\r\n\t}\r\n\r\n\tlengthSq() {\r\n\t\treturn ((this.x * this.x) + (this.y * this.y));\r\n\t}\r\n\r\n\theading() {\r\n\t\tconst constr = Math.atan2(-this.y, this.x);\r\n\t\treturn -angle + Math.PI * 0.5;\r\n\t}\r\n\r\n\tperp() \r\n\t{\r\n\t\tconst tmpX = this.x;\r\n\t\tthis.x = -this.y;\r\n\t\tthis.y = tmpX;\r\n\t}\r\n\r\n\treflect(normal) \r\n\t{\r\n\t\tconst value = this.dot(normal);\r\n\t\tthis.x -= 2 * value * normalx;\r\n\t\tthis.y -= 2 * value * normaly;\r\n\t}\r\n\r\n\ttoFloat32Array() \r\n\t{\r\n\t\tif(!this.v) {\r\n\t\t\tthis.v = new Float32Array([ this.x, this.y ]);\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.v[0] = this.x;\r\n\t\t\tthis.v[1] = this.y;\r\n\t\t}\r\n\r\n\t\treturn this.v;\r\n\t}\r\n\r\n\tprint() \r\n\t{\r\n\t\tif(txt) {\r\n\t\t\tconsole.log(`${txt} x: ${x}, y: ${y}`);\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(`x: ${x}, y: ${y}`);\r\n\t\t}\r\n\t}\r\n}",
+        "ohpm_code_before": [
+          "export default class Vector2 {\n    x: number;\n    y: number;\n    v: Float32Array | null;\n\n    constructor(x?: number, y?: number) {\n        this.x = x || 0.0;\n        this.y = y || 0.0;\n        this.v = null;\n    }\n\n    reset(): void {\n        this.x = 0.0;\n        this.y = 0.0;\n    }\n\n    set(x: number, y: number): void {\n        this.x = x;\n        this.y = y;\n    }\n\n    add(x: number, y: number): void {\n        this.x += x;\n        this.y += y;\n    }\n\n    addScalar(value: number): void {\n        this.x += value;\n        this.y += value;\n    }\n\n    addValues(x: number, y: number): void {\n        this.x += x;\n        this.y += y;\n    }\n\n    addVec(vec: Vector2): void {\n        this.x += vec.x;\n        this.y += vec.y;\n    }\n\n    sub(x: number, y: number): void {\n        this.x -= x;\n        this.y -= y;\n    }\n\n    subScalar(value: number): void {\n        this.x -= value;\n        this.y -= value;\n    }\n\n    subValues(x: number, y: number): void {\n        this.x -= x;\n        this.y -= y;\n    }\n\n    subVec(vec: Vector2): void {\n        this.x -= vec.x;\n        this.y -= vec.y;\n    }\n\n    mul(x: number, y: number): void {\n        this.x *= x;\n        this.y *= y;\n    }\n\n    mulScalar(value: number): void {\n        this.x *= value;\n        this.y *= value;\n    }\n\n    mulValues(x: number, y: number): void {\n        this.x *= x;\n        this.y *= y;\n    }\n\n    mulVec(vec: Vector2): void {\n        this.x *= vec.x;\n        this.y *= vec.y;\n    }\n\n    div(x: number, y: number): void {\n        this.x /= x;\n        this.y /= y;\n    }\n\n    divScalar(value: number): void {\n        this.x /= value;\n        this.y /= value;\n    }\n\n    divValues(x: number, y: number): void {\n        this.x /= x;\n        this.y /= y;\n    }\n\n    divVec(vec: Vector2): void {\n        this.x /= vec.x;\n        this.y /= vec.y;\n    }\n\n    length(): number {\n        return Math.sqrt((this.x * this.x) + (this.y * this.y));\n    }\n\n    normalize(): void {\n        const length = Math.sqrt((this.x * this.x) + (this.y * this.y));\n\n        if (length > 0) {\n            this.x /= length;\n            this.y /= length;\n        } else {\n            this.x = 0;\n            this.y = 0;\n        }\n    }\n\n    dot(vec: Vector2): number {\n        return ((this.x * this.x) + (this.y * this.y));\n    }\n\n    truncate(max: number): void {\n        const length = Math.sqrt((this.x * this.x) + (this.y * this.y));\n\n        if (length > max) {\n            this.x *= max / length;\n            this.y *= max / length;\n        }\n    }\n\n    limit(max: number): void {\n        if (this.x > max) { this.x = max; }\n        else if (this.x < -max) { this.x = -max; }\n\n        if (this.y > max) { this.y = max; }\n        else if (this.y < -max) { this.y = -max; }\n    }\n\n    clamp(minX: number, minY: number, maxX: number, maxY: number): void {\n        this.x = Math.min(Math.max(this.x, minX), maxX);\n        this.y = Math.min(Math.max(this.y, minY), maxY);\n    }\n\n    lengthSq(): number {\n        return ((this.x * this.x) + (this.y * this.y));\n    }\n\n    heading(): number {\n        const angle = Math.atan2(-this.y, this.x);\n        return -angle + Math.PI * 0.5;\n    }\n\n    perp(): void {\n        const tmpX = this.x;\n        this.x = -this.y;\n        this.y = tmpX;\n    }\n\n    reflect(normal: Vector2): void {\n        const value = this.dot(normal);\n        this.x -= 2 * value * normal.x;\n        this.y -= 2 * value * normal.y;\n    }\n\n    toFloat32Array(): Float32Array {\n        if (!this.v) {\n            this.v = new Float32Array([this.x, this.y]);\n        } else {\n            this.v[0] = this.x;\n            this.v[1] = this.y;\n        }\n        return this.v;\n    }\n\n    print(str?: string): void {\n        if (str) {\n            console.log(`[vec \"${str}\"] x: ${this.x} y: ${this.y}`);\n        } else {\n            console.log(`[vec] x: ${this.x} y: ${this.y}`);\n        }\n    }\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Vector2.js",
+      "sourceLines": "2-191",
+      "targetFile": "src/main/ets/src/Vector2.ets",
+      "targetLines": "1-182"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Vector2.ets",
+      "lines": "1-182"
+    }
+  },
+  {
+    "answers": [
+      "export default class Quaternion {\r\n  m: Float32Array;\r\n\r\n  constructor() {\r\n    this.m = new Float32Array([0.0, 0.0, 0.0, 1.0]);\r\n  }\r\n\r\n  copy(src: Quaternion): void {\r\n    this.m.set(src.m);\r\n  }\r\n\r\n  clone(): Quaternion {\r\n    const newQuat = new Quaternion();\r\n    newQuat.m.set(this.m);\r\n    return newQuat;\r\n  }\r\n\r\n  identity(): void {\r\n    this.m[0] = 0.0;\r\n    this.m[1] = 0.0;\r\n    this.m[2] = 0.0;\r\n    this.m[3] = 1.0;\r\n  }\r\n\r\n  mul(src: Quaternion): void {\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = src.m[0];\r\n    const by = src.m[1];\r\n    const bz = src.m[2];\r\n    const bw = src.m[3];\r\n\r\n    this.m[0] = (ax * bw) + (aw * bx) + (ay * bz) - (az * by);\r\n    this.m[1] = (ay * bw) + (aw * by) + (az * bx) - (ax * bz);\r\n    this.m[2] = (az * bw) + (aw * bz) + (ax * by) - (ay * bx);\r\n    this.m[3] = (aw * bw) - (ax * bx) - (ay * by) - (az * bz);\r\n  }\r\n\r\n  setAxisAngle(rad: number, x: number, y: number, z: number): void {\r\n    rad *= 0.5;\r\n    const sin = Math.sin(rad);\r\n\r\n    this.m[0] = sin * x;\r\n    this.m[1] = sin * y;\r\n    this.m[2] = sin * z;\r\n    this.m[3] = Math.cos(rad);\r\n  }\r\n\r\n  getAxisAngle(): number[] {\r\n    const rad = Math.acos(this.m[3]) * 2.0;\r\n    const sin = Math.sin(rad / 2.0);\r\n    const result = new Array<number>(4);\r\n\r\n    if (sin != 0.0) {\r\n      result[1] = this.m[0] / sin;\r\n      result[2] = this.m[1] / sin;\r\n      result[3] = this.m[2] / sin;\r\n    } else {\r\n      result[1] = 1.0;\r\n      result[2] = 0.0;\r\n      result[3] = 0.0;\r\n    }\r\n\r\n    result[0] = rad;\r\n    return result;\r\n  }\r\n\r\n  rotateX(rad: number): void {\r\n    rad *= 0.5;\r\n\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = Math.sin(rad);\r\n    const bw = Math.cos(rad);\r\n\r\n    this.m[0] = (ax * bw) + (aw * bx);\r\n    this.m[1] = (ay * bw) + (az * bx);\r\n    this.m[2] = (az * bw) - (ay * bx);\r\n    this.m[3] = (aw * bw) - (ax * bx);\r\n  }\r\n\r\n  rotateY(rad: number): void {\r\n    rad *= 0.5;\r\n\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = Math.sin(rad);\r\n    const bw = Math.cos(rad);\r\n\r\n    this.m[0] = (ax * bw) - (az * bx);\r\n    this.m[1] = (ay * bw) + (aw * bx);\r\n    this.m[2] = (az * bw) + (ax * bx);\r\n    this.m[3] = (aw * bw) - (ay * bx);\r\n  }\r\n\r\n  rotateZ(rad: number): void {\r\n    rad *= 0.5;\r\n\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = Math.sin(rad);\r\n    const bw = Math.cos(rad);\r\n\r\n    this.m[0] = (ax * bw) + (ay * bx);\r\n    this.m[1] = (ay * bw) - (ax * bx);\r\n    this.m[2] = (az * bw) + (aw * bx);\r\n    this.m[3] = (aw * bw) - (az * bx);\r\n  }\r\n\r\n  calculateW(): void {\r\n    const x = this.m[0];\r\n    const y = this.m[1];\r\n    const z = this.m[2];\r\n    this.m[3] = Math.sqrt(Math.abs(1.0 - (x * x) - (y * y) - (z * z)));\r\n  }\r\n\r\n  conjugate(): void {\r\n    this.m[0] = -this.m[0];\r\n    this.m[1] = -this.m[1];\r\n    this.m[2] = -this.m[2];\r\n  }\r\n\r\n  print(txt?: string): void {\r\n    if (txt) {\r\n      console.log(`${txt} Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`);\r\n    } else {\r\n      console.log(`Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`);\r\n    }\r\n  }\r\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import Quaternion from \"./src/Quaternion\";",
+          "import Quaternion from './Quaternion';"
+        ],
+        "intent": "Added imports for `radians` and `degrees` utility functions from Common module, and removed a large commented-out `setDirection` method from the Quaternion class to clean up dead code. & No functional changes were made; the code remains identical between versions, with only a minor formatting adjustment (removal of a space before the opening brace of `calculateW()`). & Removed unnecessary semicolons from the `getAxisAngle` method for code style consistency. & The code changes appear to be purely cosmetic, involving only whitespace/formatting adjustments (removing spaces before parentheses in function definitions) without any functional modifications to the quaternion operations.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 5,
+          "npm_end_line": 151,
+          "npm_file_path": "src/Quaternion.js",
+          "npm_start_line": 5,
+          "ohpm_end_line": 142,
+          "ohpm_file_path": "src/main/ets/src/Quaternion.ets",
+          "ohpm_start_line": 5,
+          "type": "modification"
+        },
+        "npm_code_after": "class Quaternion\r\n{\r\n\tconstructor() {\r\n\t\tthis.m = new Float32Array([ 0.0, 0.0, 0.0, 1.0 ])\r\n\t}\r\n\r\n\tcopy(src) {\r\n\t\tthis.m.set(src.m)\r\n\t}\r\n\r\n\tclone() {\r\n\t\tconst newQuat = new Quaternion()\r\n\t\tnewQuad.m.set(this.m)\r\n\t}\r\n\r\n\tidentity() {\r\n\t\tthis.m[0] = 0.0\r\n\t\tthis.m[1] = 0.0\r\n\t\tthis.m[2] = 0.0\r\n\t\tthis.m[3] = 1.0\r\n\t}\r\n\r\n\tmul(src)\r\n\t{\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = src.m[0]\r\n\t\tconst by = src.m[1]\r\n\t\tconst bz = src.m[2]\r\n\t\tconst bw = src.m[3]\r\n\r\n\t\tout[0] = (ax * bw) + (aw * bx) + (ay * bz) - (az * by)\r\n\t\tout[1] = (ay * bw) + (aw * by) + (az * bx) - (ax * bz)\r\n\t\tout[2] = (az * bw) + (aw * bz) + (ax * by) - (ay * bx)\r\n\t\tout[3] = (aw * bw) - (ax * bx) - (ay * by) - (az * bz)\r\n\t}\r\n\r\n\tsetAxisAngle(rad, x, y, z)\r\n\t{\r\n\t\trad *= 0.5\r\n\t\tconst sin = Math.sin(rad)\r\n\r\n\t\tthis.m[0] = sin * x\r\n\t\tthis.m[1] = sin * y\r\n\t\tthis.m[2] = sin * z\r\n\t\tthis.m[3] = Math.cos(rad)\r\n\t}\r\n\r\n\tgetAxisAngle()\r\n\t{\r\n\t\tconst rad = Math.acos(this.m[3]) * 2.0\r\n\t\tconst sin = Math.sin(rad / 2.0)\r\n\t\tconst result = new Array(4)\r\n\r\n\t\tif(sin != 0.0) {\r\n\t\t\tresult[1] = this.m[0] / s\r\n\t\t\tresult[2] = this.m[1] / s\r\n\t\t\tresult[3] = this.m[2] / s\r\n\t\t}\r\n\t\telse {\r\n\t\t\tresult[1] = 1.0\r\n\t\t\tresult[2] = 0.0\r\n\t\t\tresult[3] = 0.0\r\n\t\t}\r\n\r\n\t\tresult[0] = rad\r\n\t\treturn result\r\n\t}\r\n\r\n\trotateX(rad)\r\n\t{\r\n\t\trad *= 0.5\r\n\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = Math.sin(rad)\r\n\t\tconst bw = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = (ax * bw) + (aw * bx)\r\n\t\tthis.m[1] = (ay * bw) + (az * bx)\r\n\t\tthis.m[2] = (az * bw) - (ay * bx)\r\n\t\tthis.m[3] = (aw * bw) - (ax * bx)\r\n\t}\r\n\r\n\trotateY(rad)\r\n\t{\r\n\t\trad *= 0.5\r\n\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = Math.sin(rad)\r\n\t\tconst bw = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = (ax * bw) - (az * by)\r\n\t\tthis.m[1] = (ay * bw) + (aw * by)\r\n\t\tthis.m[2] = (az * bw) + (ax * by)\r\n\t\tthis.m[3] = (aw * bw) - (ay * by)\r\n\t}\r\n\r\n\trotateZ(rad)\r\n\t{\r\n\t\trad *= 0.5\r\n\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = Math.sin(rad)\r\n\t\tconst bw = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = (ax * bw) + (ay * bz)\r\n\t\tthis.m[1] = (ay * bw) - (ax * bz)\r\n\t\tthis.m[2] = (az * bw) + (aw * bz)\r\n\t\tthis.m[3] = (aw * bw) - (az * bz)\r\n\t}\r\n\r\n\tcalculateW()\r\n\t{\r\n\t\tconst x = this.m[0]\r\n\t\tconst y = this.m[1]\r\n\t\tconst z = this.m[2]\r\n\t\tthis.m[3] = Math.sqrt(Math.abs(1.0 - (x * x) - (y * y) - (z * z)))\r\n\t}\r\n\r\n\tconjugate()\r\n\t{\r\n\t\tthis.m[0] = -this.m[0]\r\n\t\tthis.m[1] = -this.m[1]\r\n\t\tthis.m[2] = -this.m[2]\r\n\t}\r\n\r\n\tprint(txt)\r\n\t{\r\n\t\tif(txt) {\r\n\t\t\tconsole.log(`${txt} Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(`Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`)\r\n\t\t}\r\n\t}\r\n}",
+        "npm_code_before": "class Quaternion\r\n{\r\n\tconstructor() {\r\n\t\tthis.m = new Float32Array([ 0.0, 0.0, 0.0, 1.0 ])\r\n\t}\r\n\r\n\tcopy(src) {\r\n\t\tthis.m.set(src.m)\r\n\t}\r\n\r\n\tclone() {\r\n\t\tconst newQuat = new Quaternion()\r\n\t\tnewQuad.m.set(this.m)\r\n\t}\r\n\r\n\tidentity() {\r\n\t\tthis.m[0] = 0.0\r\n\t\tthis.m[1] = 0.0\r\n\t\tthis.m[2] = 0.0\r\n\t\tthis.m[3] = 1.0\r\n\t}\r\n\r\n\tmul(src)\r\n\t{\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = src.m[0]\r\n\t\tconst by = src.m[1]\r\n\t\tconst bz = src.m[2]\r\n\t\tconst bw = src.m[3]\r\n\r\n\t\tout[0] = (ax * bw) + (aw * bx) + (ay * bz) - (az * by)\r\n\t\tout[1] = (ay * bw) + (aw * by) + (az * bx) - (ax * bz)\r\n\t\tout[2] = (az * bw) + (aw * bz) + (ax * by) - (ay * bx)\r\n\t\tout[3] = (aw * bw) - (ax * bx) - (ay * by) - (az * bz)\r\n\t}\r\n\r\n\tsetAxisAngle(rad, x, y, z) \r\n\t{\r\n\t\trad *= 0.5\r\n\t\tconst sin = Math.sin(rad)\r\n\r\n\t\tthis.m[0] = sin * x\r\n\t\tthis.m[1] = sin * y\r\n\t\tthis.m[2] = sin * z\r\n\t\tthis.m[3] = Math.cos(rad)\r\n\t}\r\n\r\n\tgetAxisAngle() \r\n\t{\r\n\t\tconst rad = Math.acos(this.m[3]) * 2.0\r\n\t\tconst sin = Math.sin(rad / 2.0)\r\n\t\tconst result = new Array(4)\r\n\r\n\t\tif(sin != 0.0) {\r\n\t\t\tresult[1] = this.m[0] / s;\r\n\t\t\tresult[2] = this.m[1] / s;\r\n\t\t\tresult[3] = this.m[2] / s;\r\n\t\t} \r\n\t\telse {\r\n\t\t\tresult[1] = 1.0;\r\n\t\t\tresult[2] = 0.0;\r\n\t\t\tresult[3] = 0.0;\r\n\t\t}\r\n\r\n\t\tresult[0] = rad\r\n\t\treturn result\r\n\t}\r\n\r\n\trotateX(rad)\r\n\t{\r\n\t\trad *= 0.5\r\n\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = Math.sin(rad)\r\n\t\tconst bw = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = (ax * bw) + (aw * bx)\r\n\t\tthis.m[1] = (ay * bw) + (az * bx)\r\n\t\tthis.m[2] = (az * bw) - (ay * bx)\r\n\t\tthis.m[3] = (aw * bw) - (ax * bx)\r\n\t}\r\n\r\n\trotateY(rad)\r\n\t{\r\n\t\trad *= 0.5\r\n\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = Math.sin(rad)\r\n\t\tconst bw = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = (ax * bw) - (az * by)\r\n\t\tthis.m[1] = (ay * bw) + (aw * by)\r\n\t\tthis.m[2] = (az * bw) + (ax * by)\r\n\t\tthis.m[3] = (aw * bw) - (ay * by)\r\n\t}\r\n\r\n\trotateZ(rad)\r\n\t{\r\n\t\trad *= 0.5\r\n\r\n\t\tconst ax = this.m[0]\r\n\t\tconst ay = this.m[1]\r\n\t\tconst az = this.m[2]\r\n\t\tconst aw = this.m[3]\r\n\t\tconst bx = Math.sin(rad)\r\n\t\tconst bw = Math.cos(rad)\r\n\r\n\t\tthis.m[0] = (ax * bw) + (ay * bz)\r\n\t\tthis.m[1] = (ay * bw) - (ax * bz)\r\n\t\tthis.m[2] = (az * bw) + (aw * bz)\r\n\t\tthis.m[3] = (aw * bw) - (az * bz)\r\n\t}\r\n\r\n\tcalculateW() \r\n\t{\r\n\t\tconst x = this.m[0]\r\n\t\tconst y = this.m[1]\r\n\t\tconst z = this.m[2]\r\n\t\tthis.m[3] = Math.sqrt(Math.abs(1.0 - (x * x) - (y * y) - (z * z)))\r\n\t}\r\n\r\n\tconjugate() \r\n\t{\r\n\t\tthis.m[0] = -this.m[0]\r\n\t\tthis.m[1] = -this.m[1]\r\n\t\tthis.m[2] = -this.m[2]\r\n\t}\r\n\r\n\tprint(txt) \r\n\t{\r\n\t\tif(txt) {\r\n\t\t\tconsole.log(`${txt} Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(`Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`)\r\n\t\t}\r\n\t}\t\r\n}",
+        "ohpm_code_before": [
+          "export default class Quaternion {\r\n  m: Float32Array;\r\n\r\n  constructor() {\r\n    this.m = new Float32Array([0.0, 0.0, 0.0, 1.0]);\r\n  }\r\n\r\n  copy(src: Quaternion): void {\r\n    this.m.set(src.m);\r\n  }\r\n\r\n  clone(): Quaternion {\r\n    const newQuat = new Quaternion();\r\n    newQuat.m.set(this.m);\r\n    return newQuat;\r\n  }\r\n\r\n  identity(): void {\r\n    this.m[0] = 0.0;\r\n    this.m[1] = 0.0;\r\n    this.m[2] = 0.0;\r\n    this.m[3] = 1.0;\r\n  }\r\n\r\n  mul(src: Quaternion): void {\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = src.m[0];\r\n    const by = src.m[1];\r\n    const bz = src.m[2];\r\n    const bw = src.m[3];\r\n\r\n    this.m[0] = (ax * bw) + (aw * bx) + (ay * bz) - (az * by);\r\n    this.m[1] = (ay * bw) + (aw * by) + (az * bx) - (ax * bz);\r\n    this.m[2] = (az * bw) + (aw * bz) + (ax * by) - (ay * bx);\r\n    this.m[3] = (aw * bw) - (ax * bx) - (ay * by) - (az * bz);\r\n  }\r\n\r\n  setAxisAngle(rad: number, x: number, y: number, z: number): void {\r\n    rad *= 0.5;\r\n    const sin = Math.sin(rad);\r\n\r\n    this.m[0] = sin * x;\r\n    this.m[1] = sin * y;\r\n    this.m[2] = sin * z;\r\n    this.m[3] = Math.cos(rad);\r\n  }\r\n\r\n  getAxisAngle(): number[] {\r\n    const rad = Math.acos(this.m[3]) * 2.0;\r\n    const sin = Math.sin(rad / 2.0);\r\n    const result = new Array<number>(4);\r\n\r\n    if (sin != 0.0) {\r\n      result[1] = this.m[0] / sin;\r\n      result[2] = this.m[1] / sin;\r\n      result[3] = this.m[2] / sin;\r\n    } else {\r\n      result[1] = 1.0;\r\n      result[2] = 0.0;\r\n      result[3] = 0.0;\r\n    }\r\n\r\n    result[0] = rad;\r\n    return result;\r\n  }\r\n\r\n  rotateX(rad: number): void {\r\n    rad *= 0.5;\r\n\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = Math.sin(rad);\r\n    const bw = Math.cos(rad);\r\n\r\n    this.m[0] = (ax * bw) + (aw * bx);\r\n    this.m[1] = (ay * bw) + (az * bx);\r\n    this.m[2] = (az * bw) - (ay * bx);\r\n    this.m[3] = (aw * bw) - (ax * bx);\r\n  }\r\n\r\n  rotateY(rad: number): void {\r\n    rad *= 0.5;\r\n\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = Math.sin(rad);\r\n    const bw = Math.cos(rad);\r\n\r\n    this.m[0] = (ax * bw) - (az * bx);\r\n    this.m[1] = (ay * bw) + (aw * bx);\r\n    this.m[2] = (az * bw) + (ax * bx);\r\n    this.m[3] = (aw * bw) - (ay * bx);\r\n  }\r\n\r\n  rotateZ(rad: number): void {\r\n    rad *= 0.5;\r\n\r\n    const ax = this.m[0];\r\n    const ay = this.m[1];\r\n    const az = this.m[2];\r\n    const aw = this.m[3];\r\n    const bx = Math.sin(rad);\r\n    const bw = Math.cos(rad);\r\n\r\n    this.m[0] = (ax * bw) + (ay * bx);\r\n    this.m[1] = (ay * bw) - (ax * bx);\r\n    this.m[2] = (az * bw) + (aw * bx);\r\n    this.m[3] = (aw * bw) - (az * bx);\r\n  }\r\n\r\n  calculateW(): void {\r\n    const x = this.m[0];\r\n    const y = this.m[1];\r\n    const z = this.m[2];\r\n    this.m[3] = Math.sqrt(Math.abs(1.0 - (x * x) - (y * y) - (z * z)));\r\n  }\r\n\r\n  conjugate(): void {\r\n    this.m[0] = -this.m[0];\r\n    this.m[1] = -this.m[1];\r\n    this.m[2] = -this.m[2];\r\n  }\r\n\r\n  print(txt?: string): void {\r\n    if (txt) {\r\n      console.log(`${txt} Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`);\r\n    } else {\r\n      console.log(`Quaternion(${this.m[0]}, ${this.m[1]}, ${this.m[2]}, ${this.m[3]})`);\r\n    }\r\n  }\r\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Quaternion.js",
+      "sourceLines": "5-151",
+      "targetFile": "src/main/ets/src/Quaternion.ets",
+      "targetLines": "5-142"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Quaternion.ets",
+      "lines": "5-142"
+    }
+  },
+  {
+    "answers": [
+      "// TS2ArkTS-SessionId-16\nexport default class AABB {\n    constructor(x: ESObject, y: ESObject, width: ESObject, height: ESObject) {\n        this.x = x || 0\n        this.y = y || 0\n        this.width = width || 0\n        this.height = height || 0\n\n        this.halfWidth = this.width / 2\n        this.halfHeight = this.height / 2\n        this.pivotPosX = this.width * this.pivotX\n        this.pivotPosY = this.height * this.pivotY\n\n        this.minX = this.x\n        this.minY = this.y\n        this.maxX = this.x + this.width\n        this.maxY = this.y + this.height\n    }\n\n    set(x: ESObject, y: ESObject, width: ESObject, height: ESObject): void {\n        this.x = x || 0\n        this.y = y || 0\n        this.width = width || 0\n        this.height = height || 0\n\n        this.halfWidth = this.width / 2\n        this.halfHeight = this.height / 2\n        this.pivotPosX = this.width * this.pivotX\n        this.pivotPosY = this.height * this.pivotY\n\n        this.minX = this.x\n        this.minY = this.y\n        this.maxX = this.x + this.width\n        this.maxY = this.y + this.height\n    }\n\n    position(x: ESObject, y: ESObject): void {\n        this.x = x\n        this.y = y\n        this.minX = this.x - this.pivotPosX\n        this.minY = this.y - this.pivotPosY\n        this.maxX = this.minX + this.width\n        this.maxY = this.minY + this.height\n    }\n\n    move(x: ESObject, y: ESObject): void {\n        this.x += x\n        this.y += y\n        this.minX += x\n        this.minY += y\n        this.maxX += x\n        this.maxY += y\n    }\n\n    resize(width: ESObject, height: ESObject): void {\n        this.width = width\n        this.height = height\n        this.halfWidth = width / 2\n        this.halfHeight = height / 2\n        this.pivotPosX = this.width * this.pivotX\n        this.pivotPosY = this.height * this.pivotY\n\n        this.minX = this.x - this.pivotPosX\n        this.minY = this.y - this.pivotPosY\n        this.maxX = this.minX + this.width\n        this.maxY = this.minY + this.height\n    }\n\n    pivot(x: ESObject, y: ESObject): void {\n        if (y === undefined) { y = x }\n\n        this.pivotX = x\n        this.pivotY = y\n        this.pivotPosX = this.width * this.pivotX\n        this.pivotPosY = this.height * this.pivotY\n\n        this.minX = this.x - this.pivotPosX\n        this.minY = this.y - this.pivotPosY\n        this.maxX = this.minX + this.width\n        this.maxY = this.minY + this.height\n    }\n\n    vsAABB(src: ESObject): boolean {\n        if (this.maxX < src.minX || this.minX > src.maxX) { return false }\n        if (this.maxY < src.minY || this.minY > src.maxY) { return false }\n\n        return true\n    }\n\n    vsBorderAABB(src: ESObject): boolean {\n        if (this.maxX <= src.minX || this.minX >= src.maxX) { return false }\n        if (this.maxY <= src.minY || this.minY >= src.maxY) { return false }\n\n        return true\n    }\n\n    vsAABBIntersection(src: ESObject): 0 | 1 | 2 {\n        if (this.maxX < src.minX || this.minX > src.maxX) { return 0 }\n        if (this.maxY < src.minY || this.minY > src.maxY) { return 0 }\n\n        if (this.minX > src.minX || this.minY > src.minY) { return 1 }\n        if (this.maxX < src.maxX || this.maxY < src.maxY) { return 1 }\n\n        return 2\n    }\n\n    vsPoint(x: ESObject, y: ESObject): boolean {\n        if (this.minX > x || this.maxX < x) { return false }\n        if (this.minY > y || this.maxY < y) { return false }\n\n        return true\n    }\n\n    vsBorderPoint(x: ESObject, y: ESObject): boolean {\n        if (this.minX >= x || this.maxX <= x) { return false }\n        if (this.minY >= y || this.maxY <= y) { return false }\n\n        return true\n    }\n\n    getSqrDistance(x: ESObject, y: ESObject): number {\n        let tmp: number\n        let sqDist = 0\n\n        if (x < this.minX) {\n            tmp = (this.minX - x)\n            sqDist += tmp * tmp\n        }\n        if (x > this.maxX) {\n            tmp = (x - this.maxX)\n            sqDist += tmp * tmp\n        }\n\n        if (y < this.minY) {\n            tmp = (this.minY - y)\n            sqDist += tmp * tmp\n        }\n        if (y > this.maxY) {\n            tmp = (y - this.maxY)\n            sqDist += tmp * tmp\n        }\n\n        return sqDist\n    }\n\n    getDistanceVsAABB(aabb: ESObject): number {\n        const centerX: number = (this.minX as ESObject) + (((this.maxX as ESObject) - (this.minX as ESObject)) / 2)\n        const centerY: number = (this.minY as ESObject) + (((this.maxY as ESObject) - (this.minY as ESObject)) / 2)\n        const srcCenterX: number = (aabb.minX as ESObject) + (((aabb.maxY as ESObject) - (aabb.minY as ESObject)) / 2)\n        const srcCenterY: number = (aabb.minY as ESObject) + (((aabb.maxY as ESObject) - (aabb.minY as ESObject)) / 2)\n\n        const diffX = srcCenterX - centerX\n        const diffY = srcCenterY - centerY\n\n        return Math.sqrt((diffX * diffX) + (diffY * diffY))\n    }\n\n    isUndefined(): boolean {\n        return (this.maxY === undefined)\n    }\n\n    print(str: ESObject): void {\n        if (str) {\n            console.log(\"(AABB) \" + str + \" minX: \" + this.minX + \" minY: \" + this.minY\n                + \" maxX: \" + this.maxX + \" maxY: \" + this.maxY)\n        }\n        else {\n            console.log(\"(AABB) minX: \" + this.minX + \" minY: \" + this.minY\n                + \" maxX: \" + this.maxX + \" maxY: \" + this.maxY)\n        }\n    }\n\n    x: ESObject\n    y: ESObject\n    width: ESObject\n    height: ESObject\n    halfWidth: number\n    halfHeight: number\n    pivotPosX: number\n    pivotPosY: number\n    minX: ESObject\n    minY: ESObject\n    maxX: ESObject\n    maxY: ESObject\n    pivotX: ESObject\n    pivotY: ESObject\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import AABB from \"./src/AABB\";"
+        ],
+        "intent": "Removed trailing semicolons from console.log statements for consistency or style compliance. & The code changes remove all trailing semicolons from JavaScript statements, transitioning the codebase to a semicolon-free coding style while preserving all functionality and logic.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 2,
+          "npm_end_line": 189,
+          "npm_file_path": "src/AABB.js",
+          "npm_start_line": 2,
+          "ohpm_end_line": 188,
+          "ohpm_file_path": "src/main/ets/src/AABB.ets",
+          "ohpm_start_line": 2,
+          "type": "modification"
+        },
+        "npm_code_after": "export default class AABB\r\n{\r\n\tconstructor(x, y, width, height)\r\n\t{\r\n\t\tthis.x = x || 0\r\n\t\tthis.y = y || 0\r\n\t\tthis.width = width || 0\r\n\t\tthis.height = height || 0\r\n\r\n\t\tthis.halfWidth = this.width / 2\r\n\t\tthis.halfHeight = this.height / 2\r\n\t\tthis.pivotPosX = this.width * this.pivotX\r\n\t\tthis.pivotPosY = this.height * this.pivotY\r\n\r\n\t\tthis.minX = this.x\r\n\t\tthis.minY = this.y\r\n\t\tthis.maxX = this.x + this.width\r\n\t\tthis.maxY = this.y + this.height\r\n\t}\r\n\r\n\tset(x, y, width, height)\r\n\t{\r\n\t\tthis.x = x || 0\r\n\t\tthis.y = y || 0\r\n\t\tthis.width = width || 0\r\n\t\tthis.height = height || 0\r\n\r\n\t\tthis.halfWidth = this.width / 2\r\n\t\tthis.halfHeight = this.height / 2\r\n\t\tthis.pivotPosX = this.width * this.pivotX\r\n\t\tthis.pivotPosY = this.height * this.pivotY\r\n\r\n\t\tthis.minX = this.x\r\n\t\tthis.minY = this.y\r\n\t\tthis.maxX = this.x + this.width\r\n\t\tthis.maxY = this.y + this.height\r\n\t}\r\n\r\n\tposition(x, y)\r\n\t{\r\n\t\tthis.x = x\r\n\t\tthis.y = y\r\n\t\tthis.minX = this.x - this.pivotPosX\r\n\t\tthis.minY = this.y - this.pivotPosY\r\n\t\tthis.maxX = this.minX + this.width\r\n\t\tthis.maxY = this.minY + this.height\r\n\t}\r\n\r\n\tmove(x, y)\r\n\t{\r\n\t\tthis.x += x\r\n\t\tthis.y += y\r\n\t\tthis.minX += x\r\n\t\tthis.minY += y\r\n\t\tthis.maxX += x\r\n\t\tthis.maxY += y\r\n\t}\r\n\r\n\tresize(width, height)\r\n\t{\r\n\t\tthis.width = width\r\n\t\tthis.height = height\r\n\t\tthis.halfWidth = width / 2\r\n\t\tthis.halfHeight = height / 2\r\n\t\tthis.pivotPosX = this.width * this.pivotX\r\n\t\tthis.pivotPosY = this.height * this.pivotY\r\n\r\n\t\tthis.minX = this.x - this.pivotPosX\r\n\t\tthis.minY = this.y - this.pivotPosY\r\n\t\tthis.maxX = this.minX + this.width\r\n\t\tthis.maxY = this.minY + this.height\r\n\t}\r\n\r\n\tpivot(x, y)\r\n\t{\r\n\t\tif(y === undefined) { y = x }\r\n\r\n\t\tthis.pivotX = x\r\n\t\tthis.pivotY = y\r\n\t\tthis.pivotPosX = this.width * this.pivotX\r\n\t\tthis.pivotPosY = this.height * this.pivotY\r\n\r\n\t\tthis.minX = this.x - this.pivotPosX\r\n\t\tthis.minY = this.y - this.pivotPosY\r\n\t\tthis.maxX = this.minX + this.width\r\n\t\tthis.maxY = this.minY + this.height\r\n\t}\r\n\r\n\tvsAABB(src)\r\n\t{\r\n\t\tif(this.maxX < src.minX || this.minX > src.maxX) { return false }\r\n\t\tif(this.maxY < src.minY || this.minY > src.maxY) { return false }\r\n\r\n\t\treturn true\r\n\t}\r\n\r\n\tvsBorderAABB(src)\r\n\t{\r\n\t\tif(this.maxX <= src.minX || this.minX >= src.maxX) { return false }\r\n\t\tif(this.maxY <= src.minY || this.minY >= src.maxY) { return false }\r\n\r\n\t\treturn true\r\n\t}\r\n\r\n\tvsAABBIntersection(src)\r\n\t{\r\n\t\tif(this.maxX < src.minX || this.minX > src.maxX) { return 0 }\r\n\t\tif(this.maxY < src.minY || this.minY > src.maxY) { return 0 }\r\n\r\n\t\tif(this.minX > src.minX || this.minY > src.minY) { return 1 }\r\n\t\tif(this.maxX < src.maxX || this.maxY < src.maxY) { return 1 }\r\n\r\n\t\treturn 2\r\n\t}\r\n\r\n\tvsPoint(x, y)\r\n\t{\r\n\t\tif(this.minX > x || this.maxX < x) { return false }\r\n\t\tif(this.minY > y || this.maxY < y) { return false }\r\n\r\n\t\treturn true\r\n\t}\r\n\r\n\tvsBorderPoint(x, y)\r\n\t{\r\n\t\tif(this.minX >= x || this.maxX <= x) { return false }\r\n\t\tif(this.minY >= y || this.maxY <= y) { return false }\r\n\r\n\t\treturn true\r\n\t}\r\n\r\n\tgetSqrDistance(x, y)\r\n\t{\r\n\t\tlet tmp\r\n\t\tlet sqDist = 0\r\n\r\n\t\tif(x < this.minX) {\r\n\t\t\ttmp = (this.minX - x)\r\n\t\t\tsqDist += tmp * tmp\r\n\t\t}\r\n\t\tif(x > this.maxX) {\r\n\t\t\ttmp = (x - this.maxX)\r\n\t\t\tsqDist += tmp * tmp\r\n\t\t}\r\n\r\n\t\tif(y < this.minY) {\r\n\t\t\ttmp = (this.minY - y)\r\n\t\t\tsqDist += tmp * tmp\r\n\t\t}\r\n\t\tif(y > this.maxY) {\r\n\t\t\ttmp = (y - this.maxY)\r\n\t\t\tsqDist += tmp * tmp\r\n\t\t}\r\n\r\n\t\treturn sqDist\r\n\t}\r\n\r\n\tgetDistanceVsAABB(aabb)\r\n\t{\r\n\t\tconst centerX = this.minX + ((this.maxX - this.minX) / 2)\r\n\t\tconst centerY = this.minY + ((this.maxY - this.minY) / 2)\r\n\t\tconst srcCenterX = aabb.minX + ((aabb.maxY - aabb.minY) / 2)\r\n\t\tconst srcCenterY = aabb.minY + ((aabb.maxY - aabb.minY) / 2)\r\n\r\n\t\tconst diffX = srcCenterX - centerX\r\n\t\tconst diffY = srcCenterY - centerY\r\n\r\n\t\treturn Math.sqrt((diffX * diffX) + (diffY * diffY))\r\n\t}\r\n\r\n\tisUndefined() {\r\n\t\treturn (this.maxY === undefined)\r\n\t}\r\n\r\n\tprint(str)\r\n\t{\r\n\t\tif(str)\r\n\t\t{\r\n\t\t\tconsole.log(\"(AABB) \" + str + \" minX: \" + this.minX + \" minY: \" + this.minY\r\n\t\t\t\t+ \" maxX: \" + this.maxX + \" maxY: \" + this.maxY)\r\n\t\t}\r\n\t\telse\r\n\t\t{\r\n\t\t\tconsole.log(\"(AABB) minX: \" + this.minX + \" minY: \" + this.minY\r\n\t\t\t\t+ \" maxX: \" + this.maxX + \" maxY: \" + this.maxY)\r\n\t\t}\r\n\t}\r\n}",
+        "npm_code_before": "export default class AABB\r\n{\r\n\tconstructor(x, y, width, height)\r\n\t{\r\n\t\tthis.x = x || 0;\r\n\t\tthis.y = y || 0;\t\r\n\t\tthis.width = width || 0;\r\n\t\tthis.height = height || 0;\r\n\r\n\t\tthis.halfWidth = this.width / 2;\r\n\t\tthis.halfHeight = this.height / 2;\r\n\t\tthis.pivotPosX = this.width * this.pivotX;\r\n\t\tthis.pivotPosY = this.height * this.pivotY;\t\r\n\r\n\t\tthis.minX = this.x;\r\n\t\tthis.minY = this.y;\r\n\t\tthis.maxX = this.x + this.width;\r\n\t\tthis.maxY = this.y + this.height;\r\n\t}\r\n\r\n\tset(x, y, width, height) \r\n\t{\r\n\t\tthis.x = x || 0;\r\n\t\tthis.y = y || 0;\t\r\n\t\tthis.width = width || 0;\r\n\t\tthis.height = height || 0;\r\n\t\t\r\n\t\tthis.halfWidth = this.width / 2;\r\n\t\tthis.halfHeight = this.height / 2;\r\n\t\tthis.pivotPosX = this.width * this.pivotX;\r\n\t\tthis.pivotPosY = this.height * this.pivotY;\t\r\n\r\n\t\tthis.minX = this.x;\r\n\t\tthis.minY = this.y;\r\n\t\tthis.maxX = this.x + this.width;\r\n\t\tthis.maxY = this.y + this.height;\r\n\t}\r\n\r\n\tposition(x, y)\r\n\t{\r\n\t\tthis.x = x;\r\n\t\tthis.y = y;\r\n\t\tthis.minX = this.x - this.pivotPosX;\r\n\t\tthis.minY = this.y - this.pivotPosY;\r\n\t\tthis.maxX = this.minX + this.width;\r\n\t\tthis.maxY = this.minY + this.height;\r\n\t}\r\n\r\n\tmove(x, y)\r\n\t{\r\n\t\tthis.x += x;\r\n\t\tthis.y += y;\r\n\t\tthis.minX += x;\r\n\t\tthis.minY += y;\r\n\t\tthis.maxX += x;\r\n\t\tthis.maxY += y;\r\n\t}\r\n\r\n\tresize(width, height)\r\n\t{\r\n\t\tthis.width = width;\r\n\t\tthis.height = height;\r\n\t\tthis.halfWidth = width / 2;\r\n\t\tthis.halfHeight = height / 2;\t\r\n\t\tthis.pivotPosX = this.width * this.pivotX;\r\n\t\tthis.pivotPosY = this.height * this.pivotY;\r\n\t\t\r\n\t\tthis.minX = this.x - this.pivotPosX;\r\n\t\tthis.minY = this.y - this.pivotPosY;\r\n\t\tthis.maxX = this.minX + this.width;\r\n\t\tthis.maxY = this.minY + this.height;\t\t\r\n\t}\r\n\r\n\tpivot(x, y)\r\n\t{\r\n\t\tif(y === undefined) { y = x; }\r\n\r\n\t\tthis.pivotX = x;\r\n\t\tthis.pivotY = y;\r\n\t\tthis.pivotPosX = this.width * this.pivotX;\r\n\t\tthis.pivotPosY = this.height * this.pivotY;\r\n\r\n\t\tthis.minX = this.x - this.pivotPosX;\r\n\t\tthis.minY = this.y - this.pivotPosY;\r\n\t\tthis.maxX = this.minX + this.width;\r\n\t\tthis.maxY = this.minY + this.height;\t\t\r\n\t}\r\n\r\n\tvsAABB(src)\r\n\t{\r\n\t\tif(this.maxX < src.minX || this.minX > src.maxX) { return false; }\r\n\t\tif(this.maxY < src.minY || this.minY > src.maxY) { return false; }\r\n\r\n\t\treturn true;\r\n\t}\r\n\r\n\tvsBorderAABB(src)\r\n\t{\r\n\t\tif(this.maxX <= src.minX || this.minX >= src.maxX) { return false; }\r\n\t\tif(this.maxY <= src.minY || this.minY >= src.maxY) { return false; }\r\n\r\n\t\treturn true;\r\n\t}\r\n\r\n\tvsAABBIntersection(src)\r\n\t{\r\n\t\tif(this.maxX < src.minX || this.minX > src.maxX) { return 0; }\r\n\t\tif(this.maxY < src.minY || this.minY > src.maxY) { return 0; }\r\n\r\n\t\tif(this.minX > src.minX || this.minY > src.minY) { return 1; }\r\n\t\tif(this.maxX < src.maxX || this.maxY < src.maxY) { return 1; }\r\n\r\n\t\treturn 2;\r\n\t}\r\n\r\n\tvsPoint(x, y)\r\n\t{\r\n\t\tif(this.minX > x || this.maxX < x) { return false; }\r\n\t\tif(this.minY > y || this.maxY < y) { return false; }\r\n\r\n\t\treturn true;\r\n\t}\r\n\r\n\tvsBorderPoint(x, y)\r\n\t{\r\n\t\tif(this.minX >= x || this.maxX <= x) { return false; }\r\n\t\tif(this.minY >= y || this.maxY <= y) { return false; }\r\n\r\n\t\treturn true;\r\n\t}\r\n\r\n\tgetSqrDistance(x, y)\r\n\t{\r\n\t\tlet tmp;\r\n\t\tlet sqDist = 0;\r\n\r\n\t\tif(x < this.minX) {\r\n\t\t\ttmp = (this.minX - x);\r\n\t\t\tsqDist += tmp * tmp;\r\n\t\t}\r\n\t\tif(x > this.maxX) {\r\n\t\t\ttmp = (x - this.maxX);\r\n\t\t\tsqDist += tmp * tmp;\r\n\t\t}\r\n\r\n\t\tif(y < this.minY) {\r\n\t\t\ttmp = (this.minY - y);\r\n\t\t\tsqDist += tmp * tmp;\r\n\t\t}\r\n\t\tif(y > this.maxY) {\r\n\t\t\ttmp = (y - this.maxY);\r\n\t\t\tsqDist += tmp * tmp;\r\n\t\t}\r\n\r\n\t\treturn sqDist;\r\n\t}\r\n\r\n\tgetDistanceVsAABB(aabb)\r\n\t{\r\n\t\tconst centerX = this.minX + ((this.maxX - this.minX) / 2);\r\n\t\tconst centerY = this.minY + ((this.maxY - this.minY) / 2);\r\n\t\tconst srcCenterX = aabb.minX + ((aabb.maxY - aabb.minY) / 2);\r\n\t\tconst srcCenterY = aabb.minY + ((aabb.maxY - aabb.minY) / 2);\r\n\r\n\t\tconst diffX = srcCenterX - centerX;\r\n\t\tconst diffY = srcCenterY - centerY;\r\n\r\n\t\treturn Math.sqrt((diffX * diffX) + (diffY * diffY));\r\n\t}\r\n\r\n\tisUndefined() {\r\n\t\treturn (this.maxY === undefined);\r\n\t}\r\n\r\n\tprint(str)\r\n\t{\r\n\t\tif(str)\r\n\t\t{\r\n\t\t\tconsole.log(\"(AABB) \" + str + \" minX: \" + this.minX + \" minY: \" + this.minY\r\n\t\t\t\t+ \" maxX: \" + this.maxX + \" maxY: \" + this.maxY);\r\n\t\t}\r\n\t\telse\r\n\t\t{\r\n\t\t\tconsole.log(\"(AABB) minX: \" + this.minX + \" minY: \" + this.minY\r\n\t\t\t\t+ \" maxX: \" + this.maxX + \" maxY: \" + this.maxY);\r\n\t\t}\r\n\t}\r\n}",
+        "ohpm_code_before": [
+          "// TS2ArkTS-SessionId-16\nexport default class AABB {\n    constructor(x: ESObject, y: ESObject, width: ESObject, height: ESObject) {\n        this.x = x || 0;\n        this.y = y || 0;\n        this.width = width || 0;\n        this.height = height || 0;\n\n        this.halfWidth = this.width / 2;\n        this.halfHeight = this.height / 2;\n        this.pivotPosX = this.width * this.pivotX;\n        this.pivotPosY = this.height * this.pivotY;\n\n        this.minX = this.x;\n        this.minY = this.y;\n        this.maxX = this.x + this.width;\n        this.maxY = this.y + this.height;\n    }\n\n    set(x: ESObject, y: ESObject, width: ESObject, height: ESObject): void {\n        this.x = x || 0;\n        this.y = y || 0;\n        this.width = width || 0;\n        this.height = height || 0;\n\n        this.halfWidth = this.width / 2;\n        this.halfHeight = this.height / 2;\n        this.pivotPosX = this.width * this.pivotX;\n        this.pivotPosY = this.height * this.pivotY;\n\n        this.minX = this.x;\n        this.minY = this.y;\n        this.maxX = this.x + this.width;\n        this.maxY = this.y + this.height;\n    }\n\n    position(x: ESObject, y: ESObject): void {\n        this.x = x;\n        this.y = y;\n        this.minX = this.x - this.pivotPosX;\n        this.minY = this.y - this.pivotPosY;\n        this.maxX = this.minX + this.width;\n        this.maxY = this.minY + this.height;\n    }\n\n    move(x: ESObject, y: ESObject): void {\n        this.x += x;\n        this.y += y;\n        this.minX += x;\n        this.minY += y;\n        this.maxX += x;\n        this.maxY += y;\n    }\n\n    resize(width: ESObject, height: ESObject): void {\n        this.width = width;\n        this.height = height;\n        this.halfWidth = width / 2;\n        this.halfHeight = height / 2;\n        this.pivotPosX = this.width * this.pivotX;\n        this.pivotPosY = this.height * this.pivotY;\n\n        this.minX = this.x - this.pivotPosX;\n        this.minY = this.y - this.pivotPosY;\n        this.maxX = this.minX + this.width;\n        this.maxY = this.minY + this.height;\n    }\n\n    pivot(x: ESObject, y: ESObject): void {\n        if (y === undefined) { y = x; }\n\n        this.pivotX = x;\n        this.pivotY = y;\n        this.pivotPosX = this.width * this.pivotX;\n        this.pivotPosY = this.height * this.pivotY;\n\n        this.minX = this.x - this.pivotPosX;\n        this.minY = this.y - this.pivotPosY;\n        this.maxX = this.minX + this.width;\n        this.maxY = this.minY + this.height;\n    }\n\n    vsAABB(src: ESObject): boolean {\n        if (this.maxX < src.minX || this.minX > src.maxX) { return false; }\n        if (this.maxY < src.minY || this.minY > src.maxY) { return false; }\n\n        return true;\n    }\n\n    vsBorderAABB(src: ESObject): boolean {\n        if (this.maxX <= src.minX || this.minX >= src.maxX) { return false; }\n        if (this.maxY <= src.minY || this.minY >= src.maxY) { return false; }\n\n        return true;\n    }\n\n    vsAABBIntersection(src: ESObject): 0 | 1 | 2 {\n        if (this.maxX < src.minX || this.minX > src.maxX) { return 0; }\n        if (this.maxY < src.minY || this.minY > src.maxY) { return 0; }\n\n        if (this.minX > src.minX || this.minY > src.minY) { return 1; }\n        if (this.maxX < src.maxX || this.maxY < src.maxY) { return 1; }\n\n        return 2;\n    }\n\n    vsPoint(x: ESObject, y: ESObject): boolean {\n        if (this.minX > x || this.maxX < x) { return false; }\n        if (this.minY > y || this.maxY < y) { return false; }\n\n        return true;\n    }\n\n    vsBorderPoint(x: ESObject, y: ESObject): boolean {\n        if (this.minX >= x || this.maxX <= x) { return false; }\n        if (this.minY >= y || this.maxY <= y) { return false; }\n\n        return true;\n    }\n\n    getSqrDistance(x: ESObject, y: ESObject): number {\n        let tmp: number;\n        let sqDist = 0;\n\n        if (x < this.minX) {\n            tmp = (this.minX - x);\n            sqDist += tmp * tmp;\n        }\n        if (x > this.maxX) {\n            tmp = (x - this.maxX);\n            sqDist += tmp * tmp;\n        }\n\n        if (y < this.minY) {\n            tmp = (this.minY - y);\n            sqDist += tmp * tmp;\n        }\n        if (y > this.maxY) {\n            tmp = (y - this.maxY);\n            sqDist += tmp * tmp;\n        }\n\n        return sqDist;\n    }\n\n    getDistanceVsAABB(aabb: ESObject): number {\n        const centerX: number = (this.minX as ESObject) + (((this.maxX as ESObject) - (this.minX as ESObject)) / 2);\n        const centerY: number = (this.minY as ESObject) + (((this.maxY as ESObject) - (this.minY as ESObject)) / 2);\n        const srcCenterX: number = (aabb.minX as ESObject) + (((aabb.maxY as ESObject) - (aabb.minY as ESObject)) / 2);\n        const srcCenterY: number = (aabb.minY as ESObject) + (((aabb.maxY as ESObject) - (aabb.minY as ESObject)) / 2);\n\n        const diffX = srcCenterX - centerX;\n        const diffY = srcCenterY - centerY;\n\n        return Math.sqrt((diffX * diffX) + (diffY * diffY));\n    }\n\n    isUndefined(): boolean {\n        return (this.maxY === undefined);\n    }\n\n    print(str: ESObject): void {\n        if (str) {\n            console.log(\"(AABB) \" + str + \" minX: \" + this.minX + \" minY: \" + this.minY\n                + \" maxX: \" + this.maxX + \" maxY: \" + this.maxY);\n        }\n        else {\n            console.log(\"(AABB) minX: \" + this.minX + \" minY: \" + this.minY\n                + \" maxX: \" + this.maxX + \" maxY: \" + this.maxY);\n        }\n    }\n\n    x: ESObject;\n    y: ESObject;\n    width: ESObject;\n    height: ESObject;\n    halfWidth: number;\n    halfHeight: number;\n    pivotPosX: number;\n    pivotPosY: number;\n    minX: ESObject;\n    minY: ESObject;\n    maxX: ESObject;\n    maxY: ESObject;\n    pivotX: ESObject;\n    pivotY: ESObject;\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/AABB.js",
+      "sourceLines": "2-189",
+      "targetFile": "src/main/ets/src/AABB.ets",
+      "targetLines": "2-188"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/AABB.ets",
+      "lines": "2-188"
+    }
+  },
+  {
+    "answers": [
+      "export default class Vector3 {\n    x: number;\n    y: number;\n    z: number;\n    v: Float32Array | null;\n\n    constructor(x?: number, y?: number, z?: number) {\n        this.x = x || 0.0;\n        this.y = y || 0.0;\n        this.z = z || 0.0;\n        this.v = null;\n    }\n\n    reset(): void {\n        this.x = 0.0;\n        this.y = 0.0;\n        this.z = 0.0;\n    }\n\n    set(x: number, y?: number, z?: number): void {\n        this.x = x;\n        this.y = (y === undefined) ? x : y;\n        this.z = (z === undefined) ? x : z;\n    }\n\n    scalar(value: number): void {\n        this.x = value;\n        this.y = value;\n        this.z = value;\n    }\n\n    clone(): Vector3 {\n        return new Vector3(this.x, this.y, this.z);\n    }\n\n    copy(vec3: Vector3): void {\n        this.x = vec3.x;\n        this.y = vec3.y;\n        this.z = vec3.z;\n    }\n\n    add(vec3: Vector3): void {\n        this.x += vec3.x;\n        this.y += vec3.y;\n        this.z += vec3.z;\n    }\n\n    addScalar(value: number): void {\n        this.x += value;\n        this.y += value;\n        this.z += value;\n    }\n\n    addValues(x: number, y: number, z: number): void {\n        this.x += x;\n        this.y += y;\n        this.z += z;\n    }\n\n    sub(vec3: Vector3): void {\n        this.x -= vec3.x;\n        this.y -= vec3.y;\n        this.z -= vec3.z;\n    }\n\n    subScalar(value: number): void {\n        this.x -= value;\n        this.y -= value;\n        this.z -= value;\n    }\n\n    subValues(x: number, y: number, z: number): void {\n        this.x -= x;\n        this.y -= y;\n        this.z -= z;\n    }\n\n    mul(vec3: Vector3): void {\n        this.x *= vec3.x;\n        this.y *= vec3.y;\n        this.z *= vec3.z;\n    }\n\n    mulScalar(value: number): void {\n        this.x *= value;\n        this.y *= value;\n        this.z *= value;\n    }\n\n    mulValues(x: number, y: number, z: number): void {\n        this.x *= x;\n        this.y *= y;\n        this.z *= z;\n    }\n\n    div(vec3: Vector3): void {\n        this.x /= vec3.x;\n        this.y /= vec3.y;\n        this.z /= vec3.z;\n    }\n\n    divScalar(value: number): void {\n        this.x /= value;\n        this.y /= value;\n        this.z /= value;\n    }\n\n    divValues(x: number, y: number, z: number): void {\n        this.x /= x;\n        this.y /= y;\n        this.z /= z;\n    }\n\n    applyMatrix3(matrix3: Matrix3): void {\n        const m = matrix3.m;\n\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        this.x = m[0] * x + m[3] * y + m[6] * z;\n        this.y = m[1] * x + m[4] * y + m[7] * z;\n        this.z = m[2] * x + m[5] * y + m[8] * z;\n    }\n\n    applyMatrix4(matrix4: Matrix4): void {\n        const m = matrix4.m;\n\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        this.x = m[0] * x + m[4] * y + m[8] * z + m[12];\n        this.y = m[1] * x + m[5] * y + m[9] * z + m[13];\n        this.z = m[2] * x + m[6] * y + m[10] * z + m[14];\n        const w = m[3] * x + m[7] * y + m[11] * z + m[15];\n\n        this.divScalar(w);\n    }\n\n    applyQuaternion(q: Quaternion): void {\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        const qx = q.m[0];\n        const qy = q.m[1];\n        const qz = q.m[2];\n        const qw = q.m[3];\n\n        const ix = qw * x + qy * z - qz * y;\n        const iy = qw * y + qz * x - qx * z;\n        const iz = qw * z + qx * y - qy * x;\n        const iw = -qx * x - qy * y - qz * z;\n\n        this.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;\n        this.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;\n        this.z = iz * qw + iw * -qz + ix * -qy - iy * -qx;\n    }\n\n    min(vec3: Vector3): void {\n        this.x = Math.min(this.x, vec3.x);\n        this.y = Math.min(this.y, vec3.y);\n        this.z = Math.min(this.z, vec3.z);\n    }\n\n    max(vec3: Vector3): void {\n        this.x = Math.max(this.x, vec3.x);\n        this.y = Math.max(this.y, vec3.y);\n        this.z = Math.max(this.z, vec3.z);\n    }\n\n    clamp(min: Vector3, max: Vector3): void {\n        this.x = Math.max(min.x, Math.min(max.x, this.x));\n        this.y = Math.max(min.y, Math.min(max.y, this.y));\n        this.z = Math.max(min.z, Math.min(max.z, this.z));\n    }\n\n    floor(): void {\n        this.x = Math.floor(this.x);\n        this.y = Math.floor(this.y);\n        this.z = Math.floor(this.z);\n    }\n\n    ceil(): void {\n        this.x = Math.ceil(this.x);\n        this.y = Math.ceil(this.y);\n        this.z = Math.ceil(this.z);\n    }\n\n    round(): void {\n        this.x = Math.round(this.x);\n        this.y = Math.round(this.y);\n        this.z = Math.round(this.z);\n    }\n\n    roundToZero(): void {\n        this.x = (this.x < 0) ? Math.ceil(this.x) : Math.floor(this.x);\n        this.y = (this.y < 0) ? Math.ceil(this.y) : Math.floor(this.y);\n        this.z = (this.z < 0) ? Math.ceil(this.z) : Math.floor(this.z);\n    }\n\n    negate(): void {\n        this.x = -this.x;\n        this.y = -this.y;\n        this.z = -this.z;\n    }\n\n    dot(src: Vector3): number {\n        return this.x * src.x + this.y * src.y + this.z * src.z;\n    }\n\n    lengthSq(): number {\n        return this.x * this.x + this.y * this.y + this.z * this.z;\n    }\n\n    length(): number {\n        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);\n    }\n\n    lengthManhattan(): number {\n        return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z);\n    }\n\n    normalize(): void {\n        let length = this.x * this.x + this.y * this.y + this.z * this.z;\n        if (length > 0) {\n            length = 1 / Math.sqrt(length);\n            this.x *= length;\n            this.y *= length;\n            this.z *= length;\n        } else {\n            this.x = 0.0;\n            this.y = 0.0;\n            this.z = 0.0;\n        }\n    }\n\n    lerp(src: Vector3, alpha: number): void {\n        this.x += (src.x - this.x) * alpha;\n        this.y += (src.y - this.y) * alpha;\n        this.z += (src.z - this.z) * alpha;\n    }\n\n    cross(src: Vector3): void {\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        this.x = y * src.z - z * src.y;\n        this.y = z * src.x - x * src.z;\n        this.z = x * src.y - y * src.x;\n    }\n\n    distanceToSquared(src: Vector3): number {\n        const dx = this.x - src.x;\n        const dy = this.y - src.y;\n        const dz = this.z - src.z;\n\n        return dx * dx + dy * dy + dz * dz;\n    }\n\n    distanceTo(src: Vector3): number {\n        const dx = this.x - src.x;\n        const dy = this.y - src.y;\n        const dz = this.z - src.z;\n\n        return Math.sqrt(dx * dx + dy * dy + dz * dz);\n    }\n\n    equals(src: Vector3): boolean {\n        return ((this.x === src.x) && (this.y === src.y) && (this.z === src.z));\n    }\n\n    toFloat32Array(): Float32Array {\n        if (!this.v) {\n            this.v = new Float32Array([this.x, this.y, this.z]);\n        } else {\n            this.v[0] = this.x;\n            this.v[1] = this.y;\n            this.v[2] = this.z;\n        }\n\n        return this.v;\n    }\n\n    fromArray(array: number[]): void {\n        this.x = array[0];\n        this.y = array[1];\n        this.z = array[2];\n    }\n\n    print(txt?: string): void {\n        if (txt) {\n            console.log(`${txt} Vector3(${this.x}, ${this.y}, ${this.z})`);\n        } else {\n            console.log(`Vector3(${this.x}, ${this.y}, ${this.z})`);\n        }\n    }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import Vector3 from \"./src/Vector3\";",
+          "import Vector3 from \"./Vector3\""
+        ],
+        "intent": "Added a `fromArray` method to the Vector3 class that allows setting the vector's x, y, z components from an array, and removed semicolons from the `toFloat32Array` method for consistency. & Added import of `radians` and `degrees` utility functions, and modified the `set` method to allow single-argument calls that set all components to the same value. & Fixed inconsistent spacing in method signature formatting. & Fixed inconsistent spacing in the method signature of `applyMatrix3` to maintain code formatting consistency. & No functional changes detected; only formatting adjustments (removal of whitespace before the opening brace of the `cross` method). & No functional changes detected; only whitespace/formatting adjustments were made (removing trailing space after method signature). & No functional changes were made; the code remains identical between versions, with only whitespace/formatting differences (removal of a space before the opening parenthesis in the method signature). & No functional changes were made; the code remains identical between versions. & Removed unnecessary semicolons from the `distanceTo` method to align with a consistent code style that omits semicolons.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 9,
+          "npm_end_line": 305,
+          "npm_file_path": "src/Vector3.js",
+          "npm_start_line": 2,
+          "ohpm_end_line": 298,
+          "ohpm_file_path": "src/main/ets/src/Vector3.ets",
+          "ohpm_start_line": 5,
+          "type": "modification"
+        },
+        "npm_code_after": "export default class Vector3\r\n{\r\n\tconstructor(x, y, z) {\r\n\t\tthis.x = x || 0.0\r\n\t\tthis.y = y || 0.0\r\n\t\tthis.z = z || 0.0\r\n\t\tthis.v = null\r\n\t}\r\n\r\n\treset() {\r\n\t\tthis.x = 0.0\r\n\t\tthis.y = 0.0\r\n\t\tthis.z = 0.0\r\n\t}\r\n\r\n\tset(x, y, z) {\r\n\t\tthis.x = x\r\n\t\tthis.y = (y === undefined) ? x : y\r\n\t\tthis.z = (z === undefined) ? x : z\r\n\t}\r\n\r\n\tscalar(value) {\r\n\t\tthis.x = value\r\n\t\tthis.y = value\r\n\t\tthis.z = value\r\n\t}\r\n\r\n\tclone() {\r\n\t\treturn new Vector3(this.x, this.y, this.z)\r\n\t}\r\n\r\n\tcopy(vec3) {\r\n\t\tthis.x = vec3.x\r\n\t\tthis.y = vec3.y\r\n\t\tthis.z = vec3.z\r\n\t}\r\n\r\n\tadd(vec3) {\r\n\t\tthis.x += vec3.x\r\n\t\tthis.y += vec3.y\r\n\t\tthis.z += vec3.z\r\n\t}\r\n\r\n\taddScalar(value) {\r\n\t\tthis.x += value\r\n\t\tthis.y += value\r\n\t\tthis.z += value\r\n\t}\r\n\r\n\taddValues(x, y, z) {\r\n\t\tthis.x += x\r\n\t\tthis.y += y\r\n\t\tthis.z += z\r\n\t}\r\n\r\n\tsub(vec3) {\r\n\t\tthis.x -= vec3.x\r\n\t\tthis.y -= vec3.y\r\n\t\tthis.z -= vec3.z\r\n\t}\r\n\r\n\tsubScalar(value) {\r\n\t\tthis.x -= value\r\n\t\tthis.y -= value\r\n\t\tthis.z -= value\r\n\t}\r\n\r\n\tsubValues(x, y, z) {\r\n\t\tthis.x -= x\r\n\t\tthis.y -= y\r\n\t\tthis.z -= z\r\n\t}\r\n\r\n\tmul(vec3) {\r\n\t\tthis.x *= vec3.x\r\n\t\tthis.y *= vec3.y\r\n\t\tthis.z *= vec3.z\r\n\t}\r\n\r\n\tmulScalar(value) {\r\n\t\tthis.x *= value\r\n\t\tthis.y *= value\r\n\t\tthis.z *= value\r\n\t}\r\n\r\n\tmulValues(x, y, z) {\r\n\t\tthis.x *= x\r\n\t\tthis.y *= y\r\n\t\tthis.z *= z\r\n\t}\r\n\r\n\tdiv(vec3) {\r\n\t\tthis.x /= vec3.x\r\n\t\tthis.y /= vec3.y\r\n\t\tthis.z /= vec3.z\r\n\t}\r\n\r\n\tdivScalar(value) {\r\n\t\tthis.x /= value\r\n\t\tthis.y /= value\r\n\t\tthis.z /= value\r\n\t}\r\n\r\n\tdivValues(x, y, z) {\r\n\t\tthis.x /= x\r\n\t\tthis.y /= y\r\n\t\tthis.z /= z\r\n\t}\r\n\r\n\tapplyMatrix3(matrix3)\r\n\t{\r\n\t\tconst m = matrix.m\r\n\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tthis.x = m[0] * x + m[3] * y + m[ 6 ] * z\r\n\t\tthis.y = m[1] * x + m[4] * y + m[ 7 ] * z\r\n\t\tthis.z = m[2] * x + m[5] * y + m[ 8 ] * z\r\n\t}\r\n\r\n\tapplyMatrix4(matrix4)\r\n\t{\r\n\t\tconst m = matrix.m\r\n\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tthis.x = m[0] * x + m[4] * y + m[8]  * z + m[12]\r\n\t\tthis.y = m[1] * x + m[5] * y + m[9]  * z + m[13]\r\n\t\tthis.z = m[2] * x + m[6] * y + m[10] * z + m[14]\r\n\t\tconst w =  m[3] * x + m[7] * y + m[11] * z + m[15]\r\n\r\n\t\tthis.divScalar(w)\r\n\t}\r\n\r\n\tapplyQuaternion(q)\r\n\t{\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tconst qx = q.x\r\n\t\tconst qy = q.y\r\n\t\tconst qz = q.z\r\n\t\tconst qw = q.w\r\n\r\n\t\tconst ix =  qw * x + qy * z - qz * y\r\n\t\tconst iy =  qw * y + qz * x - qx * z\r\n\t\tconst iz =  qw * z + qx * y - qy * x\r\n\t\tconst iw = - qx * x - qy * y - qz * z\r\n\r\n\t\tthis.x = ix * qw + iw * - qx + iy * - qz - iz * - qy\r\n\t\tthis.y = iy * qw + iw * - qy + iz * - qx - ix * - qz\r\n\t\tthis.z = iz * qw + iw * - qz + ix * - qy - iy * - qx\r\n\t}\r\n\r\n\tmin(vec3) {\r\n\t\tthis.x = Math.min(this.x, vec3.x)\r\n\t\tthis.y = Math.min(this.y, vec3.y)\r\n\t\tthis.z = Math.min(this.z, vec3.z)\r\n\t}\r\n\r\n\tmax() {\r\n\t\tthis.x = Math.max(this.x, vec3.x)\r\n\t\tthis.y = Math.max(this.y, vec3.y)\r\n\t\tthis.z = Math.max(this.z, vec3.z)\r\n\t}\r\n\r\n\tclamp(min, max) {\r\n\t\tthis.x = Math.max(minx, Math.min(maxx, this.x))\r\n\t\tthis.y = Math.max(miny, Math.min(maxy, this.y))\r\n\t\tthis.z = Math.max(minz, Math.min(maxz, this.z))\r\n\t}\r\n\r\n\tfloor() {\r\n\t\tthis.x = Math.floor(this.x)\r\n\t\tthis.y = Math.floor(this.y)\r\n\t\tthis.z = Math.floor(this.z)\r\n\t}\r\n\r\n\tceil() {\r\n\t\tthis.x = Math.ceil(this.x)\r\n\t\tthis.y = Math.ceil(this.y)\r\n\t\tthis.z = Math.ceil(this.z)\r\n\t}\r\n\r\n\tround() {\r\n\t\tthis.x = Math.round(this.x)\r\n\t\tthis.y = Math.round(this.y)\r\n\t\tthis.z = Math.round(this.z)\r\n\t}\r\n\r\n\troundToZero() {\r\n\t\tthis.x = (this.x < 0) ? Math.ceil(this.x) : Math.floor(this.x)\r\n\t\tthis.y = (this.y < 0) ? Math.ceil(this.y) : Math.floor(this.y)\r\n\t\tthis.z = (this.z < 0) ? Math.ceil(this.z) : Math.floor(this.z)\r\n\t}\r\n\r\n\tnegate() {\r\n\t\tthis.x = -this.x\r\n\t\tthis.y = -this.y\r\n\t\tthis.z = -this.z\r\n\t}\r\n\r\n\tdot(src) {\r\n\t\treturn this.x * src.x + this.y * src.y + this.z * src.z\r\n\t}\r\n\r\n\tlengthSq() {\r\n\t\treturn this.x * this.x + this.y * this.y + this.z * this.z\r\n\t}\r\n\r\n\tlength() {\r\n\t\treturn Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z)\r\n\t}\r\n\r\n\tlengthManhattan() {\r\n\t\treturn Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z)\r\n\t}\r\n\r\n\tnormalize()\r\n\t{\r\n\t\tlet length = this.x * this.x + this.y * this.y + this.z * this.z\r\n\t\tif(length > 0)\r\n\t\t{\r\n\t\t\tlength = 1 / Math.sqrt(length)\r\n\t\t\tthis.x *= length\r\n\t\t\tthis.y *= length\r\n\t\t\tthis.z *= length\r\n\t\t}\r\n\t\telse\r\n\t\t{\r\n\t\t\tthis.x = 0.0\r\n\t\t\tthis.y = 0.0\r\n\t\t\tthis.z = 0.0\r\n\t\t}\r\n\t}\r\n\r\n\tlerp(src, alpha) {\r\n\t\tthis.x += (src.x - this.x) * alpha\r\n\t\tthis.y += (src.y - this.y) * alpha\r\n\t\tthis.z += (src.z - this.z) * alpha\r\n\t}\r\n\r\n\tcross(src)\r\n\t{\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tthis.x = y * src.z - z * src.y\r\n\t\tthis.y = z * src.x - x * src.z\r\n\t\tthis.z = x * src.y - y * src.x\r\n\t}\r\n\r\n\tdistanceToSquared(src)\r\n\t{\r\n\t\tconst dx = this.x - src.x\r\n\t\tconst dy = this.y - src.y\r\n\t\tconst dz = this.z - src.z\r\n\r\n\t\treturn dx * dx + dy * dy + dz * dz\r\n\t}\r\n\r\n\tdistanceTo(src)\r\n\t{\r\n\t\tconst dx = this.x - src.x\r\n\t\tconst dy = this.y - src.y\r\n\t\tconst dz = this.z - src.z\r\n\r\n\t\treturn Math.sqrt(dx * dx + dy * dy + dz * dz)\r\n\t}\r\n\r\n\tequals(src) {\r\n\t\treturn ((this.x === src.x) && (this.y === src.y) && (this.z === src.z))\r\n\t}\r\n\r\n\ttoFloat32Array()\r\n\t{\r\n\t\tif(!this.v) {\r\n\t\t\tthis.v = new Float32Array([ this.x, this.y, this.z ])\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.v[0] = this.x\r\n\t\t\tthis.v[1] = this.y\r\n\t\t\tthis.v[2] = this.z\r\n\t\t}\r\n\r\n\t\treturn this.v\r\n\t}\r\n\r\n\tfromArray(array) {\r\n\t\tthis.x = array[0]\r\n\t\tthis.y = array[1]\r\n\t\tthis.z = array[2]\r\n\t}\r\n\r\n\tprint(txt)\r\n\t{\r\n\t\tif(txt) {\r\n\t\t\tconsole.log(`${txt} Vector3(${x}, ${y}, ${z})`)\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(`Vector3(${x}, ${y}, ${z})`)\r\n\t\t}\r\n\t}\r\n}",
+        "npm_code_before": "export default class Vector3\r\n{\r\n\tconstructor(x, y, z) {\r\n\t\tthis.x = x || 0.0\r\n\t\tthis.y = y || 0.0\r\n\t\tthis.z = z || 0.0\r\n\t\tthis.v = null\r\n\t}\r\n\r\n\treset() {\r\n\t\tthis.x = 0.0\r\n\t\tthis.y = 0.0\r\n\t\tthis.z = 0.0\r\n\t}\r\n\r\n\tset(x, y, z) {\r\n\t\tthis.x = x\r\n\t\tthis.y = y\r\n\t\tthis.z = z\r\n\t}\r\n\r\n\tscalar(value) {\r\n\t\tthis.x = value\r\n\t\tthis.y = value\r\n\t\tthis.z = value\r\n\t}\r\n\r\n\tclone() {\r\n\t\treturn new Vector3(this.x, this.y, this.z)\r\n\t}\r\n\r\n\tcopy(vec3) {\r\n\t\tthis.x = vec3.x\r\n\t\tthis.y = vec3.y\r\n\t\tthis.z = vec3.z\r\n\t}\r\n\r\n\tadd(vec3) {\r\n\t\tthis.x += vec3.x\r\n\t\tthis.y += vec3.y\r\n\t\tthis.z += vec3.z\r\n\t}\r\n\r\n\taddScalar(value) {\r\n\t\tthis.x += value\r\n\t\tthis.y += value\r\n\t\tthis.z += value\r\n\t}\r\n\r\n\taddValues(x, y, z) {\r\n\t\tthis.x += x\r\n\t\tthis.y += y\r\n\t\tthis.z += z\r\n\t}\r\n\r\n\tsub(vec3) {\r\n\t\tthis.x -= vec3.x\r\n\t\tthis.y -= vec3.y\r\n\t\tthis.z -= vec3.z\r\n\t}\r\n\r\n\tsubScalar(value) {\r\n\t\tthis.x -= value\r\n\t\tthis.y -= value\r\n\t\tthis.z -= value\r\n\t}\r\n\r\n\tsubValues(x, y, z) {\r\n\t\tthis.x -= x\r\n\t\tthis.y -= y\r\n\t\tthis.z -= z\r\n\t}\r\n\r\n\tmul(vec3) {\r\n\t\tthis.x *= vec3.x\r\n\t\tthis.y *= vec3.y\r\n\t\tthis.z *= vec3.z\r\n\t}\r\n\r\n\tmulScalar(value) {\r\n\t\tthis.x *= value\r\n\t\tthis.y *= value\r\n\t\tthis.z *= value\r\n\t}\r\n\r\n\tmulValues(x, y, z) {\r\n\t\tthis.x *= x\r\n\t\tthis.y *= y\r\n\t\tthis.z *= z\r\n\t}\r\n\r\n\tdiv(vec3) {\r\n\t\tthis.x /= vec3.x\r\n\t\tthis.y /= vec3.y\r\n\t\tthis.z /= vec3.z\r\n\t}\r\n\r\n\tdivScalar(value) {\r\n\t\tthis.x /= value\r\n\t\tthis.y /= value\r\n\t\tthis.z /= value\r\n\t}\r\n\r\n\tdivValues(x, y, z) {\r\n\t\tthis.x /= x\r\n\t\tthis.y /= y\r\n\t\tthis.z /= z\r\n\t}\r\n\r\n\tapplyMatrix3(matrix3) \r\n\t{\r\n\t\tconst m = matrix.m\r\n\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tthis.x = m[0] * x + m[3] * y + m[ 6 ] * z\r\n\t\tthis.y = m[1] * x + m[4] * y + m[ 7 ] * z\r\n\t\tthis.z = m[2] * x + m[5] * y + m[ 8 ] * z\r\n\t}\r\n\r\n\tapplyMatrix4(matrix4) \r\n\t{\r\n\t\tconst m = matrix.m\r\n\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tthis.x = m[0] * x + m[4] * y + m[8]  * z + m[12]\r\n\t\tthis.y = m[1] * x + m[5] * y + m[9]  * z + m[13]\r\n\t\tthis.z = m[2] * x + m[6] * y + m[10] * z + m[14]\r\n\t\tconst w =  m[3] * x + m[7] * y + m[11] * z + m[15]\r\n\r\n\t\tthis.divScalar(w)\r\n\t}\r\n\r\n\tapplyQuaternion(q) \r\n\t{\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tconst qx = q.x\r\n\t\tconst qy = q.y\r\n\t\tconst qz = q.z\r\n\t\tconst qw = q.w\r\n\r\n\t\tconst ix =  qw * x + qy * z - qz * y\r\n\t\tconst iy =  qw * y + qz * x - qx * z\r\n\t\tconst iz =  qw * z + qx * y - qy * x\r\n\t\tconst iw = - qx * x - qy * y - qz * z\r\n\r\n\t\tthis.x = ix * qw + iw * - qx + iy * - qz - iz * - qy\r\n\t\tthis.y = iy * qw + iw * - qy + iz * - qx - ix * - qz\r\n\t\tthis.z = iz * qw + iw * - qz + ix * - qy - iy * - qx\r\n\t}\r\n\r\n\tmin(vec3) {\r\n\t\tthis.x = Math.min(this.x, vec3.x)\r\n\t\tthis.y = Math.min(this.y, vec3.y)\r\n\t\tthis.z = Math.min(this.z, vec3.z)\r\n\t}\r\n\r\n\tmax() {\r\n\t\tthis.x = Math.max(this.x, vec3.x)\r\n\t\tthis.y = Math.max(this.y, vec3.y)\r\n\t\tthis.z = Math.max(this.z, vec3.z)\r\n\t}\r\n\r\n\tclamp(min, max) {\r\n\t\tthis.x = Math.max(minx, Math.min(maxx, this.x))\r\n\t\tthis.y = Math.max(miny, Math.min(maxy, this.y))\r\n\t\tthis.z = Math.max(minz, Math.min(maxz, this.z))\r\n\t}\r\n\r\n\tfloor() {\r\n\t\tthis.x = Math.floor(this.x)\r\n\t\tthis.y = Math.floor(this.y)\r\n\t\tthis.z = Math.floor(this.z)\r\n\t}\r\n\r\n\tceil() {\r\n\t\tthis.x = Math.ceil(this.x)\r\n\t\tthis.y = Math.ceil(this.y)\r\n\t\tthis.z = Math.ceil(this.z)\r\n\t}\r\n\r\n\tround() {\r\n\t\tthis.x = Math.round(this.x)\r\n\t\tthis.y = Math.round(this.y)\r\n\t\tthis.z = Math.round(this.z)\r\n\t}\r\n\r\n\troundToZero() {\r\n\t\tthis.x = (this.x < 0) ? Math.ceil(this.x) : Math.floor(this.x)\r\n\t\tthis.y = (this.y < 0) ? Math.ceil(this.y) : Math.floor(this.y)\r\n\t\tthis.z = (this.z < 0) ? Math.ceil(this.z) : Math.floor(this.z)\r\n\t}\r\n\r\n\tnegate() {\r\n\t\tthis.x = -this.x\r\n\t\tthis.y = -this.y\r\n\t\tthis.z = -this.z\r\n\t}\r\n\r\n\tdot(src) {\r\n\t\treturn this.x * src.x + this.y * src.y + this.z * src.z\r\n\t}\r\n\r\n\tlengthSq() {\r\n\t\treturn this.x * this.x + this.y * this.y + this.z * this.z\r\n\t}\r\n\r\n\tlength() {\r\n\t\treturn Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z)\r\n\t}\r\n\r\n\tlengthManhattan() {\r\n\t\treturn Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z)\r\n\t}\r\n\r\n\tnormalize() \r\n\t{\r\n\t\tlet length = this.x * this.x + this.y * this.y + this.z * this.z\r\n\t\tif(length > 0) \r\n\t\t{\r\n\t\t\tlength = 1 / Math.sqrt(length)\r\n\t\t\tthis.x *= length\r\n\t\t\tthis.y *= length\r\n\t\t\tthis.z *= length\r\n\t\t}\r\n\t\telse \r\n\t\t{\r\n\t\t\tthis.x = 0.0\r\n\t\t\tthis.y = 0.0\r\n\t\t\tthis.z = 0.0\r\n\t\t}\r\n\t}\r\n\r\n\tlerp(src, alpha) {\r\n\t\tthis.x += (src.x - this.x) * alpha\r\n\t\tthis.y += (src.y - this.y) * alpha\r\n\t\tthis.z += (src.z - this.z) * alpha\r\n\t}\r\n\r\n\tcross(src) \r\n\t{\r\n\t\tconst x = this.x\r\n\t\tconst y = this.y\r\n\t\tconst z = this.z\r\n\r\n\t\tthis.x = y * src.z - z * src.y\r\n\t\tthis.y = z * src.x - x * src.z\r\n\t\tthis.z = x * src.y - y * src.x\r\n\t}\r\n\r\n\tdistanceToSquared(src) \r\n\t{\r\n\t\tconst dx = this.x - src.x\r\n\t\tconst dy = this.y - src.y\r\n\t\tconst dz = this.z - src.z\r\n\r\n\t\treturn dx * dx + dy * dy + dz * dz\r\n\t}\r\n\r\n\tdistanceTo(src) \r\n\t{\r\n\t\tconst dx = this.x - src.x;\r\n\t\tconst dy = this.y - src.y;\r\n\t\tconst dz = this.z - src.z;\r\n\r\n\t\treturn Math.sqrt(dx * dx + dy * dy + dz * dz)\r\n\t}\r\n\r\n\tequals(src) {\r\n\t\treturn ((this.x === src.x) && (this.y === src.y) && (this.z === src.z))\r\n\t}\r\n\r\n\ttoFloat32Array() \r\n\t{\r\n\t\tif(!this.v) {\r\n\t\t\tthis.v = new Float32Array([ this.x, this.y, this.z ]);\r\n\t\t}\r\n\t\telse {\r\n\t\t\tthis.v[0] = this.x;\r\n\t\t\tthis.v[1] = this.y;\r\n\t\t\tthis.v[2] = this.z;\r\n\t\t}\r\n\r\n\t\treturn this.v;\r\n\t}\r\n\r\n\tprint(txt) \r\n\t{\r\n\t\tif(txt) {\r\n\t\t\tconsole.log(`${txt} Vector3(${x}, ${y}, ${z})`);\r\n\t\t}\r\n\t\telse {\r\n\t\t\tconsole.log(`Vector3(${x}, ${y}, ${z})`);\r\n\t\t}\r\n\t}\t\r\n}",
+        "ohpm_code_before": [
+          "export default class Vector3 {\n    x: number;\n    y: number;\n    z: number;\n    v: Float32Array | null;\n\n    constructor(x?: number, y?: number, z?: number) {\n        this.x = x || 0.0;\n        this.y = y || 0.0;\n        this.z = z || 0.0;\n        this.v = null;\n    }\n\n    reset(): void {\n        this.x = 0.0;\n        this.y = 0.0;\n        this.z = 0.0;\n    }\n\n    set(x: number, y: number, z: number): void {\n        this.x = x;\n        this.y = y;\n        this.z = z;\n    }\n\n    scalar(value: number): void {\n        this.x = value;\n        this.y = value;\n        this.z = value;\n    }\n\n    clone(): Vector3 {\n        return new Vector3(this.x, this.y, this.z);\n    }\n\n    copy(vec3: Vector3): void {\n        this.x = vec3.x;\n        this.y = vec3.y;\n        this.z = vec3.z;\n    }\n\n    add(vec3: Vector3): void {\n        this.x += vec3.x;\n        this.y += vec3.y;\n        this.z += vec3.z;\n    }\n\n    addScalar(value: number): void {\n        this.x += value;\n        this.y += value;\n        this.z += value;\n    }\n\n    addValues(x: number, y: number, z: number): void {\n        this.x += x;\n        this.y += y;\n        this.z += z;\n    }\n\n    sub(vec3: Vector3): void {\n        this.x -= vec3.x;\n        this.y -= vec3.y;\n        this.z -= vec3.z;\n    }\n\n    subScalar(value: number): void {\n        this.x -= value;\n        this.y -= value;\n        this.z -= value;\n    }\n\n    subValues(x: number, y: number, z: number): void {\n        this.x -= x;\n        this.y -= y;\n        this.z -= z;\n    }\n\n    mul(vec3: Vector3): void {\n        this.x *= vec3.x;\n        this.y *= vec3.y;\n        this.z *= vec3.z;\n    }\n\n    mulScalar(value: number): void {\n        this.x *= value;\n        this.y *= value;\n        this.z *= value;\n    }\n\n    mulValues(x: number, y: number, z: number): void {\n        this.x *= x;\n        this.y *= y;\n        this.z *= z;\n    }\n\n    div(vec3: Vector3): void {\n        this.x /= vec3.x;\n        this.y /= vec3.y;\n        this.z /= vec3.z;\n    }\n\n    divScalar(value: number): void {\n        this.x /= value;\n        this.y /= value;\n        this.z /= value;\n    }\n\n    divValues(x: number, y: number, z: number): void {\n        this.x /= x;\n        this.y /= y;\n        this.z /= z;\n    }\n\n    applyMatrix3(matrix3: Matrix3): void {\n        const m = matrix3.m;\n\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        this.x = m[0] * x + m[3] * y + m[6] * z;\n        this.y = m[1] * x + m[4] * y + m[7] * z;\n        this.z = m[2] * x + m[5] * y + m[8] * z;\n    }\n\n    applyMatrix4(matrix4: Matrix4): void {\n        const m = matrix4.m;\n\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        this.x = m[0] * x + m[4] * y + m[8] * z + m[12];\n        this.y = m[1] * x + m[5] * y + m[9] * z + m[13];\n        this.z = m[2] * x + m[6] * y + m[10] * z + m[14];\n        const w = m[3] * x + m[7] * y + m[11] * z + m[15];\n\n        this.divScalar(w);\n    }\n\n    applyQuaternion(q: Quaternion): void {\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        const qx = q.m[0];\n        const qy = q.m[1];\n        const qz = q.m[2];\n        const qw = q.m[3];\n\n        const ix = qw * x + qy * z - qz * y;\n        const iy = qw * y + qz * x - qx * z;\n        const iz = qw * z + qx * y - qy * x;\n        const iw = -qx * x - qy * y - qz * z;\n\n        this.x = ix * qw + iw * -qx + iy * -qz - iz * -qy;\n        this.y = iy * qw + iw * -qy + iz * -qx - ix * -qz;\n        this.z = iz * qw + iw * -qz + ix * -qy - iy * -qx;\n    }\n\n    min(vec3: Vector3): void {\n        this.x = Math.min(this.x, vec3.x);\n        this.y = Math.min(this.y, vec3.y);\n        this.z = Math.min(this.z, vec3.z);\n    }\n\n    max(vec3: Vector3): void {\n        this.x = Math.max(this.x, vec3.x);\n        this.y = Math.max(this.y, vec3.y);\n        this.z = Math.max(this.z, vec3.z);\n    }\n\n    clamp(min: Vector3, max: Vector3): void {\n        this.x = Math.max(min.x, Math.min(max.x, this.x));\n        this.y = Math.max(min.y, Math.min(max.y, this.y));\n        this.z = Math.max(min.z, Math.min(max.z, this.z));\n    }\n\n    floor(): void {\n        this.x = Math.floor(this.x);\n        this.y = Math.floor(this.y);\n        this.z = Math.floor(this.z);\n    }\n\n    ceil(): void {\n        this.x = Math.ceil(this.x);\n        this.y = Math.ceil(this.y);\n        this.z = Math.ceil(this.z);\n    }\n\n    round(): void {\n        this.x = Math.round(this.x);\n        this.y = Math.round(this.y);\n        this.z = Math.round(this.z);\n    }\n\n    roundToZero(): void {\n        this.x = (this.x < 0) ? Math.ceil(this.x) : Math.floor(this.x);\n        this.y = (this.y < 0) ? Math.ceil(this.y) : Math.floor(this.y);\n        this.z = (this.z < 0) ? Math.ceil(this.z) : Math.floor(this.z);\n    }\n\n    negate(): void {\n        this.x = -this.x;\n        this.y = -this.y;\n        this.z = -this.z;\n    }\n\n    dot(src: Vector3): number {\n        return this.x * src.x + this.y * src.y + this.z * src.z;\n    }\n\n    lengthSq(): number {\n        return this.x * this.x + this.y * this.y + this.z * this.z;\n    }\n\n    length(): number {\n        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);\n    }\n\n    lengthManhattan(): number {\n        return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z);\n    }\n\n    normalize(): void {\n        let length = this.x * this.x + this.y * this.y + this.z * this.z;\n        if (length > 0) {\n            length = 1 / Math.sqrt(length);\n            this.x *= length;\n            this.y *= length;\n            this.z *= length;\n        } else {\n            this.x = 0.0;\n            this.y = 0.0;\n            this.z = 0.0;\n        }\n    }\n\n    lerp(src: Vector3, alpha: number): void {\n        this.x += (src.x - this.x) * alpha;\n        this.y += (src.y - this.y) * alpha;\n        this.z += (src.z - this.z) * alpha;\n    }\n\n    cross(src: Vector3): void {\n        const x = this.x;\n        const y = this.y;\n        const z = this.z;\n\n        this.x = y * src.z - z * src.y;\n        this.y = z * src.x - x * src.z;\n        this.z = x * src.y - y * src.x;\n    }\n\n    distanceToSquared(src: Vector3): number {\n        const dx = this.x - src.x;\n        const dy = this.y - src.y;\n        const dz = this.z - src.z;\n\n        return dx * dx + dy * dy + dz * dz;\n    }\n\n    distanceTo(src: Vector3): number {\n        const dx = this.x - src.x;\n        const dy = this.y - src.y;\n        const dz = this.z - src.z;\n\n        return Math.sqrt(dx * dx + dy * dy + dz * dz);\n    }\n\n    equals(src: Vector3): boolean {\n        return ((this.x === src.x) && (this.y === src.y) && (this.z === src.z));\n    }\n\n    toFloat32Array(): Float32Array {\n        if (!this.v) {\n            this.v = new Float32Array([this.x, this.y, this.z]);\n        } else {\n            this.v[0] = this.x;\n            this.v[1] = this.y;\n            this.v[2] = this.z;\n        }\n\n        return this.v;\n    }\n\n    print(txt?: string): void {\n        if (txt) {\n            console.log(`${txt} Vector3(${this.x}, ${this.y}, ${this.z})`);\n        } else {\n            console.log(`Vector3(${this.x}, ${this.y}, ${this.z})`);\n        }\n    }\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "src/Vector3.js",
+      "sourceLines": "2-305",
+      "targetFile": "src/main/ets/src/Vector3.ets",
+      "targetLines": "5-298"
+    },
+    "location": {
+      "filePath": "src/main/ets/src/Vector3.ets",
+      "lines": "5-298"
+    }
+  }
+]

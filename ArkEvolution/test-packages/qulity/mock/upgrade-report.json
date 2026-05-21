@@ -1,0 +1,873 @@
+[
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能 / 性能优化",
+    "cluster_id": 1,
+    "cluster_ids": [
+      1,
+      7
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 377,
+            "file_path": "lib/Base/Collection.js",
+            "start_line": 4,
+            "text": "class Collection extends Map {\n\n    /**\n     * An extended JavaScript Map with additional optimisations, properties and methods.\n     * @param {Array|Object} [iterable] Optional initial values of this Collection.\n     * @example const Col = new Qulity.Collection(Iterable?);\n     * @extends {Map}\n     */\n    constructor (iterable = {}) {\n        super();\n\n        for (const keyContext in iterable) {\n            Array.isArray(iterable) ?\n                this.set(iterable[keyContext][0], iterable[keyContext][1]) :\n                this.set(keyContext, iterable[keyContext]);\n        }\n    }\n\n    /**\n     * Amount of key/value pairs in this Collection.\n     * @name Collection#size\n     * @type {Number}\n     */\n    get size () {\n        return super.size;\n    }\n\n    // Standard methods\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} keyContext Specifies an address for this value.\n     * @param {*} value A value to be inserted at the key of this document.\n     * @returns {Collection}\n     */\n    set (keyContext, value) {\n        super.set(keyContext, value);\n        return this;\n    }\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} keyContext Specifies a key to erase from this Collection.\n     * @returns {Collection}\n     */\n    delete (keyContext) {\n        super.delete(keyContext);\n        return this;\n    }\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} keyContext Specifies a key to fetch from this Collection.\n     * @returns {*} If found, the element at the address of the key.\n     */\n    get (keyContext) {\n        return super.get(keyContext);\n    }\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} keyContext Specifies a key to see if it exists.\n     * @returns {Boolean} A boolean value to indicate whether this element exists.\n     */\n    has (keyContext) {\n        return super.has(keyContext);\n    }\n\n    // Migration methods\n\n    /**\n     * Creates an ordered array of the values of this Collection.\n     * @returns {Array} Array of values in this Collection.\n     */\n    toArray () {\n        return [...super.values()];\n    }\n\n    /**\n     * Creates an ordered array of the keys of this Collection.\n     * @returns {Array} Array of keys in this Collection.\n     */\n    toKeyArray () {\n        return [...super.keys()];\n    }\n\n    /**\n     * Creates an ordered object of all the entries of this Collection.\n     * @returns {Object} Object of the key/value pairs in this Collection.\n     */\n    toPairObject () {\n        return Object.fromEntries(super.entries());\n    }\n\n    // Search methods\n\n    /**\n     * Obtains the first value(s) from this Collection. Starting from the end if a negative amount is provided.\n     * @param {Number} [amount] Amount of values to obtain from the beginning.\n     * @returns {*|Collection} A single value, or a new Collection of entries if there's an amount provided.\n     */\n    first (amount = 1) {\n        if (amount === 1) return super.values().next().value;\n        if (amount < 0) return this.last(amount * -1);\n\n        const safeAmount = Math.min(this.size, amount);\n        const insertionArray = new Array(safeAmount);\n        const iterable = this.entries();\n\n        for (let i = 0; i < safeAmount; i++)\n            insertionArray[i] = iterable.next().value;\n        return new this.constructor[Symbol.species](insertionArray);\n    }\n\n    /**\n     * Obtains the last value(s) from this Collection. Starting from the beginning if a negative amount is provided.\n     * @param {Number} [amount] Amount of values to obtain from the end.\n     * @returns {*|Collection} A single value, or a new Collection of entries if there's an amount provided.\n     */\n    last (amount = 1) {\n        if (amount === 1) return this.toArray()[this.size - 1];\n        if (amount < 0) return this.first(amount * -1);\n\n        const iterable = [...this.entries()];\n        const safeAmount = Math.min(this.size, amount);\n        return new this.constructor[Symbol.species](iterable.slice(-safeAmount).reverse());\n    }\n\n    /**\n     * Searches for a specific item where the given function returns a truthy value.\n     * @param {Function} predicate Function used to test iterating elements with.\n     * @returns {*} Returns the value of the element found.\n     */\n    find (predicate) {\n        predicate = predicate.bind(this);\n        for (const [keyContext, value] of this)\n            if (predicate(value, keyContext, this)) return value;\n    }\n\n    /**\n     * Identical to `Array.filter()`, but returns a Collection instead of an array.\n     * @param {Function} predicate Function used to test the iterating elements with.\n     * @returns {Collection} Returns the new, filtered Collection.\n     */\n    filter (predicate) {\n        const results = new this.constructor[Symbol.species]();\n        for (const [keyContext, value] of this)\n            if (predicate(value, keyContext, this)) results.set(keyContext, value);\n        return results;\n    }\n    \n    /**\n     * Removes entries that satisfy the provided filter function.\n     * @param {Function} predicate Function used to test the iterating elements with.\n     * @returns {Number} Returns the number of deleted entries.\n     */\n    sweep (predicate) {\n        const previousSize = this.size;\n        for (const [keyContext, value] of this)\n            if (predicate(value, keyContext, this)) this.delete(keyContext);\n        return previousSize - this.size;\n    }\n\n    /**\n     * Partitions the Collection into two (when returning boolean values) or more Collections.\n     * If a boolean was given, the first Collection contains the items that passed the test.\n     * @param {Function} predicate Function used to test the iterating elements with.\n     * @param {Number} [lengthExpected] Expected length, and the length of the array of Collections to return.\n     * @returns {Array<Collection>} An array of partitioned Collections.\n     */\n    partition (predicate, lengthExpected) {\n        const results = [];\n\n        for (const [keyContext, value] of this) {\n            const conditionOrIndex = predicate(value, keyContext, this);\n            const insertionCollIndex = typeof conditionOrIndex === \"number\" ?\n                conditionOrIndex :\n                (conditionOrIndex ? 0 : 1);\n\n            if (!results[insertionCollIndex])\n                results[insertionCollIndex] = new this.constructor[Symbol.species]();\n            results[insertionCollIndex].set(keyContext, value);\n        }\n\n        for (let i = 0; i < (lengthExpected || results.length); i++)\n            if (!results[i]) results[i] = new this.constructor[Symbol.species]();\n        return results;\n    }\n\n    /**\n     * Applies a function to produce a single value.\n     * @param {Function} transformer Function used to reduce, taking three arguments: 'accumulator', 'current value' and 'key'.\n     * @param {*} [initialAccumulatorContext] A starting value for the accumulator.\n     * @returns {*} Returns the reduced value.\n     */\n    reduce (transformer, initialAccumulatorContext) {\n        if (initialAccumulatorContext !== undefined) {\n            let accumulator = initialAccumulatorContext;\n            for (const [keyContext, value] of this)\n                accumulator = transformer(accumulator, value, keyContext, this);\n            return accumulator;\n        }\n\n        let accumulator,\n            isFirstItem = true;\n\n        for (const [keyContext, value] of this) {\n            accumulator = isFirstItem ?\n                value :\n                transformer(accumulator, value, keyContext, this);\n            isFirstItem = false;\n        }\n\n        return accumulator;\n    }\n\n    /**\n     * Maps each item to another value and creates an array out of it.\n     * @param {Function} transformer Function that produces an element of the new array.\n     * @returns {Array<*>} Returns an array of the mapped values.\n     */\n    map (transformer) {\n        let accumulatedArray = new Array(this.size),\n            arrayIteration = 0;\n\n        for (const [keyContext, value] of this) {\n            const accumulatedOutput = transformer(value, keyContext, arrayIteration - 1, this);\n            accumulatedArray[arrayIteration++] = accumulatedOutput;\n        }\n\n        return accumulatedArray;\n    }\n\n    // Conditional methods\n\n    /**\n     * Checks if there is an item that exists that passes a test.\n     * @param {Function} predicate Function used to test iterating elements with.\n     * @returns {Boolean} Returns a boolean based on whether or not an element was found.\n     */ \n    exists (predicate) {\n        predicate = predicate.bind(this);\n        for (const [keyContext, value] of this)\n            if (predicate(value, keyContext, this)) return true;\n        return false;\n    }\n\n    /**\n     * Checks whether at least one item satisfies the test.\n     * @param {Function} predicate Function used to test iteration elements with.\n     * @returns {Boolean} Returns a boolean based on whether or not some element passed.\n     */\n    someSatisfy (predicate) {\n        for (const [keyContext, value] of this)\n            if (predicate(value, keyContext, this)) return true;\n        return false;\n    }\n\n    /**\n     * Checks whether all the elements in this Collection pass the test.\n     * @param {Function} predicate Function used to test iterating elements with.\n     * @returns {Boolean} Returns a boolean based on whether or not all elements pass the test.\n     */\n    everySatisfy (predicate) {\n        for (const [keyContext, value] of this)\n            if (!predicate(value, keyContext, this)) return false;\n        return true;\n    }\n\n    // Collection management\n\n    /**\n     * Provides an identical, deep copy of this Collection.\n     * @returns {Collection}\n     */\n    clone () {\n        const { serialize, deserialize } = require(\"v8\");\n        const pairs = deserialize(serialize(this.toPairObject()));\n        return new this.constructor[Symbol.species](pairs);\n    }\n\n    /**\n     * Merges this Collection with other instances into a new Collection. None of the source Collections will be modified.\n     * @param {...Collection} collections Collections to merge into one instance.\n     * @returns {Collection}\n     */\n    merge (...collections) {\n        const sourceClone = this.clone();\n        for (const targetCollection of collections)\n            for (const [keyContext, value] of targetCollection.clone())\n                sourceClone.set(keyContext, value);\n        return sourceClone;\n    }\n\n    /**\n     * Shallowly merges the given Collections into this instance.\n     * @param {...Collection} collections Collections to merge into this instance.\n     * @returns {Collection}\n     */\n    implement (...collections) {\n        for (const collection of collections)\n            for (const [keyContext, value] of collection)\n                this.set(keyContext, value);\n        return this;\n    }\n\n    /**\n     * Returns a new Collection containing items where the keys are present in both original structures.\n     * @param {Collection} secondary A Collection to filter against this instance.\n     * @returns {Collection}\n     */\n    intersect (secondary) {\n        return this.filter((_, keyContext) => secondary.has(keyContext));\n    }\n\n    /**\n     * Returns a new Collection containing items where the key is present in one of the original structures, but not the other.\n     * @param {Collection} secondary A Collection to filter against this instance.\n     * @returns {Collection}\n     */\n    difference (secondary) {\n        const rightSide = secondary.filter((_, keyContext) => !this.has(keyContext));\n        return this\n            .filter((_, keyContext) => !secondary.has(keyContext))\n            .implement(rightSide);\n    }\n\n    /**\n     * Passes this Collection into a function and returns the Collection itself.\n     * @param {Function} indenter Function used to execute on the Collection.\n     * @returns {Collection}\n     */\n    tap (indenter) {\n        indenter(this, this.size);\n        return this;\n    }\n\n    /**\n     * Synchronously iterates through this Collection's item and returns itself.\n     * @param {Function} iterator Function to execute on each element.\n     * @returns {Collection}\n     */\n    each (iterator) {\n        for (const [keyContext, value] of this)\n            iterator(value, keyContext, this);\n        return this;\n    }\n\n    /**\n     * Sorts all the items in this Collection and returns itself.\n     * @param {Function} orderer Function that determines the sort order.\n     * @returns {Collection}\n     */\n    sort (orderer) {\n        const entries = [...super.entries()];\n        super.clear();\n\n        entries.sort((a, b) => orderer(a[1], b[1], [a[0], a[1]]));\n        for (const [keyContext, value] of entries)\n            this.set(keyContext, value);\n        return this;\n    }\n\n    // Deprecated\n    some (...parameters) {\n        console.warn(\"Query deprecation warning: method 'some' is deprecated. Please use 'someSatisfy' instead.\");\n        return this.someSatisfy(...parameters);\n    }\n\n    every (...parameters) {\n        console.warn(\"Query deprecation warning: method 'every' is deprecated. Please use 'everySatisfy' instead.\");\n        return this.everySatisfy(...parameters);\n    }\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 388,
+          "file_path": "lib/Base/Collection.js",
+          "start_line": 4,
+          "text": "class Collection extends Map {\n\n    /**\n     * An extended JavaScript Map with additional optimisations, properties and methods.\n     * @param {Array|Object} [Iterable] Optional initial values of this Collection.\n     * @example const Col = new Qulity.Collection(Iterable?);\n     * @extends {Map}\n     */\n    constructor (Iterable = {}) {\n\n        super();\n\n        if (Iterable instanceof Array)\n        for (const Key in Iterable) this.set(Iterable[Key][0], Iterable[Key][1]);\n        else for (const Key in Iterable) this.set(Key, Iterable[Key]);\n\n    }\n\n\n    /**\n     * Amount of key/value pairs in this Collection.\n     * @name Collection#size\n     * @type {Number}\n     */\n    get size () {\n        return super.size;\n    }\n\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} Key Specifies an address for this value.\n     * @param {*} Value A value to be inserted at the key of this document.\n     * @returns {Collection}\n     */\n    set (Key, Value) {\n        super.set(Key, Value);\n        return this;\n    }\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} Key Specifies a key to erase from this Collection.\n     * @returns {Collection}\n     */\n    delete (Key) {\n        super.delete(Key);\n        return this;\n    }\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} Key Specifies a key to fetch from this Collection.\n     * @returns {*} If found, the element at the address of the key.\n     */\n    get (Key) {\n        return super.get(Key);\n    }\n\n    /**\n     * Main interaction point of this Collection.\n     * @param {*} Key Specifies a key to see if it exists.\n     * @returns {Boolean} A boolean value to indicate whether this element exists.\n     */\n    has (Key) {\n        return super.has(Key);\n    }\n\n\n    // ---------------------------------------------------------------- Migration units\n\n    /**\n     * Creates an ordered array of the values of this Collection.\n     * @returns {Array} Array of values in this Collection.\n     */\n    toArray () {\n        return [...super.values()];\n    }\n\n    /**\n     * Creates an ordered array of the keys of this Collection.\n     * @returns {Array} Array of keys in this Collection.\n     */\n    toKeyArray () {\n        return [...super.keys()];\n    }\n\n    /**\n     * Creates an ordered object of all the entries of this Collection.\n     * @returns {Object} Object of the key/value pairs in this Collection.\n     */\n    toPairObject () {\n        return Object.fromEntries(super.entries());\n    }\n\n\n    // ---------------------------------------------------------------- Lookup functions\n\n    /**\n     * Obtains the first value(s) from this Collection. Starting from the end if a negative amount is provided.\n     * @param {Number} [Amount] Amount of values to obtain from the beginning.\n     * @returns {*|Collection} A single value, or a new Collection of entries if there's an amount provided.\n     */\n    first (Amount = 1) {\n        if (typeof Amount !== \"number\") return null;\n\n        if (Amount === 1) return super.values().next().value;\n        if (Amount < 0)   return this.last(Amount * -1);\n        if (Amount === 0) return null;\n\n        const Amt  = Math.min(this.size, Amount);\n        const Arr  = new Array(Amt);\n        const Iter = this.entries();\n\n        for (let i = 0; i < Amt; i++)\n        Arr[i] = Iter.next().value;\n        return new this.constructor[Symbol.species](Arr);\n    }\n\n    /**\n     * Obtains the last value(s) from this Collection. Starting from the beginning if a negative amount is provided.\n     * @param {Number} [Amount] Amount of values to obtain from the end.\n     * @returns {*|Collection} A single value, or a new Collection of entries if there's an amount provided.\n     */\n    last (Amount = 1) {\n        if (typeof Amount !== \"number\") return null;\n\n        if (Amount === 1) return this.toArray()[this.size - 1];\n        if (Amount < 0)   return this.first(Amount * -1);\n        if (Amount === 0) return null;\n\n        const Iter = [...this.entries()];\n\n        const Amt = Math.min(this.size, Amount);\n        return new this.constructor[Symbol.species](Iter.slice(-Amt).reverse());\n    }\n\n    /**\n     * Searches for a specific item where the given function returns a truthy value.\n     * @param {Function} Fn Function used to test iterating elements with.\n     * @returns {*} Returns the value of the element found.\n     */\n    find (Fn) {\n        if (typeof Fn !== \"function\") return null;\n        \n        Fn = Fn.bind(this);\n        for (const [Key, Val] of this)\n        if (Fn(Val, Key, this)) return Val;\n\n        return undefined;\n    }\n\n    /**\n     * Identical to `Array.filter()`, but returns a Collection instead of an array.\n     * @param {Function} Fn Function used to test the iterating elements with.\n     * @returns {Collection} Returns the new, filtered Collection.\n     */\n    filter (Fn) {\n        if (typeof Fn !== \"function\") return null;\n        const Results = new this.constructor[Symbol.species]();\n\n        for (const [Key, Val] of this)\n        if (Fn(Val, Key, this)) Results.set(Key, Val);\n\n        return Results;\n    }\n    \n    /**\n     * Removes entries that satisfy the provided filter function.\n     * @param {Function} Fn Function used to test the iterating elements with.\n     * @returns {Number} Returns the number of deleted entries.\n     */\n    sweep (Fn) {\n        if (typeof Fn !== \"function\") return null;\n        const PrevSize = this.size;\n\n        for (const [Key, Val] of this)\n        if (Fn(Val, Key, this)) this.delete(Key);\n\n        return PrevSize - this.size || 0;\n    }\n\n    /**\n     * Partitions the Collection into two (when returning boolean values) or more Collections.\n     * If a boolean was given, the first Collection contains the items that passed the test.\n     * @param {Function} Fn Function used to test the iterating elements with.\n     * @param {Number} [Length] Expected length, and the length of the array of Collections to return.\n     * @returns {Array<Collection>} An array of partitioned Collections.\n     */\n    partition (Fn, Length) {\n        if (typeof Fn !== \"function\") return null;\n        const Results = [];\n\n        for (const [Key, Val] of this) {\n            const Condition = Fn(Val, Key, this);\n            const Idx = typeof Condition === \"number\" ? Condition : (Condition ? 0 : 1);\n            if (!Results[Idx]) Results[Idx] = new this.constructor[Symbol.species]();\n            Results[Idx].set(Key, Val);\n        }\n\n        for (let i = 0; i < (Length || Results.length); i++)\n        if (!Results[i]) Results[i] = new this.constructor[Symbol.species]();\n\n        return Results;\n    }\n\n    /**\n     * Applies a function to produce a single value.\n     * @param {Function} Fn Function used to reduce, taking three arguments: 'accumulator', 'current value' and 'key'.\n     * @param {*} [Initial] A starting value for the accumulator.\n     * @returns {*} Returns the reduced value.\n     */\n    reduce (Fn, Initial) {\n        if (typeof Fn !== \"function\") return null;\n\n        if (typeof Initial !== \"undefined\") {\n            let Accumulator = Initial;\n            for (const [Key, Val] of this)\n            Accumulator = Fn(Accumulator, Val, Key, this);\n            return Accumulator;\n        }\n\n        let Accumulator;\n        let First = true;\n\n        for (const [Key, Val] of this) {\n            if (First) Accumulator = Val, First = false;\n            else Accumulator = Fn(Accumulator, Val, Key, this);\n        }\n\n        return Accumulator;\n    }\n\n    /**\n     * Maps each item to another value and creates an array out of it.\n     * @param {Function} Fn Function that produces an element of the new array.\n     * @returns {Array<*>} Returns an array of the mapped values.\n     */\n    map (Fn) {\n        if (typeof Fn !== \"function\") return null;\n        let Arr = new Array(this.size), i = 0;\n\n        for (const [Key, Val] of this)\n        Arr[i++] = Fn(Val, Key, i - 1, this);\n\n        return Arr;\n    }\n\n\n    // ---------------------------------------------------------------- Conditionals\n\n    /**\n     * Checks if there is an item that exists that passes a test.\n     * @param {Function} Fn Function used to test iterating elements with.\n     * @returns {Boolean} Returns a boolean based on whether or not an element was found.\n     */ \n    exists (Fn) {\n        if (typeof Fn !== \"function\") return null;\n\n        Fn = Fn.bind(this);\n        for (const [Key, Val] of this)\n        if (Fn(Val, Key, this)) return true;\n\n        return false;\n    }\n\n    some (Fn) {\n        if (typeof Fn !== \"function\") return null;\n\n        for (const [Key, Val] of this)\n        if (Fn(Val, Key, this)) return true;\n\n        return false;\n    }\n\n    /**\n     * Checks whether all the elements in this Collection pass the test.\n     * @param {Function} Fn Function used to test iterating elements with.\n     * @returns {Boolean} Returns a boolean based on whether or not all elements pass the test.\n     */\n    every (Fn) {\n        if (typeof Fn !== \"function\") return null;\n\n        for (const [Key, Val] of this)\n        if (!Fn(Val, Key, this)) return false;\n\n        return true;\n    }\n\n\n    // ---------------------------------------------------------------- Collection management\n\n    /**\n     * Provides an identical, deep copy of this Collection.\n     * @returns {Collection}\n     */\n    clone () {\n        const {serialize, deserialize} = require(\"v8\");\n        const Pairs = deserialize(serialize(this.toPairObject()));\n        return new this.constructor[Symbol.species](Pairs);\n    }\n\n    /**\n     * Merges this Collection with other instances into a new Collection. None of the source Collections will be modified.\n     * @param {...Collection} Collections Collections to merge into one instance.\n     * @returns {Collection}\n     */\n    merge (...Collections) {\n        const Clone = this.clone();\n\n        for (const Col of Collections)\n        for (const [Key, Val] of Col.clone())\n        Clone.set(Key, Val);\n\n        return Clone;\n    }\n\n    /**\n     * Shallowly merges the given Collections into this instance.\n     * @param  {...Collection} Collection Collections to merge into this instance.\n     * @returns {Collection}\n     */\n    implement (...Collections) {\n        for (const Col of Collections)\n        for (const [Key, Val] of Col)\n        this.set(Key, Val);\n\n        return this;\n    }\n\n    /**\n     * Returns a new Collection containing items where the keys are present in both original structures.\n     * @param {Collection} Secondary A Collection to filter against this instance.\n     * @returns {Collection}\n     */\n    intersect (Secondary) {\n        return this.filter((_, Key) => Secondary.has(Key));\n    }\n\n    /**\n     * Returns a new Collection containing items where the key is present in one of the original structures, but not the other.\n     * @param {Collection} Secondary A Collection to filter against this instance.\n     * @returns {Collection}\n     */\n    difference (Secondary) {\n        return this.filter((_, Key) => !Secondary.has(Key))\n        .implement(Secondary.filter((_, Key) => !this.has(Key)));\n    }\n\n    /**\n     * Passes this Collection into a function and returns the Collection itself.\n     * @param {Function} Fn Function used to execute on the Collection.\n     * @returns {Collection}\n     */\n    tap (Fn) {\n        Fn(this, this.size);\n        return this;\n    }\n\n    /**\n     * Synchronously iterates through this Collection's item and returns itself.\n     * @param {Function} Fn Function to execute on each element.\n     * @returns {Collection}\n     */\n    each (Fn) {\n        for (const [Key, Val] of this)\n        Fn(Val, Key, this);\n        return this;\n    }\n\n    /**\n     * Sorts all the items in this Collection and returns itself.\n     * @param {Function} Fn Function that determines the sort order.\n     * @returns {Collection}\n     */\n    sort (Fn) {\n        const Entries = [...super.entries()];\n        super.clear();\n\n        Entries.sort((a, b) => Fn(a[1], b[1], [a[0], a[1]]));\n        for (const [Key, Val] of Entries) this.set(Key, Val);\n        return this;\n    }\n\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 316,
+            "file_path": "src/main/ets/lib/Base/Collection.ets",
+            "start_line": 1,
+            "text": "// TS2ArkTS-SessionId-13\nexport default class Collection extends Map<ESObject, ESObject> {\n\n    /**\n     * An extended JavaScript Map with additional optimisations, properties and methods.\n     * @param {Array|Object} [Iterable] Optional initial values of this Collection.\n     */\n    constructor(Iterable: ESObject = null) {\n        super();\n\n        if (Iterable) {\n            if (Iterable instanceof Array) {\n                for (let i: number = 0; i < Iterable.length; i++) {\n                    const entry: ESObject = Iterable[i];\n                    // 确保是 [key, val] 格式\n                    if (entry instanceof Array && entry.length >= 2) {\n                        this.set(entry[0], entry[1]);\n                    }\n                }\n            } else {\n                const keys: string[] = Object.keys(Iterable);\n                for (let i: number = 0; i < keys.length; i++) {\n                    const key: string = keys[i];\n                    this.set(key, Iterable[key]);\n                }\n            }\n        }\n    }\n\n    /**\n     * Amount of key/value pairs in this Collection.\n     */\n    get size(): number {\n        return super.size;\n    }\n\n    // 移除了 set 重写，直接继承 Map 的 set 方法以避免类型冲突\n\n    delete(Key: ESObject): boolean {\n        return super.delete(Key);\n    }\n\n    get(Key: ESObject): ESObject {\n        return super.get(Key);\n    }\n\n    has(Key: ESObject): boolean {\n        return super.has(Key);\n    }\n\n    // ---------------------------------------------------------------- Migration units\n\n    toArray(): ESObject[] {\n        return Array.from(super.values());\n    }\n\n    toKeyArray(): ESObject[] {\n        return Array.from(super.keys());\n    }\n\n    /**\n     * Creates an ordered object of all the entries of this Collection.\n     */\n    toPairObject(): ESObject {\n        const obj: Record<string, ESObject> = {};\n        const iter: IterableIterator<[ESObject, ESObject]> = super.entries();\n        let result: IteratorResult<[ESObject, ESObject]> = iter.next();\n        while (!result.done) {\n            const entry: [ESObject, ESObject] = result.value;\n            obj[String(entry[0])] = entry[1];\n            result = iter.next();\n        }\n        return obj;\n    }\n\n    // ---------------------------------------------------------------- Lookup functions\n\n    first(Amount: number = 1): ESObject {\n        if (typeof Amount !== \"number\") return null;\n\n        if (Amount === 1) return super.values().next().value;\n        if (Amount < 0) return this.last(Amount * -1);\n        if (Amount === 0) return null;\n\n        const Amt: number = Math.min(this.size, Amount);\n        const Arr: ESObject[] = new Array<ESObject>(Amt);\n        // 修复：使用 entries() 获取 [key, val]，以便传入 Collection 构造函数\n        const Iter: IterableIterator<[ESObject, ESObject]> = super.entries();\n\n        for (let i: number = 0; i < Amt; i++) {\n            Arr[i] = Iter.next().value;\n        }\n        return new Collection(Arr);\n    }\n\n    last(Amount: number = 1): ESObject {\n        if (typeof Amount !== \"number\") return null;\n\n        if (Amount === 1) {\n            const arr: ESObject[] = this.toArray();\n            return arr[arr.length - 1];\n        }\n        if (Amount < 0) return this.first(Amount * -1);\n        if (Amount === 0) return null;\n\n        const Amt: number = Math.min(this.size, Amount);\n        // 修复：使用 entries() 获取 [key, val]，以便传入 Collection 构造函数\n        // 显式声明类型为 [ESObject, ESObject][]\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        const Sliced: [ESObject, ESObject][] = entries.slice(entries.length - Amt).reverse();\n        return new Collection(Sliced);\n    }\n\n    find(Fn: ESObject): ESObject {\n        if (typeof Fn !== \"function\") return null;\n\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            // 显式调用 Fn as ESObject\n            if ((Fn as ESObject)(entry[1], entry[0], this)) return entry[1];\n        }\n        return undefined;\n    }\n\n    filter(Fn: ESObject): Collection {\n        if (typeof Fn !== \"function\") return new Collection();\n        const Results: Collection = new Collection();\n\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            if ((Fn as ESObject)(entry[1], entry[0], this)) Results.set(entry[0], entry[1]);\n        }\n        return Results;\n    }\n\n    sweep(Fn: ESObject): number {\n        if (typeof Fn !== \"function\") return 0;\n        const PrevSize: number = this.size;\n\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            if ((Fn as ESObject)(entry[1], entry[0], this)) super.delete(entry[0]);\n        }\n        return PrevSize - this.size || 0;\n    }\n\n    partition(Fn: ESObject, Length?: number): Collection[] {\n        if (typeof Fn !== \"function\") return [];\n        const Results: Collection[] = [];\n\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            const Key: ESObject = entry[0];\n            const Val: ESObject = entry[1];\n            const Condition: ESObject = (Fn as ESObject)(Val, Key, this);\n\n            let Idx: number;\n            if (typeof Condition === 'number') {\n                Idx = Condition;\n            } else {\n                Idx = Condition ? 0 : 1;\n            }\n\n            if (!Results[Idx]) Results[Idx] = new Collection();\n            Results[Idx].set(Key, Val);\n        }\n\n        const targetLen: number = Length || Results.length;\n        for (let i: number = 0; i < targetLen; i++) {\n            if (!Results[i]) Results[i] = new Collection();\n        }\n\n        return Results;\n    }\n\n    reduce(Fn: ESObject, Initial?: ESObject): ESObject {\n        if (typeof Fn !== \"function\") return null;\n\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        let Accumulator: ESObject;\n        let StartIndex: number = 0;\n\n        if (Initial !== undefined) {\n            Accumulator = Initial;\n        } else {\n            if (entries.length === 0) return undefined;\n            Accumulator = entries[0][1];\n            StartIndex = 1;\n        }\n\n        for (let i: number = StartIndex; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            Accumulator = (Fn as ESObject)(Accumulator, entry[1], entry[0], this);\n        }\n\n        return Accumulator;\n    }\n\n    map(Fn: ESObject): ESObject[] {\n        if (typeof Fn !== \"function\") return [];\n        const Arr: ESObject[] = new Array<ESObject>(this.size);\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            Arr[i] = (Fn as ESObject)(entry[1], entry[0], i, this);\n        }\n        return Arr;\n    }\n\n    // ---------------------------------------------------------------- Conditionals\n\n    exists(Fn: ESObject): boolean {\n        if (typeof Fn !== \"function\") return false;\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            if ((Fn as ESObject)(entry[1], entry[0], this)) return true;\n        }\n        return false;\n    }\n\n    some(Fn: ESObject): boolean {\n        return this.exists(Fn);\n    }\n\n    every(Fn: ESObject): boolean {\n        if (typeof Fn !== \"function\") return false;\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        for (let i: number = 0; i < entries.length; i++) {\n            const entry: [ESObject, ESObject] = entries[i];\n            if (!(Fn as ESObject)(entry[1], entry[0], this)) return false;\n        }\n        return true;\n    }\n\n    // ---------------------------------------------------------------- Collection management\n\n    clone(): Collection {\n        return new Collection(this.toPairObject());\n    }\n\n    merge(...Collections: Collection[]): Collection {\n        const Clone: Collection = this.clone();\n        for (let i: number = 0; i < Collections.length; i++) {\n            const Col: Collection = Collections[i];\n            const iter: IterableIterator<[ESObject, ESObject]> = Col.entries();\n            let res: IteratorResult<[ESObject, ESObject]> = iter.next();\n            while(!res.done) {\n                Clone.set(res.value[0], res.value[1]);\n                res = iter.next();\n            }\n        }\n        return Clone;\n    }\n\n    implement(...Collections: Collection[]): Collection {\n        for (let i: number = 0; i < Collections.length; i++) {\n            const Col: Collection = Collections[i];\n            const iter: IterableIterator<[ESObject, ESObject]> = Col.entries();\n            let res: IteratorResult<[ESObject, ESObject]> = iter.next();\n            while(!res.done) {\n                this.set(res.value[0], res.value[1]);\n                res = iter.next();\n            }\n        }\n        return this;\n    }\n\n    intersect(Secondary: Collection): Collection {\n        return this.filter((_: ESObject, Key: ESObject) => Secondary.has(Key));\n    }\n\n    difference(Secondary: Collection): Collection {\n        const diff1: Collection = this.filter((_: ESObject, Key: ESObject) => !Secondary.has(Key));\n        const diff2: Collection = Secondary.filter((_: ESObject, Key: ESObject) => !this.has(Key));\n        return diff1.implement(diff2);\n    }\n\n    tap(Fn: ESObject): Collection {\n        if (typeof Fn === \"function\") (Fn as ESObject)(this, this.size);\n        return this;\n    }\n\n    each(Fn: ESObject): Collection {\n        if (typeof Fn === \"function\") {\n            const entries: [ESObject, ESObject][] = Array.from(super.entries());\n            for (let i: number = 0; i < entries.length; i++) {\n                const entry: [ESObject, ESObject] = entries[i];\n                (Fn as ESObject)(entry[1], entry[0], this);\n            }\n        }\n        return this;\n    }\n\n    sort(Fn: ESObject): Collection {\n        if (typeof Fn !== \"function\") return this;\n\n        // 显式声明回调参数为 Tuple\n        const entries: [ESObject, ESObject][] = Array.from(super.entries());\n        super.clear();\n\n        entries.sort((a: [ESObject, ESObject], b: [ESObject, ESObject]) => {\n            return Number((Fn as ESObject)(a[1], b[1], [a[0], a[1]]));\n        });\n\n        for (let i: number = 0; i < entries.length; i++) {\n            this.set(entries[i][0], entries[i][1]);\n        }\n        return this;\n    }\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/Managers/BaseManager.ets",
+            "start_line": 1,
+            "text": "import Collection from \"../Base/Collection\";"
+          },
+          {
+            "end_line": 1,
+            "file_path": "src/main/ets/lib/Managers/DataStore.ets",
+            "start_line": 1,
+            "text": "import Collection from \"../Base/Collection\";"
+          },
+          {
+            "end_line": 10,
+            "file_path": "src/main/ets/Qulity.ets",
+            "start_line": 1,
+            "text": "import Collection from \"./lib/Base/Collection\";"
+          }
+        ]
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/Base/Collection.js",
+      "sourceLines": "4-388",
+      "targetFile": "src/main/ets/lib/Base/Collection.ets",
+      "targetLines": "1-316"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/Base/Collection.ets",
+      "lines": "1-316"
+    },
+    "location_override": {
+      "filePath": "src/main/ets/lib/Base/Collection.ets",
+      "lines": "1-316"
+    },
+    "matched_errors": [],
+    "matched_warnings": [
+      {
+        "endLine": 1,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 45,
+        "startLine": 1
+      },
+      {
+        "endLine": 1,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 55,
+        "startLine": 1
+      },
+      {
+        "endLine": 65,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 39,
+        "startLine": 65
+      },
+      {
+        "endLine": 65,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 49,
+        "startLine": 65
+      },
+      {
+        "endLine": 66,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 66
+      },
+      {
+        "endLine": 66,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 47,
+        "startLine": 66
+      },
+      {
+        "endLine": 68,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 68
+      },
+      {
+        "endLine": 68,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 68
+      },
+      {
+        "endLine": 87,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 39,
+        "startLine": 87
+      },
+      {
+        "endLine": 87,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 49,
+        "startLine": 87
+      },
+      {
+        "endLine": 108,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 108
+      },
+      {
+        "endLine": 108,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 108
+      },
+      {
+        "endLine": 109,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 24,
+        "startLine": 109
+      },
+      {
+        "endLine": 109,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 34,
+        "startLine": 109
+      },
+      {
+        "endLine": 116,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 116
+      },
+      {
+        "endLine": 116,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 116
+      },
+      {
+        "endLine": 118,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 118
+      },
+      {
+        "endLine": 118,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 118
+      },
+      {
+        "endLine": 129,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 129
+      },
+      {
+        "endLine": 129,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 129
+      },
+      {
+        "endLine": 131,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 131
+      },
+      {
+        "endLine": 131,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 131
+      },
+      {
+        "endLine": 141,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 141
+      },
+      {
+        "endLine": 141,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 141
+      },
+      {
+        "endLine": 143,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 143
+      },
+      {
+        "endLine": 143,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 143
+      },
+      {
+        "endLine": 153,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 153
+      },
+      {
+        "endLine": 153,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 153
+      },
+      {
+        "endLine": 155,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 155
+      },
+      {
+        "endLine": 155,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 155
+      },
+      {
+        "endLine": 162,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 17,
+        "startLine": 162
+      },
+      {
+        "endLine": 182,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 182
+      },
+      {
+        "endLine": 182,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 182
+      },
+      {
+        "endLine": 195,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 195
+      },
+      {
+        "endLine": 195,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 195
+      },
+      {
+        "endLine": 205,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 205
+      },
+      {
+        "endLine": 205,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 205
+      },
+      {
+        "endLine": 208,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 208
+      },
+      {
+        "endLine": 208,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 208
+      },
+      {
+        "endLine": 218,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 218
+      },
+      {
+        "endLine": 218,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 218
+      },
+      {
+        "endLine": 220,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 220
+      },
+      {
+        "endLine": 220,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 220
+      },
+      {
+        "endLine": 232,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 232
+      },
+      {
+        "endLine": 232,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 232
+      },
+      {
+        "endLine": 234,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 234
+      },
+      {
+        "endLine": 234,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 234
+      },
+      {
+        "endLine": 250,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 43,
+        "startLine": 250
+      },
+      {
+        "endLine": 250,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 53,
+        "startLine": 250
+      },
+      {
+        "endLine": 251,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 38,
+        "startLine": 251
+      },
+      {
+        "endLine": 251,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 48,
+        "startLine": 251
+      },
+      {
+        "endLine": 263,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 43,
+        "startLine": 263
+      },
+      {
+        "endLine": 263,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 53,
+        "startLine": 263
+      },
+      {
+        "endLine": 264,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 38,
+        "startLine": 264
+      },
+      {
+        "endLine": 264,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 48,
+        "startLine": 264
+      },
+      {
+        "endLine": 290,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 29,
+        "startLine": 290
+      },
+      {
+        "endLine": 290,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 39,
+        "startLine": 290
+      },
+      {
+        "endLine": 292,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 31,
+        "startLine": 292
+      },
+      {
+        "endLine": 292,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 41,
+        "startLine": 292
+      },
+      {
+        "endLine": 303,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 25,
+        "startLine": 303
+      },
+      {
+        "endLine": 303,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 35,
+        "startLine": 303
+      },
+      {
+        "endLine": 306,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 27,
+        "startLine": 306
+      },
+      {
+        "endLine": 306,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 37,
+        "startLine": 306
+      },
+      {
+        "endLine": 306,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 52,
+        "startLine": 306
+      },
+      {
+        "endLine": 306,
+        "filePath": "library/src/main/ets/lib/Base/Collection.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 62,
+        "startLine": 306
+      }
+    ],
+    "merged_count": 2,
+    "status": "未应用"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 2,
+    "cluster_ids": [
+      2
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 28,
+            "file_path": "Qulity.js",
+            "start_line": 2,
+            "text": "/*\n    Qulity is built from the ground up by QSmally.\n    Qulity © 2021 by QSmally, all rights reserved.\n    Please report bugs by creating an issue on the repo.\n\n    Originally included in project QSmally/QDB.\n\n    Obviously the Node runtime is not created by myself,\n    it's created by their respective owners.\n    All rights are reserved.\n*/\n\n\nmodule.exports = {\n\n    // Base\n    Collection: require(\"./lib/Base/Collection\"),\n\n    // Extensions\n    Cache:       require(\"./lib/Extensions/Cache\"),\n    ActiveCache: require(\"./lib/Extensions/ActiveCache\"),\n\n    // Managers\n    Manager:   require(\"./lib/Managers/BaseManager\"),\n    DataStore: require(\"./lib/Managers/DataStore\")\n\n};"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 24,
+          "file_path": "Qulity.js",
+          "start_line": 2,
+          "text": "/*\n    Qulity is built from the ground up by QSmally.\n    Qulity © 2021 by QSmally, all rights reserved.\n    Please report bugs by creating an issue on the repo.\n\n    Originally included in project QSmally/QDB.\n\n    Obviously the Node runtime is not created by myself,\n    it's created by their respective owners.\n    All rights are reserved.\n*/\n\n\nmodule.exports = {\n\n    // Base\n    Collection: require(\"./lib/Base/Collection\"),\n\n    // Managers\n    Manager:   require(\"./lib/Managers/BaseManager\"),\n    DataStore: require(\"./lib/Managers/DataStore\")\n\n};"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 21,
+            "file_path": "src/main/ets/Qulity.ets",
+            "start_line": 17,
+            "text": "export {\n  Collection,\n  BaseManager as Manager,\n  DataStore\n};"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "Qulity.js",
+      "sourceLines": "2-28",
+      "targetFile": "src/main/ets/Qulity.ets",
+      "targetLines": "17-21"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/Qulity.ets",
+      "lines": "17-21"
+    },
+    "location_override": {
+      "filePath": "src/main/ets/Qulity.ets",
+      "lines": "17-21"
+    },
+    "matched_errors": [],
+    "status": "未应用"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "修复BUG",
+    "cluster_id": 3,
+    "cluster_ids": [
+      3
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 43,
+            "file_path": "lib/Managers/DataStore.js",
+            "start_line": 6,
+            "text": "class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [iterable] Optional initial values of this DataStore.\n     * @example const DS = new Qulity.DataStore(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (iterable = {}) {\n        super(iterable);\n    }\n\n    /**\n     * An entry of this DataStore.\n     * @typedef {Function|Object} DataModel\n     */\n\n    /**\n     * Inserts or updates a model.\n     * @param {String|Number} keyContext Key of the model to be inserted.\n     * @param {Function|Object|DataModel} model The data model to set into the DataStore.\n     * @returns {DataStore}\n     */\n    set (keyContext, model) {\n        if (![\"function\", \"object\"].includes(typeof model))    return null;\n        if (![\"string\", \"number\"].includes(typeof keyContext)) return null;\n        return super.set(keyContext, model);\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} keyContext Key of the model to be resolved.\n     * @returns {DataModel} Model that got resolved or cached.\n     */\n    resolve (keyContext) {\n        return super.get(keyContext);\n    }\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 48,
+          "file_path": "lib/Managers/DataStore.js",
+          "start_line": 6,
+          "text": "class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [Iterable] Optional initial values of this DataStore.\n     * @example const DS = new Qulity.DataStore(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (Iterable = {}) {\n\n        super();\n\n        if (Iterable instanceof Array)\n        for (const Key in Iterable) this.set(Iterable[Key][0], Iterable[Key][1]);\n        else for (const Key in Iterable) this.set(Key, Iterable[Key]);\n\n    }\n\n\n    /**\n     * Sets a model into the DataStore.\n     * @param {String|Number} Key Key of the model to be inserted.\n     * @param {Function|Object|DataModel} Model The data model to set into the DataStore.\n     * @returns {DataStore}\n     */\n    set (Key, Model) {\n        if (![\"function\", \"object\"].includes(typeof Model)) return null;\n        if (![\"string\", \"number\"].includes(typeof Key))     return null;\n        return super.set(Key, Model);\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} Key Key of the model to be resolved.\n     * @returns {DataModel} Model that got resolved or cached.\n     */\n    resolve (Key) {\n        if (![\"string\", \"number\"].includes(typeof Key)) return null;\n        const Model = super.get(Key);\n        return Model;\n    }\n\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 55,
+            "file_path": "src/main/ets/lib/Managers/DataStore.ets",
+            "start_line": 3,
+            "text": "export default class DataStore extends Collection {\n\n    /**\n     * Base class that manages the creation, retrieval and deletion of a specific data model.\n     * @param {Array|Object} [Iterable] Optional initial values of this DataStore.\n     */\n    constructor(Iterable: ESObject = {}) {\n        super();\n\n        if (Iterable instanceof Array) {\n            for (let i = 0; i < Iterable.length; i++) {\n                const entry: ESObject = Iterable[i];\n                if (entry instanceof Array && entry.length >= 2) {\n                    this.set(entry[0], entry[1]);\n                }\n            }\n        } else {\n            const keys = Object.keys(Iterable);\n            for (let i = 0; i < keys.length; i++) {\n                const key: string = keys[i];\n                this.set(key, Iterable[key]);\n            }\n        }\n    }\n\n    /**\n     * Sets a model into the DataStore.\n     * @param {String|Number} Key Key of the model to be inserted.\n     * @param {Function|Object} Model The data model to set into the DataStore.\n     */\n    // 使用 ESObject 作为返回类型，以兼容 Map.set 的 this 返回类型检查\n    set(Key: string | number, Model: ESObject): ESObject {\n        const typeModel = typeof Model;\n        const typeKey = typeof Key;\n\n        if (typeModel !== \"function\" && typeModel !== \"object\") return this;\n        if (typeKey !== \"string\" && typeKey !== \"number\") return this;\n\n        super.set(Key, Model);\n        return this;\n    }\n\n    /**\n     * Resolves a data model.\n     * @param {String|Number} Key Key of the model to be resolved.\n     */\n    resolve(Key: string | number): ESObject {\n        const typeKey = typeof Key;\n        if (typeKey !== \"string\" && typeKey !== \"number\") return null;\n\n        return super.get(Key);\n    }\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 15,
+            "file_path": "src/main/ets/Qulity.ets",
+            "start_line": 15,
+            "text": "import DataStore from \"./lib/Managers/DataStore\";"
+          }
+        ]
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/Managers/DataStore.js",
+      "sourceLines": "6-48",
+      "targetFile": "src/main/ets/lib/Managers/DataStore.ets",
+      "targetLines": "3-55"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/Managers/DataStore.ets",
+      "lines": "3-55"
+    },
+    "location_override": {
+      "filePath": "src/main/ets/lib/Managers/DataStore.ets",
+      "lines": "3-55"
+    },
+    "matched_errors": [],
+    "status": "未应用"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "性能优化",
+    "cluster_id": 4,
+    "cluster_ids": [
+      4
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 78,
+            "file_path": "lib/Managers/BaseManager.js",
+            "start_line": 6,
+            "text": "class BaseManager {\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [iterable] Optional initial values of this Manager.\n     * @param {Function} [holds] An optional data stricture belonging to this Manager.\n     * @example class MyManager extends Qulity.Manager\n     * @implements Collection\n     */\n    constructor (iterable = {}, holds = null) {\n\n        /**\n         * Cached dataset entries of this Manager.\n         * @name BaseManager#cache\n         * @type {Collection}\n         * @readonly\n         */\n        this.cache = new Collection();\n\n        for (const keyContext in iterable) {\n            Array.isArray(iterable) ?\n                this.cache.set(iterable[keyContext][0], iterable[keyContext][1]) :\n                this.cache.set(keyContext, iterable[keyContext]);\n        }\n\n        /**\n         * A structure belonging to this Manager.\n         * @name BaseManager#holds\n         * @type {Function?}\n         * @readonly\n         */\n        this.holds = holds;\n    }\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     * @param {String} identifier Identifier string for the address of this model.\n     * @param {Function|*} model A data model to add to this Manager.\n     * @returns {Manager}\n     */\n    add (identifier, model) {\n        if (typeof identifier !== \"string\")               return null;\n        if (this.cache.has(identifier))                   return null;\n        if (this.holds && !(model instanceof this.holds)) return null;\n\n        this.cache.set(identifier, model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     * @param {String} identifier Identifier string of the instance.\n     * @returns {Manager}\n     */\n    remove (identifier) {\n        if (typeof identifier !== \"string\") return null;\n        if (!this.cache.has(identifier))    return null;\n\n        this.cache.delete(identifier);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     * @param {String|Function|*} idOrInstance Identifier to resolve from this Manager.\n     * @returns {Function|*} A data model resolved from this Manager's cache.\n     */\n    resolve (idOrInstance) {\n        if (this.holds && idOrInstance instanceof this.holds) return this.holds;\n        if (typeof idOrInstance !== \"string\") return null;\n        return this.cache.get(idOrInstance);\n    }\n}"
+          }
+        ],
+        "npm_code_before": {
+          "end_line": 84,
+          "file_path": "lib/Managers/BaseManager.js",
+          "start_line": 6,
+          "text": "class BaseManager {\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [Iterable] Optional initial values of this Manager.\n     * @param {Function} [Holds] An optional data stricture belonging to this Manager.\n     * @example class MyManager extends Qulity.Manager\n     */\n    constructor (Iterable = {}, Holds = null) {\n\n        /**\n         * Cached dataset entries of this Manager.\n         * @name BaseManager#cache\n         * @type {Collection}\n         * @readonly\n         */\n        Object.defineProperty(this, \"cache\", {\n            enumerable: true,\n            value: new Collection()\n        });\n\n        if (Iterable instanceof Array)\n        for (const Key in Iterable) this.cache.set(Iterable[Key][0], Iterable[Key][1]);\n        else for (const Key in Iterable) this.cache.set(Key, Iterable[Key]);\n\n        /**\n         * A structure belonging to this Manager.\n         * @name BaseManager#holds\n         * @type {Function?}\n         * @private\n         */\n        Object.defineProperty(this, \"holds\", {\n            enumerable: true,\n            value: Holds\n        });\n\n    }\n\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     * @param {String} Id Identifier string for the address of this model.\n     * @param {Function|*} Model A data model to add to this Manager.\n     * @returns {Manager}\n     */\n    add (Id, Model) {\n        if (typeof Id !== \"string\")                       return null;\n        if (this.cache.has(Id))                           return null;\n        if (this.holds && !(Model instanceof this.holds)) return null;\n\n        this.cache.set(Id, Model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     * @param {String} Id Identifier string of the instance.\n     * @returns {Manager}\n     */\n    remove (Id) {\n        if (typeof Id !== \"string\") return null;\n        if (!this.cache.has(Id))    return null;\n\n        this.cache.delete(Id);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     * @param {String|Function|*} IdOrInstance Identifier to resolve from this Manager.\n     * @returns {Function|*} A data model resolved from this Manager's cache.\n     */\n    resolve (IdOrInstance) {\n        if (this.holds && IdOrInstance instanceof this.holds) return this.holds;\n        if (typeof IdOrInstance !== \"string\") return null;\n        return this.cache.get(IdOrInstance);\n    }\n\n}"
+        },
+        "ohpm_code_before": [
+          {
+            "end_line": 64,
+            "file_path": "src/main/ets/lib/Managers/BaseManager.ets",
+            "start_line": 3,
+            "text": "export default class BaseManager {\n    public cache: Collection;\n    private holds: ESObject | null;\n\n    /**\n     * Manages the API methods of data models and holds its cache.\n     * @param {Array|Object} [Iterable] Optional initial values of this Manager.\n     * @param {Function} [Holds] An optional data stricture belonging to this Manager.\n     */\n    constructor(Iterable: ESObject = {}, Holds: ESObject | null = null) {\n        this.cache = new Collection();\n        this.holds = Holds;\n\n        if (Iterable instanceof Array) {\n            for (let i = 0; i < Iterable.length; i++) {\n                const entry: ESObject = Iterable[i];\n                if (entry instanceof Array && entry.length >= 2) {\n                    this.cache.set(entry[0], entry[1]);\n                }\n            }\n        } else {\n            const keys = Object.keys(Iterable);\n            for (let i = 0; i < keys.length; i++) {\n                const key: string = keys[i];\n                this.cache.set(key, Iterable[key]);\n            }\n        }\n    }\n\n    /**\n     * Inserts an instance into this Manager's cache.\n     */\n    add(Id: string, Model: ESObject): BaseManager | null {\n        if (typeof Id !== \"string\") return null;\n        if (this.cache.has(Id)) return null;\n\n        if (this.holds && !(Model instanceof (this.holds as ESObject))) return null;\n\n        this.cache.set(Id, Model);\n        return this;\n    }\n\n    /**\n     * Removes an instance from this Manager's cache.\n     */\n    remove(Id: string): BaseManager | null {\n        if (typeof Id !== \"string\") return null;\n        if (!this.cache.has(Id)) return null;\n\n        this.cache.delete(Id);\n        return this;\n    }\n\n    /**\n     * Resolves an instance of this Manager.\n     */\n    resolve(IdOrInstance: ESObject): ESObject {\n        if (this.holds && IdOrInstance instanceof (this.holds as ESObject)) return this.holds;\n        if (typeof IdOrInstance !== \"string\") return null;\n        return this.cache.get(IdOrInstance);\n    }\n}"
+          }
+        ],
+        "ohpm_code_dependent_code_blocks": [
+          {
+            "end_line": 14,
+            "file_path": "src/main/ets/Qulity.ets",
+            "start_line": 12,
+            "text": "import BaseManager from \"./lib/Managers/BaseManager\";"
+          }
+        ]
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/Managers/BaseManager.js",
+      "sourceLines": "6-84",
+      "targetFile": "src/main/ets/lib/Managers/BaseManager.ets",
+      "targetLines": "3-64"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "src/main/ets/lib/Managers/BaseManager.ets",
+      "lines": "3-64"
+    },
+    "location_override": {
+      "filePath": "src/main/ets/lib/Managers/BaseManager.ets",
+      "lines": "3-64"
+    },
+    "matched_errors": [],
+    "matched_warnings": [
+      {
+        "endLine": 5,
+        "filePath": "library/src/main/ets/lib/Managers/BaseManager.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 20,
+        "startLine": 5
+      },
+      {
+        "endLine": 12,
+        "filePath": "library/src/main/ets/lib/Managers/BaseManager.ets",
+        "info": "Usage of 'ESObject' type is restricted (arkts-limited-esobj)",
+        "startColumn": 49,
+        "startLine": 12
+      }
+    ],
+    "status": "未应用"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 5,
+    "cluster_ids": [
+      5
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 4,
+            "file_path": "lib/Extensions/ActiveCache.js",
+            "start_line": 4,
+            "text": "const Cache            = require(\"./Cache\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 5,
+            "file_path": "lib/Extensions/ActiveCache.js",
+            "start_line": 5,
+            "text": "const { EventEmitter } = require(\"events\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 56,
+            "file_path": "lib/Extensions/ActiveCache.js",
+            "start_line": 7,
+            "text": "class ActiveCache extends Cache {\n\n    /**\n     * Extended class that implements an events driver.\n     * @param {Array|Object} [iterable] Optional initial values of this Cache.\n     * @example const AC = new Qulity.ActiveCache(Iterable?);\n     * @extends {EventEmitter}\n     */\n    constructor (iterable = {}) {\n        super(iterable);\n\n        /**\n         * An event manager for this ActiveCache.\n         * @name ActiveCache#_emitter\n         * @type {EventEmitter}\n         * @private\n         */\n        this._emitter = new EventEmitter();\n    }\n\n    /**\n     * Current types of events.\n     * @typedef {String} Event\n     * @param {String} set\n     * @param {String} delete\n     */\n\n    /**\n     * Registers a handler for this ActiveCache.\n     * @param {Event} event An event to handle.\n     * @param {Function} handler A handler for this registered event.\n     * @returns {ActiveCache}\n     */\n    on (event, handler) {\n        this._emitter.on(event, handler);\n        return this;\n    }\n\n    set (keyContext, value) {\n        super.set(keyContext, value);\n        this._emitter.emit(\"set\", keyContext, value);\n        return this;\n    }\n\n    delete (keyContext) {\n        super.delete(keyContext);\n        this._emitter.emit(\"delete\", keyContext);\n        return this;\n    }\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 58,
+            "file_path": "lib/Extensions/ActiveCache.js",
+            "start_line": 58,
+            "text": "module.exports = ActiveCache;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/Extensions/ActiveCache.js",
+      "sourceLines": "4-58",
+      "targetFile": "unknown",
+      "targetLines": "N/A"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "unknown",
+      "lines": "N/A"
+    },
+    "matched_errors": [],
+    "status": "未应用"
+  },
+  {
+    "applied": true,
+    "change_level": "文件层级变更",
+    "change_type": "新功能",
+    "cluster_id": 6,
+    "cluster_ids": [
+      6
+    ],
+    "code_items": [
+      {
+        "npm_code_after": [
+          {
+            "end_line": 4,
+            "file_path": "lib/Extensions/Cache.js",
+            "start_line": 4,
+            "text": "const Collection = require(\"../Base/Collection\");"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 29,
+            "file_path": "lib/Extensions/Cache.js",
+            "start_line": 6,
+            "text": "class Cache extends Collection {\n\n    /**\n     * Base class that manages additional utility functions and other features.\n     * @param {Array|Object} [iterable] Optional initial values of this Cache.\n     * @example const CC = new Qulity.Cache(Iterable?);\n     * @extends {Collection}\n     */\n    constructor (iterable = {}) {\n        super(iterable)\n    }\n\n    /**\n     * Ensures an entry being in this Cache map.\n     * @param {*} keyContext Specifies the address for the value.\n     * @param {*} value A value to be conditionally inserted.\n     * @returns {Boolean} Whether or not a new value was inserted.\n     */\n    default (keyContext, value) {\n        if (this.has(keyContext)) return false;\n        this.set(keyContext, value);\n        return true;\n    }\n}"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      },
+      {
+        "npm_code_after": [
+          {
+            "end_line": 31,
+            "file_path": "lib/Extensions/Cache.js",
+            "start_line": 31,
+            "text": "module.exports = Cache;"
+          }
+        ],
+        "npm_code_before": {},
+        "ohpm_code_before": [],
+        "ohpm_code_dependent_code_blocks": []
+      }
+    ],
+    "compile_output": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\final_ohpm_compile.json",
+    "fileInfo": {
+      "sourceFile": "lib/Extensions/Cache.js",
+      "sourceLines": "4-31",
+      "targetFile": "unknown",
+      "targetLines": "N/A"
+    },
+    "final_ohpm_project": "C:\\workspace\\OHPM_Evaluation\\src\\utils\\server\\server_utils\\tmp\\task_qulity_v2.0.0_to_v2.2.0__qulity_vOHPM_upgradeTask\\output\\merged_project",
+    "integrationStatus": "applied",
+    "location": {
+      "filePath": "unknown",
+      "lines": "N/A"
+    },
+    "matched_errors": [],
+    "status": "未应用"
+  }
+]

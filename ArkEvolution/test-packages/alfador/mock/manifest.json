@@ -1,0 +1,10 @@
+{
+  "taskId": "alfador_v0.5.0_to_v0.6.0__alfador_vOHPM_upgradeTask",
+  "recordedAt": "2026-05-14T16:00:57.115Z",
+  "metadata": {
+    "name": "alfador",
+    "npmOriginalVersion": "0.5.0",
+    "npmTargetVersion": "0.6.0",
+    "ohpmOriginalVersion": "OHPM"
+  }
+}

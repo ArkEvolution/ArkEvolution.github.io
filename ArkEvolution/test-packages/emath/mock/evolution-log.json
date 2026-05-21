@@ -1,0 +1,626 @@
+[
+  {
+    "answers": [
+      "module.exports.e = 2.7182818284590452;",
+      "module.exports.PI = 3.141592653589793;",
+      "module.exports.gamma = 3.141592653589793;",
+      "module.exports.phi = 1.618033988749894848;",
+      "module.exports.C = 299792458;",
+      "module.exports.G = 6.671999999999999e-11;",
+      "module.exports.k = 1.3806620000000002e-23;",
+      "module.exports.F = 9.648456e4;",
+      "module.exports.k = 6.626176e-34;"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 540,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 540,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.e = 2.7182818284590452;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 541,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 541,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.PI = 3.141592653589793;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 542,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 542,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.gamma = 3.141592653589793;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 543,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 543,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.phi = 1.618033988749894848;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 550,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 550,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.C = 299792458;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 551,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 551,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.G = 6.671999999999999e-11;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 552,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 552,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.k = 1.3806620000000002e-23;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 553,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 553,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.F = 9.648456e4;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added mathematical and physical constants (e, PI, gamma, phi, speed of light, gravitational constant, Boltzmann constant, Faraday constant, Planck constant) to the module exports, while removing the duplicate `isPrime` export.",
+        "metadata": {
+          "npm_end_line": 554,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 554,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.k = 6.626176e-34;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/number.js",
+      "sourceLines": "540-554",
+      "targetFile": "src/main/ets/lib/number.ets",
+      "targetLines": "N/A"
+    },
+    "location": {
+      "filePath": "src/main/ets/lib/number.ets",
+      "lines": "N/A"
+    }
+  },
+  {
+    "answers": [
+      "var outside = this;",
+      "/**\n * @class matrix\n * @classdesc This is the class of matrix.\n * @desc It's for create object and init object.\n */\nclass matrix\n{\n    constructor(width,height,value){\n        this.type = \"matrix\";\n        this.value = [];\n        this.width = width;\n        this.height = height;\n        if (typeof value === \"object\"){\n            for (var i = 0 ; i < height ; i++){\n                this.value[i] = [];\n                for (var j = 0 ; j < width ; j++){\n                    this.value[i][j] = value[i][j];\n                }\n            }\n        } else {\n            for (var i = 0 ; i < height ; i++){\n                this.value[i] = [];\n                for (var j = 0 ; j < width ; j++){\n                    this.value[i][j] = value;\n                }\n            }\n        }\n    }\n    /**\n     * @method\n     * @function T\n     * @desc For change this matrix to the value of matrix after T.\n     */\n    T(){\n        this.value = outside.T(this).value;\n    }\n    /**\n     * @method\n     * @function each\n     * @desc For each this matrix.\n     */\n    each(callback){\n        for (var i = 0 ; i < this.width ; i++){\n            for (var j = 0 ; j < this.height ; j++){\n                callback(j,i,this.value[j][i]);\n            }\n        }\n    }\n    /**\n     * @method\n     * @function add\n     * @param {matrix} matrix_ The matrix.\n     * @desc For change this matrix to the value of matrix after added another matrix.\n     */\n    add(matrix_){\n        var res = outside.add(this,matrix_);\n        if (res)\n            this.value = res.value;\n    }\n     /**\n     * @method\n     * @function product\n     * @param {vector} matrix The matrix or vector\n     * @desc For get the value of matrix or vector after product.\n     */\n    product(matrix) {\n        var res = outside.product();\n        if (res){\n            if (typeof res === \"object\"){\n                this.value = res.value;\n                this.width = res.width;\n                this.height = res.height;\n            } else {\n                this.value = res;\n                this.width = null;\n                this.height = null;\n            }\n        }\n    }\n    /**\n     * @method\n     * @function toString()\n     * @desc For return the string of matrix.\n     */\n    toString(){\n        return JSON.stringify(this);\n    }\n    /**\n     * @method\n     * @function print()\n     * @desc For print the string of matrix.\n     */\n    print(){\n        console.log(this.toString());\n    }\n    /**\n     * @method\n     * @function toArray()\n     * @desc For return the value of matrix.\n     */\n    toArray(){\n        return this.value;\n    }\n}",
+      "/**\n * @class vector\n * @classdesc This is the class of vector.\n * @desc It's for create object and init object.\n */\nclass vector extends matrix\n{\n    constructor(width,value){\n        if (typeof value === \"object\"){\n            value = [value];\n        }\n        super(width,1,value);\n        this.type = \"vector\";\n    }\n    /**\n     * @method\n     * @function T\n     * @desc For change this vector to the value of vector after T.\n     */\n    T(){\n        var tmp = [];\n        if (this.height == 1){\n            for (var i = 0 ; i < this.width ; i++){\n                tmp[i] = [];\n                tmp[i][0] = this.value[0][i];\n            }\n        } else {\n            tmp = [[]];\n            for (var i = 0 ; i < this.height ; i++){\n                tmp[0][i] = this.value[i][0];\n            }\n        }\n        this.value = tmp;\n        tmp = this.width;\n        this.width = this.height;\n        this.height = tmp;\n    }\n    /**\n     * @method\n     * @function each\n     * @desc For each this vector.\n     */\n    each(callback){\n        if (this.height == 1){\n            for (var i = 0 ; i < this.width ; i++){\n                callback(i,this.value[0][i]);\n            }\n        } else {\n            for (var i = 0 ; i < this.height ; i++){\n                callback(i,this.value[i][0]);\n            }\n        }\n    }\n}",
+      "/**\n * @method\n * @function T\n * @param {matrix} matrix_ The matrix.\n * @returns {matrix} The value of matrix after T.\n * @desc For get the value of matrix after T.\n */\nfunction T(matrix_) {\n    var tmpMatrix = new matrix(matrix_.height,matrix_.width,0);\n    for (var i = 0 ; i < matrix_.width ; i++){\n        for (var j = 0 ; j < matrix_.height ; j++){\n            tmpMatrix.value[i][j] = matrix_.value[j][i];\n        }\n    }\n    var tmp = matrix_.width;\n    matrix_.width = matrix_.height;\n    matrix_.height = tmp;\n    return tmpMatrix;\n}",
+      "/**\n * @method\n * @function add\n * @param {matrix} matrix1 The matrix or vector\n * @param {matrix} matrix2 The matrix or vector\n * @returns {matrix} The value of matrix after T.\n * @returns {boolean} If can't add,return this.\n * @desc For get the value of matrix after T.\n */\nfunction add(matrix1,matrix2) {\n    var res;\n    res = add_matrix(matrix1,matrix2);\n    if (res) return res;\n    res = add_vector(matrix1,matrix2);\n    if (res) return res;\n    if (matrix1.height == 1 && matrix1.width == matrix2.width){\n        for (var i = 0 ; i < matrix1.width ; i++){\n            for (var j = 0 ; j < matrix2.height ; j++){\n                matrix2.value[j][i] += matrix1.value[0][i];\n            }\n        }\n        return matrix2;\n    }\n    if (matrix1.width == 1 && matrix1.height == matrix2.height){\n        for (var i = 0 ; i < matrix1.height ; i++){\n            for (var j = 0 ; j < matrix2.width ; j++){\n                matrix2.value[i][j] += matrix1.value[i][0];\n            }\n        }\n        return matrix2;\n    }\n    return false;\n}",
+      "/**\n * @method\n * @function add_matrix\n * @param {matrix} matrix1 The matrix\n * @param {matrix} matrix2 The matrix\n * @returns {matrix} The value of matrix after added.\n * @returns {boolean} If can't add,return this.\n * @desc For get the value of matrix after added.\n */\nfunction add_matrix(matrix1,matrix2) {\n    if (matrix1.type != \"matrix\" || matrix2.type != \"matrix\"){\n        return false;\n    }\n    if (matrix1.width == matrix2.width && matrix1.height == matrix2.height){\n        for (var i = 0 ; i < matrix1.height ; i++){\n            for (var j = 0 ; j < matrix1.width ; j++){\n                matrix1.value[i][j] += matrix2.value[i][j];\n            }\n        }\n    } else if (matrix1.width == matrix2.height && matrix1.height == matrix2.width){\n        matrix1.T();\n        return add_matrix(matrix1,matrix2);\n    } else {\n        return false;\n    }\n}",
+      "/**\n * @method\n * @function add_vector\n * @param {vector} vector1 The vector\n * @param {vector} vector2 The vector\n * @returns {vector} The value of vector after added.\n * @returns {boolean} If can't add,return this.\n * @desc For get the value of vector after added.\n */\nfunction add_vector(vector1,vector2) {\n    if (vector1.type != \"vector\" || vector2.type != \"vector\"){\n        return false;\n    }\n    if (vector1.width == vector2.width){\n        for (var i = 0 ; i < vector1.width ; i++){\n            vector1.value[0][i] += vector2.value[0][i];\n        }\n    } else if (vector1.width == vector2.height){\n        vector1.T();\n        add_vector(vector1,vector2);\n    } else {\n        return false;\n    }\n}",
+      "/**\n * @method\n * @function product\n * @param {matrix} matrix1 The matrix or vector\n * @param {matrix} matrix2 The matrix or vector\n * @returns {matrix} The value of matrix after product.\n * @desc For get the value of matrix or vector after product.\n */\nfunction product(matrix1,matrix2) {\n    if (matrix1.type == \"matrix\" && matrix2.type == \"matrix\"){\n        return matrix_product(matrix1,matrix2);\n    }\n    if (matrix1.type == \"vector\" && matrix2.type == \"vector\"){\n        return vector_product(matrix1,matrix2);\n    }\n    if (matrix1.type == \"matrix\"){\n        if (matrix2.width == 1){\n            for (var i = 0 ; i < matrix1.height ; i++){\n                for (var j = 0 ; j < matrix1.width ; j++){\n                    matrix1.value[i][j] *= matrix2.value[i][0];\n                }\n            }\n        } else {\n            for (var i = 0 ; i < matrix1.height ; i++){\n                for (var j = 0 ; j < matrix1.width ; j++){\n                    matrix1.value[i][j] *= matrix2.value[0][i];\n                }\n            }\n        }\n    } else {\n        if (matrix1.width == 1){\n            for (var i = 0 ; i < matrix2.height ; i++){\n                for (var j = 0 ; j < matrix2.width ; j++){\n                    matrix2.value[i][j] *= matrix2.value[i][0];\n                }\n            }\n        } else {\n            for (var i = 0 ; i < matrix2.height ; i++){\n                for (var j = 0 ; j < matrix1.width ; j++){\n                    matrix2.value[i][j] *= matrix1.value[0][i];\n                }\n            }\n        }\n    }\n}",
+      "/**\n * @method\n * @function matrix_product\n * @param {matrix} matrix1 The matrix\n * @param {matrix} matrix2 The matrix\n * @returns {matrix} The value of matrix after product.\n * @desc For get the value of matrix after product.\n */\nfunction matrix_product(matrix1,matrix2) {\n    if (matrix1.width != matrix2.height){\n        return false;\n    }\n    var matrix3 = new matrix(matrix1.height,matrix2.width,0);\n    matrix3.each(function (i,j) {\n        for (var k = 0 ; k < matrix1.width/* or matrix2.width */ ; k++){\n            matrix3.value[i][j] += matrix1.value[i][k] * matrix2.value[k][j];\n        }\n    });\n    return matrix3;\n}",
+      "/**\n * @method\n * @function vector_product\n * @param {vector} vector1 The vector\n * @param {vector} vector2 The vector\n * @returns {number} The value of vector after product.\n * @desc For get the value of vector after product.\n */\nfunction vector_product(vector1,vector2) {\n    var num = 0;\n    if (vector1.width != 1){\n        vector1.T();\n    }\n    if (vector2.width != 1){\n        vector2.T();\n    }\n    if (vector1.height < vector2.height){\n        vector1.each(function (i,value) {\n            num += value * vector2.value[i][0];\n        });\n    } else {\n        vector2.each(function (i,value) {\n            num += value * vector1.value[i][0];\n        });\n    }\n    return num;\n}",
+      "module.exports.matrix = matrix;",
+      "module.exports.vector = vector;",
+      "module.exports.T = T;",
+      "module.exports.add = add;",
+      "module.exports.add_matrix = add_matrix;",
+      "module.exports.add_vector = add_vector;",
+      "module.exports.matrix_product = matrix_product;",
+      "module.exports.vector_product = vector_product;",
+      "module.exports.product = product;"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 10,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 10,
+          "type": "addition"
+        },
+        "npm_code_after": "var outside = this;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 115,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 12,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @class matrix\n * @classdesc This is the class of matrix.\n * @desc It's for create object and init object.\n */\nclass matrix\n{\n    constructor(width,height,value){\n        this.type = \"matrix\";\n        this.value = [];\n        this.width = width;\n        this.height = height;\n        if (typeof value === \"object\"){\n            for (var i = 0 ; i < height ; i++){\n                this.value[i] = [];\n                for (var j = 0 ; j < width ; j++){\n                    this.value[i][j] = value[i][j];\n                }\n            }\n        } else {\n            for (var i = 0 ; i < height ; i++){\n                this.value[i] = [];\n                for (var j = 0 ; j < width ; j++){\n                    this.value[i][j] = value;\n                }\n            }\n        }\n    }\n    /**\n     * @method\n     * @function T\n     * @desc For change this matrix to the value of matrix after T.\n     */\n    T(){\n        this.value = outside.T(this).value;\n    }\n    /**\n     * @method\n     * @function each\n     * @desc For each this matrix.\n     */\n    each(callback){\n        for (var i = 0 ; i < this.width ; i++){\n            for (var j = 0 ; j < this.height ; j++){\n                callback(j,i,this.value[j][i]);\n            }\n        }\n    }\n    /**\n     * @method\n     * @function add\n     * @param {matrix} matrix_ The matrix.\n     * @desc For change this matrix to the value of matrix after added another matrix.\n     */\n    add(matrix_){\n        var res = outside.add(this,matrix_);\n        if (res)\n            this.value = res.value;\n    }\n     /**\n     * @method\n     * @function product\n     * @param {vector} matrix The matrix or vector\n     * @desc For get the value of matrix or vector after product.\n     */\n    product(matrix) {\n        var res = outside.product();\n        if (res){\n            if (typeof res === \"object\"){\n                this.value = res.value;\n                this.width = res.width;\n                this.height = res.height;\n            } else {\n                this.value = res;\n                this.width = null;\n                this.height = null;\n            }\n        }\n    }\n    /**\n     * @method\n     * @function toString()\n     * @desc For return the string of matrix.\n     */\n    toString(){\n        return JSON.stringify(this);\n    }\n    /**\n     * @method\n     * @function print()\n     * @desc For print the string of matrix.\n     */\n    print(){\n        console.log(this.toString());\n    }\n    /**\n     * @method\n     * @function toArray()\n     * @desc For return the value of matrix.\n     */\n    toArray(){\n        return this.value;\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 170,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 117,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @class vector\n * @classdesc This is the class of vector.\n * @desc It's for create object and init object.\n */\nclass vector extends matrix\n{\n    constructor(width,value){\n        if (typeof value === \"object\"){\n            value = [value];\n        }\n        super(width,1,value);\n        this.type = \"vector\";\n    }\n    /**\n     * @method\n     * @function T\n     * @desc For change this vector to the value of vector after T.\n     */\n    T(){\n        var tmp = [];\n        if (this.height == 1){\n            for (var i = 0 ; i < this.width ; i++){\n                tmp[i] = [];\n                tmp[i][0] = this.value[0][i];\n            }\n        } else {\n            tmp = [[]];\n            for (var i = 0 ; i < this.height ; i++){\n                tmp[0][i] = this.value[i][0];\n            }\n        }\n        this.value = tmp;\n        tmp = this.width;\n        this.width = this.height;\n        this.height = tmp;\n    }\n    /**\n     * @method\n     * @function each\n     * @desc For each this vector.\n     */\n    each(callback){\n        if (this.height == 1){\n            for (var i = 0 ; i < this.width ; i++){\n                callback(i,this.value[0][i]);\n            }\n        } else {\n            for (var i = 0 ; i < this.height ; i++){\n                callback(i,this.value[i][0]);\n            }\n        }\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 189,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 171,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function T\n * @param {matrix} matrix_ The matrix.\n * @returns {matrix} The value of matrix after T.\n * @desc For get the value of matrix after T.\n */\nfunction T(matrix_) {\n    var tmpMatrix = new matrix(matrix_.height,matrix_.width,0);\n    for (var i = 0 ; i < matrix_.width ; i++){\n        for (var j = 0 ; j < matrix_.height ; j++){\n            tmpMatrix.value[i][j] = matrix_.value[j][i];\n        }\n    }\n    var tmp = matrix_.width;\n    matrix_.width = matrix_.height;\n    matrix_.height = tmp;\n    return tmpMatrix;\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 223,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 191,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function add\n * @param {matrix} matrix1 The matrix or vector\n * @param {matrix} matrix2 The matrix or vector\n * @returns {matrix} The value of matrix after T.\n * @returns {boolean} If can't add,return this.\n * @desc For get the value of matrix after T.\n */\nfunction add(matrix1,matrix2) {\n    var res;\n    res = add_matrix(matrix1,matrix2);\n    if (res) return res;\n    res = add_vector(matrix1,matrix2);\n    if (res) return res;\n    if (matrix1.height == 1 && matrix1.width == matrix2.width){\n        for (var i = 0 ; i < matrix1.width ; i++){\n            for (var j = 0 ; j < matrix2.height ; j++){\n                matrix2.value[j][i] += matrix1.value[0][i];\n            }\n        }\n        return matrix2;\n    }\n    if (matrix1.width == 1 && matrix1.height == matrix2.height){\n        for (var i = 0 ; i < matrix1.height ; i++){\n            for (var j = 0 ; j < matrix2.width ; j++){\n                matrix2.value[i][j] += matrix1.value[i][0];\n            }\n        }\n        return matrix2;\n    }\n    return false;\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 250,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 225,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function add_matrix\n * @param {matrix} matrix1 The matrix\n * @param {matrix} matrix2 The matrix\n * @returns {matrix} The value of matrix after added.\n * @returns {boolean} If can't add,return this.\n * @desc For get the value of matrix after added.\n */\nfunction add_matrix(matrix1,matrix2) {\n    if (matrix1.type != \"matrix\" || matrix2.type != \"matrix\"){\n        return false;\n    }\n    if (matrix1.width == matrix2.width && matrix1.height == matrix2.height){\n        for (var i = 0 ; i < matrix1.height ; i++){\n            for (var j = 0 ; j < matrix1.width ; j++){\n                matrix1.value[i][j] += matrix2.value[i][j];\n            }\n        }\n    } else if (matrix1.width == matrix2.height && matrix1.height == matrix2.width){\n        matrix1.T();\n        return add_matrix(matrix1,matrix2);\n    } else {\n        return false;\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 275,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 252,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function add_vector\n * @param {vector} vector1 The vector\n * @param {vector} vector2 The vector\n * @returns {vector} The value of vector after added.\n * @returns {boolean} If can't add,return this.\n * @desc For get the value of vector after added.\n */\nfunction add_vector(vector1,vector2) {\n    if (vector1.type != \"vector\" || vector2.type != \"vector\"){\n        return false;\n    }\n    if (vector1.width == vector2.width){\n        for (var i = 0 ; i < vector1.width ; i++){\n            vector1.value[0][i] += vector2.value[0][i];\n        }\n    } else if (vector1.width == vector2.height){\n        vector1.T();\n        add_vector(vector1,vector2);\n    } else {\n        return false;\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 322,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 278,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function product\n * @param {matrix} matrix1 The matrix or vector\n * @param {matrix} matrix2 The matrix or vector\n * @returns {matrix} The value of matrix after product.\n * @desc For get the value of matrix or vector after product.\n */\nfunction product(matrix1,matrix2) {\n    if (matrix1.type == \"matrix\" && matrix2.type == \"matrix\"){\n        return matrix_product(matrix1,matrix2);\n    }\n    if (matrix1.type == \"vector\" && matrix2.type == \"vector\"){\n        return vector_product(matrix1,matrix2);\n    }\n    if (matrix1.type == \"matrix\"){\n        if (matrix2.width == 1){\n            for (var i = 0 ; i < matrix1.height ; i++){\n                for (var j = 0 ; j < matrix1.width ; j++){\n                    matrix1.value[i][j] *= matrix2.value[i][0];\n                }\n            }\n        } else {\n            for (var i = 0 ; i < matrix1.height ; i++){\n                for (var j = 0 ; j < matrix1.width ; j++){\n                    matrix1.value[i][j] *= matrix2.value[0][i];\n                }\n            }\n        }\n    } else {\n        if (matrix1.width == 1){\n            for (var i = 0 ; i < matrix2.height ; i++){\n                for (var j = 0 ; j < matrix2.width ; j++){\n                    matrix2.value[i][j] *= matrix2.value[i][0];\n                }\n            }\n        } else {\n            for (var i = 0 ; i < matrix2.height ; i++){\n                for (var j = 0 ; j < matrix1.width ; j++){\n                    matrix2.value[i][j] *= matrix1.value[0][i];\n                }\n            }\n        }\n    }\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 343,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 324,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function matrix_product\n * @param {matrix} matrix1 The matrix\n * @param {matrix} matrix2 The matrix\n * @returns {matrix} The value of matrix after product.\n * @desc For get the value of matrix after product.\n */\nfunction matrix_product(matrix1,matrix2) {\n    if (matrix1.width != matrix2.height){\n        return false;\n    }\n    var matrix3 = new matrix(matrix1.height,matrix2.width,0);\n    matrix3.each(function (i,j) {\n        for (var k = 0 ; k < matrix1.width/* or matrix2.width */ ; k++){\n            matrix3.value[i][j] += matrix1.value[i][k] * matrix2.value[k][j];\n        }\n    });\n    return matrix3;\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 371,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 345,
+          "type": "addition"
+        },
+        "npm_code_after": "/**\n * @method\n * @function vector_product\n * @param {vector} vector1 The vector\n * @param {vector} vector2 The vector\n * @returns {number} The value of vector after product.\n * @desc For get the value of vector after product.\n */\nfunction vector_product(vector1,vector2) {\n    var num = 0;\n    if (vector1.width != 1){\n        vector1.T();\n    }\n    if (vector2.width != 1){\n        vector2.T();\n    }\n    if (vector1.height < vector2.height){\n        vector1.each(function (i,value) {\n            num += value * vector2.value[i][0];\n        });\n    } else {\n        vector2.each(function (i,value) {\n            num += value * vector1.value[i][0];\n        });\n    }\n    return num;\n}",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 373,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 373,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.matrix = matrix;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 374,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 374,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.vector = vector;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 375,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 375,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.T = T;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 376,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 376,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.add = add;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 377,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 377,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.add_matrix = add_matrix;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 378,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 378,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.add_vector = add_vector;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 379,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 379,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.matrix_product = matrix_product;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 380,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 380,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.vector_product = vector_product;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "This change introduces a complete linear algebra library (linearAlgebra.js) implementing matrix and vector classes with operations for transpose, addition, multiplication, and element-wise iteration, along with corresponding utility functions.",
+        "metadata": {
+          "npm_end_line": 381,
+          "npm_file_path": "lib/linearAlgebra.js",
+          "npm_start_line": 381,
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.product = product;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/linearAlgebra.js",
+      "sourceLines": "10-381",
+      "targetFile": "src/main/ets/lib/linearAlgebra.ets",
+      "targetLines": "10-381"
+    },
+    "location": {
+      "filePath": "src/main/ets/lib/linearAlgebra.ets",
+      "lines": "10-381"
+    }
+  },
+  {
+    "answers": [
+      "var linearAlgebra = require(\"./lib/linearAlgebra\");",
+      "module.exports.linearAlgebra = linearAlgebra;"
+    ],
+    "changeType": "addition",
+    "code_items": [
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added a new `linearAlgebra` module to the library's public API, including its require and export.\n\nAdded a new `linearAlgebra` module to the library's public API by requiring and exporting it from the main index, while removing a test script that directly evaluated mathematical expressions from a file.",
+        "metadata": {
+          "npm_end_line": 13,
+          "npm_file_path": "index.js",
+          "npm_start_line": 13,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "var linearAlgebra = require(\"./lib/linearAlgebra\");",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      },
+      {
+        "dependent_code_blocks": [],
+        "intent": "Added a new `linearAlgebra` module to the library's public API, including its require and export.\n\nAdded a new `linearAlgebra` module to the library's public API by requiring and exporting it from the main index, while removing a test script that directly evaluated mathematical expressions from a file.",
+        "metadata": {
+          "npm_end_line": 20,
+          "npm_file_path": "index.js",
+          "npm_start_line": 20,
+          "ohpm_file_path": "src/main/ets/index.ets",
+          "type": "addition"
+        },
+        "npm_code_after": "module.exports.linearAlgebra = linearAlgebra;",
+        "npm_code_before": "",
+        "ohpm_code_before": [
+          ""
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "index.js",
+      "sourceLines": "13-20",
+      "targetFile": "src/main/ets/index.ets",
+      "targetLines": "N/A"
+    },
+    "location": {
+      "filePath": "src/main/ets/index.ets",
+      "lines": "N/A"
+    }
+  },
+  {
+    "answers": [
+      "import native from './lib/nativeMath';\nexport default Math;"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import native from './lib/nativeMath';"
+        ],
+        "intent": "Removed the code that exported all Math properties to module.exports and replaced it with a direct assignment of the Math object, then subsequently removed the entire export block entirely.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 1,
+          "npm_end_line": 12,
+          "npm_file_path": "lib/nativeMath.js",
+          "npm_start_line": 10,
+          "ohpm_end_line": 2,
+          "ohpm_file_path": "src/main/ets/lib/nativeMath.ets",
+          "ohpm_start_line": 1,
+          "type": "modification"
+        },
+        "npm_code_after": "module.exports = Math;",
+        "npm_code_before": "for (var i in Math){\n    module.exports[i] = Math[i];\n}",
+        "ohpm_code_before": [
+          "// TS2ArkTS-SessionId-16\nexport default Math;"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/nativeMath.js",
+      "sourceLines": "10-12",
+      "targetFile": "src/main/ets/lib/nativeMath.ets",
+      "targetLines": "1-2"
+    },
+    "location": {
+      "filePath": "src/main/ets/lib/nativeMath.ets",
+      "lines": "1-2"
+    }
+  },
+  {
+    "answers": [
+      "import * as number from \"./lib/number\";\n\n/**\n * Sigma function\n */\nexport function sigma(exp: string, count: number, init: SigmaInit): number {\n    let sum = 0;\n    let newExp: string;\n    let currentValue = init.value;\n\n    for (let i = 0; i < count; i++) {\n        newExp = exp.replace(new RegExp(init.name, 'g'), currentValue.toString());\n        sum += (expression(newExp) as number);\n        currentValue++;\n    }\n    return sum;\n}\n\n/**\n * Parse the expression of the string arithmetic and get the result.\n */\nexport function expression(exp: string): number | number[] {\n    const lines: string[] = exp.split(\"\\n\");\n    const exps: string[] = exp.split(/={5}/g);\n\n    if (exps.length > 1) {\n        // Many expressions\n        const reses: number[] = [];\n        for (let i = 0; i < exps.length; i++) {\n            const result = expression(exps[i]);\n            if (typeof result === 'number') {\n                reses.push(result);\n            }\n        }\n        return reses;\n    } else {\n        // Check for Sigma or Fraction formats\n        if (exp.search(/[_\\\\]/g) === -1 &&\n            exp.search(/[a-zA-z]\\s*\\([\\s\\S]*\\)\\s*=/g) === -1 &&\n            exp.search(/={2}/g) === -1 &&\n            exp.search(/-{2}/g) === -1) {\n\n            // Four arithmetic operation (The core Stack-based parser)\n            exp = exp.replace(/\\(\\s*(-\\d+\\.{0,1}\\d*\\s*)\\)/g, \"0\" + \"$1\");\n\n            const optArr: OptPriority[] = [\n                { opt: '+', priority: 1 },\n                { opt: '-', priority: 1 },\n                { opt: '*', priority: 2 },\n                { opt: '/', priority: 2 },\n                { opt: '%', priority: 2 },\n            ];\n\n            const priority = (opt: string): number => {\n                for (let i = 0; i < optArr.length; i++) {\n                    if (opt == optArr[i].opt)\n                        return optArr[i].priority;\n                }\n                return -1;\n            };\n\n            const isNum = (c: string): boolean => {\n                return c == '√' || (c >= '0' && c <= '9') || (c >= \"a\" && c <= \"z\");\n            };\n\n            const toNum = (str: string, pos: number): NumResult => {\n                let sztmp = \"\";\n                let currentPos = pos;\n\n                // Loop while char is letter, digit, dot, or power symbol\n                while (currentPos < str.length &&\n                    ((str[currentPos] >= \"a\" && str[currentPos] <= \"z\") ||\n                        (str[currentPos] >= '0' && str[currentPos] <= '9') ||\n                        str[currentPos] == '.' ||\n                        str[currentPos] == \"^\")) {\n                    sztmp += str.charAt(currentPos);\n                    currentPos++;\n                }\n\n                // Handle square root (√)\n                let num = \"\";\n                if (sztmp.charAt(0) == \"√\") {\n                    for (let i = 1; i < sztmp.length; i++) {\n                        if (sztmp.charAt(i) == \"^\") {\n                            break;\n                        }\n                        num += sztmp.charAt(i);\n                    }\n                    num = Math.sqrt(Number(num)).toString();\n                    const sztmpArr_ = sztmp.split(\"^\");\n                    sztmpArr_[0] = num;\n                    sztmp = \"\";\n                    for (let i = 0; i < sztmpArr_.length; i++) {\n                        sztmp += sztmpArr_[i] + \"^\";\n                    }\n                }\n\n                // Handle power ^\n                let sztmpArr = sztmp.split(\"^\");\n                if (sztmpArr.length >= 2) {\n                    let tmpFun = \"\";\n                    if (sztmp.search(/[a-zA-z]/) !== -1) {\n                        const end = sztmp.search(/\\d/);\n                        for (let i = 0; i < end; i++) {\n                            tmpFun += sztmp.charAt(i);\n                        }\n                        sztmp = sztmp.replace(tmpFun, \"\");\n                        sztmpArr = sztmp.split(\"^\");\n                    }\n                    let val = sztmpArr[sztmpArr.length - 1];\n                    for (let i = sztmpArr.length - 2; i >= 0; i--) {\n                        val = Math.pow(Number(sztmpArr[i]), Number(val)).toString();\n                    }\n                    sztmp = tmpFun + val;\n                }\n\n                // Handle trigonometric functions\n                let start = 0;\n                while (start > -1) {\n                    start = sztmp.search(/sin\\s*\\d+/g) + 3;\n                    if (start == 2) {\n                        break;\n                    }\n                    let i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))) {\n                        if (sztmp.charAt(i) == \" \") {\n                            i++;\n                            continue;\n                        }\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    const tmpnum = Math.sin(Number(num));\n                    sztmp = sztmp.replace(new RegExp(\"sin\\\\s*\" + num, \"g\"), tmpnum.toString());\n                }\n\n                start = 0;\n                while (start > -1) {\n                    start = sztmp.search(/cos\\s*\\d+/g) + 3;\n                    if (start == 2) {\n                        break;\n                    }\n                    let i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))) {\n                        if (sztmp.charAt(i) == \" \") {\n                            i++;\n                            continue;\n                        }\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    const tmpnum = Math.cos(Number(num));\n                    sztmp = sztmp.replace(new RegExp(\"cos\\\\s*\" + num, \"g\"), tmpnum.toString());\n                }\n\n                start = 0;\n                while (start > -1) {\n                    start = sztmp.search(/tan\\s*\\d+/g) + 3;\n                    if (start == 2) {\n                        break;\n                    }\n                    let i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))) {\n                        if (sztmp.charAt(i) == \" \") {\n                            i++;\n                            continue;\n                        }\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    const tmpnum = Math.tan(Number(num));\n                    sztmp = sztmp.replace(new RegExp(\"tan\\\\s*\" + num, \"g\"), tmpnum.toString());\n                }\n\n                start = 0;\n                while (start > -1) {\n                    start = sztmp.search(/asin\\s*\\d+/g) + 3;\n                    if (start == 2) {\n                        break;\n                    }\n                    let i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))) {\n                        if (sztmp.charAt(i) == \" \") {\n                            i++;\n                            continue;\n                        }\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    const tmpnum = Math.asin(Number(num));\n                    sztmp = sztmp.replace(new RegExp(\"asin\\\\s*\" + num, \"g\"), tmpnum.toString());\n                }\n\n                start = 0;\n                while (start > -1) {\n                    start = sztmp.search(/acos\\s*\\d+/g) + 3;\n                    if (start == 2) {\n                        break;\n                    }\n                    let i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))) {\n                        if (sztmp.charAt(i) == \" \") {\n                            i++;\n                            continue;\n                        }\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    const tmpnum = Math.acos(Number(num));\n                    sztmp = sztmp.replace(new RegExp(\"acos\\\\s*\" + num, \"g\"), tmpnum.toString());\n                }\n\n                start = 0;\n                while (start > -1) {\n                    start = sztmp.search(/atan\\s*\\d+/g) + 3;\n                    if (start == 2) {\n                        break;\n                    }\n                    let i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))) {\n                        if (sztmp.charAt(i) == \" \") {\n                            i++;\n                            continue;\n                        }\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    const tmpnum = Math.atan(Number(num));\n                    sztmp = sztmp.replace(new RegExp(\"atan\\\\s*\" + num, \"g\"), tmpnum.toString());\n                }\n\n                return { num: Number(sztmp), index: currentPos };\n            };\n\n            const numStack = new stack<number>();\n            const optStack = new stack<string>();\n            let i = 0;\n\n            while (true) {\n                if (i >= exp.length && optStack.empty()) {\n                    break;\n                }\n\n                if (i < exp.length && exp.charAt(i).match(/\\s/)) {\n                    i++;\n                } else if (i < exp.length && isNum(exp.charAt(i))) {\n                    const tmp = toNum(exp, i);\n                    numStack.push(tmp.num);\n                    i = tmp.index;\n                } else {\n                    if (i >= exp.length && optStack.empty()) {\n                        break;\n                    }\n\n                    if (optStack.empty()) {\n                        if (i < exp.length) {\n                            optStack.push(exp.charAt(i));\n                            i++;\n                        } else {\n                            break;\n                        }\n                    } else {\n                        const topOpt = optStack.top();\n\n                        if (i < exp.length && (exp.charAt(i) == \"(\" || (topOpt && priority(exp.charAt(i)) > priority(topOpt)))) {\n                            optStack.push(exp.charAt(i));\n                            i++;\n                        } else if (i < exp.length && exp.charAt(i) == \")\" && topOpt == \"(\") {\n                            optStack.pop();\n                            i++;\n                        } else {\n                            const opttmp = optStack.pop();\n                            const numa = numStack.pop();\n                            const numb = numStack.pop();\n\n                            if (opttmp && numa !== undefined && numb !== undefined) {\n                                let res = 0;\n                                switch (opttmp) {\n                                    case \"+\": res = numb + numa; break;\n                                    case \"-\": res = numb - numa; break;\n                                    case \"*\": res = numb * numa; break;\n                                    case \"/\": res = numb / numa; break;\n                                    case \"%\": res = numb % numa; break;\n                                    default:\n                                        throw new Error(\"Don't have this operator!\");\n                                }\n                                numStack.push(res);\n                            }\n                        }\n                    }\n                }\n            }\n            return numStack.top() ?? 0;\n\n        } else if (exp.search(/==/g) !== -1) {\n            // Sigma / Summation logic\n            let index = -1;\n            const fills: FillItem[] = [];\n            let tmp: string[];\n\n            for (let i = 0; i < lines.length; i++) {\n                if (lines[i].search(/\\s*==\\s*/) !== -1) {\n                    index = i - 1;\n                    break;\n                }\n            }\n\n            if (lines[1] != \"==\") {\n                // Complex sigma\n                for (let i = 0; i < index; i++) {\n                    if (lines[i].search(/^\\s*$/) !== -1) continue;\n                    tmp = lines[i].replace(/\\s*(\\S)\\s*=\\s*(\\S)\\s*/g, \"$1=$2\").split(\"=\");\n                    if (tmp.length >= 2) {\n                        fills.push({ name: tmp[0], value: tmp[1] });\n                    }\n                }\n\n                let countStr = lines[index];\n                let countNum = 0;\n                if (countStr.search(/inf/g) !== -1 || countStr.search(/∞/g) !== -1) {\n                    countNum = inf;\n                } else {\n                    countNum = Number(countStr);\n                }\n\n                let expression_ = \"\";\n                for (let i = (index + 3); i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n\n                for (let i = 0; i < fills.length; i++) {\n                    expression_ = expression_.replace(new RegExp(fills[i].name, 'g'), fills[i].value);\n                }\n\n                const lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, countNum, {\n                    name: lastLine[0],\n                    value: Number(lastLine[1])\n                } as SigmaInit);\n\n            } else {\n                // Simple sigma\n                let countStr = lines[0];\n                let countNum = 0;\n                if (countStr.search(/inf/g) !== -1 || countStr.search(/∞/g) !== -1) {\n                    countNum = inf;\n                } else {\n                    countNum = Number(countStr);\n                }\n\n                let expression_ = \"\";\n                for (let i = 3; i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n\n                const lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                countNum++;\n                return sigma(expression_, countNum, {\n                    name: lastLine[0],\n                    value: Number(lastLine[1])\n                } as SigmaInit);\n            }\n\n        } else if (exp.search(/-{3}/g) !== -1) {\n            // Fraction representation with dashes\n            let maxLine = \"\";\n            for (let i = 0; i < lines.length; i++) {\n                if (lines[i].search(/^-+$/g) !== -1) {\n                    if (lines[i].length > maxLine.length) {\n                        maxLine = lines[i];\n                    }\n                }\n            }\n            const tmp = exp.split(maxLine);\n            if (tmp.length >= 2) {\n                const up = tmp[0];\n                const down = tmp[1];\n                return (expression(up) as number) / (expression(down) as number);\n            }\n            return 0;\n        } else {\n            console.error(\"Expression format not supported or implementation missing.\");\n            return 0;\n        }\n    }\n}"
+    ],
+    "changeType": "modification",
+    "code_items": [
+      {
+        "dependent_code_blocks": [
+          "import * as number from \"./lib/number\";",
+          "/**\n * Sigma function\n */\nexport function sigma(exp: string, count: number, init: SigmaInit): number {\n    let sum = 0;\n    let newExp: string;\n    let currentValue = init.value;\n\n    for (let i = 0; i < count; i++) {\n        newExp = exp.replace(new RegExp(init.name, 'g'), currentValue.toString());\n        sum += (expression(newExp) as number);\n        currentValue++;\n    }\n    return sum;\n}",
+          "/**\n * Parse the expression of the string arithmetic and get the result.\n */\nexport function expression(exp: string): number | number[] {\n    const lines: string[] = exp.split(\"\\n\");\n    const exps: string[] = exp.split(/={5}/g);\n\n    if (exps.length > 1) {\n        // Many expressions\n        const reses: number[] = [];\n        for (let i = 0; i < exps.length; i++) {\n            const result = expression(exps[i]);\n            if (typeof result === 'number') {\n                reses.push(result);\n            }\n            // Note: Nested arrays not fully supported in this return type to keep it simple,\n            // but logic follows diff.\n        }\n        return reses;\n    } else {\n        // Check for Sigma or Fraction formats\n        // Condition: No special chars like _, \\, and not \"x(..)=..\" and not \"==\" and not \"--\"\n        if (exp.search(/[_\\\\]/g) === -1 &&\n            exp.search(/[a-zA-z]\\s*\\([\\s\\S]*\\)\\s*=/g) === -1 &&\n            exp.search(/={2}/g) === -1 &&\n            exp.search(/-{2}/g) === -1) {\n\n            // Four arithmetic operation (The core Stack-based parser)\n\n            // Handle negative numbers: (-5) -> (0-5)\n            exp = exp.replace(/\\(\\s*(-\\d+\\.{0,1}\\d*\\s*)\\)/g, \"0\" + \"$1\");\n\n            const optArr: OptPriority[] = [\n                { opt: '+', priority: 1 },\n                { opt: '-', priority: 1 },\n                { opt: '*', priority: 2 },\n                { opt: '/', priority: 2 },\n                { opt: '%', priority: 2 },\n            ];\n\n            const priority = (opt: string): number => {\n                for (let i = 0; i < optArr.length; i++) {\n                    if (opt == optArr[i].opt)\n                        return optArr[i].priority;\n                }\n                return -1;\n            };\n\n            const isNum = (c: string): boolean => {\n                return c >= '0' && c <= '9';\n            };\n\n            const toNum = (str: string, pos: number): NumResult => {\n                let sztmp = \"\";\n                let currentPos = pos;\n\n                // Loop while char is digit, dot, or power symbol\n                while (currentPos < str.length &&\n                    ((str[currentPos] >= '0' && str[currentPos] <= '9') ||\n                        str[currentPos] == '.' ||\n                        str[currentPos] == \"^\")) {\n                    sztmp += str.charAt(currentPos);\n                    currentPos++;\n                }\n\n                // Handle power ^\n                const sztmpArr = sztmp.split(\"^\");\n                let val = Number(sztmpArr[sztmpArr.length - 1]);\n\n                for (let i = sztmpArr.length - 2; i >= 0; i--) {\n                    val = Math.pow(Number(sztmpArr[i]), val);\n                }\n\n                return { num: val, index: currentPos };\n            };\n\n            const numStack = new stack<number>();\n            const optStack = new stack<string>();\n            let i = 0;\n\n            while (true) {\n                if (i >= exp.length && optStack.empty()) {\n                    break;\n                }\n\n                if (i < exp.length && exp.charAt(i).match(/\\s/)) {\n                    i++;\n                } else if (i < exp.length && isNum(exp.charAt(i))) {\n                    const tmp = toNum(exp, i);\n                    numStack.push(tmp.num);\n                    i = tmp.index;\n                } else {\n                    // Operator or brackets\n                    if (i >= exp.length && optStack.empty()) {\n                        break;\n                    }\n\n                    if (optStack.empty()) {\n                        if (i < exp.length) {\n                            optStack.push(exp.charAt(i));\n                            i++;\n                        } else {\n                            break; // Safety break\n                        }\n                    } else {\n                        const topOpt = optStack.top();\n\n                        if (i < exp.length && (exp.charAt(i) == \"(\" || (topOpt && priority(exp.charAt(i)) > priority(topOpt)))) {\n                            optStack.push(exp.charAt(i));\n                            i++;\n                        } else if (i < exp.length && exp.charAt(i) == \")\" && topOpt == \"(\") {\n                            optStack.pop();\n                            i++;\n                        } else {\n                            // Calculate\n                            const opttmp = optStack.pop();\n                            const numa = numStack.pop();\n                            const numb = numStack.pop();\n\n                            if (opttmp && numa !== undefined && numb !== undefined) {\n                                let res = 0;\n                                switch (opttmp) {\n                                    case \"+\": res = numb + numa; break;\n                                    case \"-\": res = numb - numa; break;\n                                    case \"*\": res = numb * numa; break;\n                                    case \"/\": res = numb / numa; break;\n                                    case \"%\": res = numb % numa; break;\n                                    default:\n                                        throw new Error(\"Don't have this operator!\");\n                                }\n                                numStack.push(res);\n                            }\n                            // Note: If i hasn't advanced, we loop again to compare the current char with the new top\n                        }\n                    }\n                }\n            }\n            return numStack.top() ?? 0;\n\n        } else if (exp.search(/==/g) !== -1) {\n            // Sigma / Summation logic\n            // Structure assumption based on diff:\n            // z\n            // ==\n            //  /\n            //  | expression\n            //  \\\n            // ==\n            // x=y\n\n            let index = -1;\n            const fills: FillItem[] = [];\n            let tmp: string[];\n\n            for (let i = 0; i < lines.length; i++) {\n                if (lines[i].search(/\\s*==\\s*/) !== -1) {\n                    index = i - 1;\n                    break;\n                }\n            }\n\n            if (lines[1] != \"==\") {\n                // Complex sigma\n                for (let i = 0; i < index; i++) {\n                    if (lines[i].search(/^\\s*$/) !== -1) continue;\n                    tmp = lines[i].replace(/\\s*(\\S)\\s*=\\s*(\\S)\\s*/g, \"$1=$2\").split(\"=\");\n                    if(tmp.length >= 2) {\n                        fills.push({ name: tmp[0], value: tmp[1] });\n                    }\n                }\n\n                let countStr = lines[index];\n                let countNum = 0;\n                if (countStr.search(/inf/g) !== -1 || countStr.search(/∞/g) !== -1) {\n                    countNum = inf;\n                } else {\n                    countNum = Number(countStr);\n                }\n\n                let expression_ = \"\";\n                // Extracting expression between the sigma bars\n                for (let i = (index + 3); i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n\n                // Apply pre-fills\n                for (let i = 0; i < fills.length; i++) {\n                    expression_ = expression_.replace(new RegExp(fills[i].name, 'g'), fills[i].value);\n                }\n\n                const lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, countNum, {\n                    name: lastLine[0],\n                    value: Number(lastLine[1])\n                } as SigmaInit);\n\n            } else {\n                // Simple sigma\n                let countStr = lines[0];\n                let countNum = 0;\n                if (countStr.search(/inf/g) !== -1 || countStr.search(/∞/g) !== -1) {\n                    countNum = inf;\n                } else {\n                    countNum = Number(countStr);\n                }\n\n                let expression_ = \"\";\n                for (let i = 3; i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n\n                const lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, countNum, {\n                    name: lastLine[0],\n                    value: Number(lastLine[1])\n                } as SigmaInit);\n            }\n\n        } else if (exp.search(/-{3}/g) !== -1) {\n            // Fraction representation with dashes\n            let maxLine = \"\";\n            for (let i = 0; i < lines.length; i++) {\n                if (lines[i].search(/^-+$/g) !== -1) {\n                    if (lines[i].length > maxLine.length) {\n                        maxLine = lines[i];\n                    }\n                }\n            }\n            // Split by the longest dash line\n            const tmp = exp.split(maxLine);\n            if (tmp.length >= 2) {\n                const up = tmp[0];\n                const down = tmp[1];\n                return (expression(up) as number) / (expression(down) as number);\n            }\n            return 0;\n        } else {\n            console.error(\"Expression format not supported or implementation missing.\");\n            return 0;\n        }\n    }\n}"
+        ],
+        "intent": "Added a count increment before returning the sigma function call to ensure the counter is updated for the last line processed. & Adjusted the ASCII art representation of the sigma notation style to correct the visual alignment of the expression relative to the sigma symbol. & Extended the expression parser to support square root (√) and trigonometric functions (sin, cos, tan, asin, acos, atan), along with variable names (a-z), by updating the `isNum` and `toNum` functions accordingly.",
+        "metadata": {
+          "is_merged_task": true,
+          "merge_count": 3,
+          "npm_end_line": 264,
+          "npm_file_path": "lib/number.js",
+          "npm_start_line": 64,
+          "ohpm_end_line": 323,
+          "ohpm_file_path": "src/main/ets/lib/number.ets",
+          "ohpm_start_line": 76,
+          "type": "modification"
+        },
+        "npm_code_after": "/**\n * @method\n * @param {string} exp The expression of the string arithmetic.\n * @returns number This is the result of your expression\n * @desc For parse the expression of the string arithmetic and get the result.\n */\nfunction expression(exp) {\n    var lines = exp.split(\"\\n\");\n    var exps = exp.split(/={5}/g);\n    if (exps.length > 1){// many expressions\n        var reses = [];\n        for (var i = 0 ; i < exps.length ; i++){\n            reses.push(expression(exps[i]));\n        }\n        return reses;\n    } else {// just one expressions\n        if (exp.search(/[_\\\\]/g) === -1 && exp.search(/[a-zA-z]\\s*\\([\\s\\S]*\\)\\s*=/g) === -1 && exp.search(/={2}/g) === -1 && exp.search(/-{2}/g) === -1){// four arithmetic operation\n            /*\n            * {\n            *   opt: \"xx\",\n            *   priority: xx\n            * }\n            */\n            exp = exp.replace(/\\(\\s*(-\\d+\\.{0,1}\\d*\\s*)\\)/g,\"0\" + \"$1\");\n            var optArr = [\n                {opt: '+',priority: 1},\n                {opt: '-',priority: 1},\n                {opt: '*',priority: 2},\n                {opt: '/',priority: 2},\n                {opt: '%',priority: 2},\n            ];\n            function priority(opt){\n                for(var i = 0 ; i < 5 ; i++)\n                    if(opt == optArr[i].opt)\n                        return optArr[i].priority;\n                return -1;\n            }\n            function isNum(c){\n                return c == '√' || (c >= '0' && c <= '9') || (c >= \"a\" && c <= \"z\");\n            }\n            function toNum(str,pos) {\n                var sztmp = \"\";\n                do {\n                    sztmp += str.charAt(pos);\n                    pos++;\n                } while((str.charAt(pos) >= \"a\" && str.charAt(pos) <= \"z\") || (str.charAt(pos) >='0' && str.charAt(pos) <='9') || str.charAt(pos) == '.' || str.charAt(pos) == \"^\");\n                var num = \"\";\n                if (sztmp.charAt(0) == \"√\"){\n                    for (var i = 1 ; i < sztmp.length ; i++){\n                        if (sztmp.charAt(i) == \"^\"){\n                            break;\n                        }\n                        num += sztmp.charAt(i);\n                    }\n                    num = Math.sqrt(num);\n                    var sztmpArr_ = sztmp.split(\"^\");\n                    sztmpArr_[0] = num + \"\";\n                    sztmp = \"\";\n                    for (var i = 0 ; i < sztmpArr_.length ; i++){\n                        sztmp += sztmpArr_[i] + \"^\";\n                    }\n                }\n                var sztmpArr = sztmp.split(\"^\");\n                if (sztmpArr.length >= 2){\n                    var tmpFun = \"\";\n                    if (sztmp.search(/[a-zA-z]/) !== -1){\n                        var end = sztmp.search(/\\d/);\n                        for (var i = 0 ; i < end ; i++){\n                            tmpFun += sztmp.charAt(i);\n                        }\n                        sztmp = sztmp.replace(tmpFun,\"\");\n                        sztmpArr = sztmp.split(\"^\");\n                    }\n                    sztmp = sztmpArr[sztmpArr.length - 1];\n                    for (var i = sztmpArr.length - 2 ; i >= 0 ; i--){\n                        sztmp = Math.pow(sztmpArr[i] * 1,sztmp * 1);\n                    }\n                    sztmp = tmpFun + sztmp;\n                }\n                var start = 0;\n                while (start > -1){\n                    start = sztmp.search(/sin\\s*\\d+/g) + 3;\n                    if (start == 2){\n                        break;\n                    }\n                    var i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))){\n                        if (sztmp.charAt(i) == \" \") continue;\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    num = num * 1;\n                    var tmpnum = Math.sin(num);\n                    sztmp = sztmp.replace(new RegExp(\"sin\\\\s*\" + num,\"g\"),tmpnum);\n                }\n                start = 0;\n                while (start > -1){\n                    start = sztmp.search(/cos\\s*\\d+/g) + 3;\n                    if (start == 2){\n                        break;\n                    }\n                    var i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))){\n                        if (sztmp.charAt(i) == \" \") continue;\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    num = num * 1;\n                    var tmpnum = Math.cos(num);\n                    sztmp = sztmp.replace(new RegExp(\"cos\\\\s*\" + num,\"g\"),tmpnum);\n                }\n                start = 0;\n                while (start > -1){\n                    start = sztmp.search(/tan\\s*\\d+/g) + 3;\n                    if (start == 2){\n                        break;\n                    }\n                    var i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))){\n                        if (sztmp.charAt(i) == \" \") continue;\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    num = num * 1;\n                    var tmpnum = Math.tan(num);\n                    sztmp = sztmp.replace(new RegExp(\"tan\\\\s*\" + num,\"g\"),tmpnum);\n                }\n                start = 0;\n                while (start > -1){\n                    start = sztmp.search(/asin\\s*\\d+/g) + 3;\n                    if (start == 2){\n                        break;\n                    }\n                    var i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))){\n                        if (sztmp.charAt(i) == \" \") continue;\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    num = num * 1;\n                    var tmpnum = Math.asin(num);\n                    sztmp = sztmp.replace(new RegExp(\"asin\\\\s*\" + num,\"g\"),tmpnum);\n                }\n                start = 0;\n                while (start > -1){\n                    start = sztmp.search(/acos\\s*\\d+/g) + 3;\n                    if (start == 2){\n                        break;\n                    }\n                    var i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))){\n                        if (sztmp.charAt(i) == \" \") continue;\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    num = num * 1;\n                    var tmpnum = Math.acos(num);\n                    sztmp = sztmp.replace(new RegExp(\"acos\\\\s*\" + num,\"g\"),tmpnum);\n                }\n                start = 0;\n                while (start > -1){\n                    start = sztmp.search(/atan\\s*\\d+/g) + 3;\n                    if (start == 2){\n                        break;\n                    }\n                    var i = start;\n                    num = \"\";\n                    while (i < sztmp.length && (sztmp.charAt(i) == \" \" || (sztmp.charAt(i) >= \"0\" && sztmp.charAt(i) <= \"9\"))){\n                        if (sztmp.charAt(i) == \" \") continue;\n                        num += sztmp.charAt(i);\n                        i++;\n                    }\n                    num = num * 1;\n                    var tmpnum = Math.atan(num);\n                    sztmp = sztmp.replace(new RegExp(\"atan\\\\s*\" + num,\"g\"),tmpnum);\n                }\n                return {num: sztmp * 1,index: pos};\n            }\n\n            var num = new dataStruct.stack();\n            var opt = new dataStruct.stack();\n            var i = 0;\n            while (true){\n                if (exp.charAt(i).search(/\\s/g) !== -1){\n                    i++;\n                } else if (isNum(exp.charAt(i))){\n                    var tmp = toNum(exp,i);\n                    num.push(tmp.num);\n                    i = tmp.index;\n                } else {\n                    if (exp.length <= i && opt.empty()){\n                        break;\n                    }\n                    if (opt.empty()){\n                        opt.push(exp.charAt(i));\n                        i++;\n                    } else {\n                        if (exp.charAt(i) == \"(\" || priority(exp.charAt(i)) > priority(opt.top())){\n                            opt.push(exp.charAt(i));\n                            i++;\n                        } else if (exp.charAt(i) == \")\" && opt.top() == \"(\"){\n                            opt.pop();\n                            i++;\n                        } else {\n                            var opttmp = opt.top();\n                            opt.pop();\n                            var numa = num.top();\n                            num.pop();\n                            var numb = num.top();\n                            num.pop();\n                            var res;\n                            switch (opttmp){\n                                case \"+\":\n                                    res = numb + numa;\n                                    break;\n                                case \"-\":\n                                    res = numb - numa;\n                                    break;\n                                case \"*\":\n                                    res = numb * numa;\n                                    break;\n                                case \"/\":\n                                    res = numb / numa;\n                                    break;\n                                case \"%\":\n                                    res = numb % numa;\n                                    break;\n                                default:\n                                    var err = new Error(\"Don't have this operator!\");\n                                    throw err;\n                                    break;\n                            }\n                            num.push(res);\n                        }\n                    }\n                }\n            }\n            return num.top();\n        } else if (exp.search(/==/g) !== -1) {// sigma\n            /*\n            * style of sigma:\n            * z\n            * ==\n            * \\\n            * |  expression\n            * /\n            * ==\n            * x=y\n            */\n            if (lines[1] != \"==\") {\n                var index;\n                var fills = [];\n                var tmp;\n                for (var i = 0; i < lines.length; i++) {\n                    if (lines[i].search(/\\s*==\\s*/) !== -1) {\n                        index = i - 1;\n                        break;\n                    }\n                }\n                for (var i = 0; i < index; i++) {\n                    if (lines[i].search(/^\\s*$/) !== -1)\n                        continue;\n                    tmp = lines[i].replace(/\\s*(\\S)\\s*=\\s*(\\S)\\s*/g, \"$1=$2\").split(\"=\");\n                    fills.push({\n                        name: tmp[0],\n                        value: tmp[1]\n                    });\n                }\n                var count = lines[index];\n                if (count.search(/inf/g) !== -1 || count.search(/∞/g) !== -1) {\n                    count = inf;\n                } else {\n                    count *= 1;\n                }\n                var expression_ = \"\";\n                for (var i = (index + 3); i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n                for (var i = 0 ; i < fills.length ; i++){\n                    expression_ = expression.replace(new RegExp(fills[i].name),fills[i].value);\n                }\n                var lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, count, {\n                    name: lastLine[0],\n                    value: lastLine[1]\n                });\n            } else {\n                var count = lines[0];\n                if (count.search(/inf/g) !== -1 || count.search(/∞/g) !== -1) {\n                    count = inf;\n                } else {\n                    count *= 1;\n                }\n                var expression_ = \"\";\n                for (var i = 3; i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n                var lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                count++;\n                return sigma(expression_, count, {\n                    name: lastLine[0],\n                    value: lastLine[1]\n                });\n            }\n        } else if (exp.search(/-{3}/g) !== -1){\n            var maxLine = \"\";\n            for (var i = 0 ; i < lines.length ; i++){\n                if (lines[i].search(/^-+$/g) !== -1){\n                    if (lines[i].length > maxLine.length){\n                        maxLine = lines[i];\n                    }\n                }\n            }\n            var tmp = exp.split(maxLine);\n            var up = tmp[0],down = tmp[1];\n            return expression(up) / expression(down);\n        } else {\n            console.log(\"Now that this method is not available, you can send a brief introduction of the detailed information of this method to zhengyh2018@gmail.com by email, and we will understand the message as soon as possible and make improvements (please set the title to [emath add methods).)\");\n        }\n    }\n}",
+        "npm_code_before": "/**\n * @method\n * @param {string} exp The expression of the string arithmetic.\n * @returns number This is the result of your expression\n * @desc For parse the expression of the string arithmetic and get the result.\n */\nfunction expression(exp) {\n    var lines = exp.split(\"\\n\");\n    var exps = exp.split(/={5}/g);\n    if (exps.length > 1){// many expressions\n        var reses = [];\n        for (var i = 0 ; i < exps.length ; i++){\n            reses.push(expression(exps[i]));\n        }\n        return reses;\n    } else {// just one expressions\n        if (exp.search(/[_\\\\]/g) === -1 && exp.search(/[a-zA-z]\\s*\\([\\s\\S]*\\)\\s*=/g) === -1 && exp.search(/={2}/g) === -1 && exp.search(/-{2}/g) === -1){// four arithmetic operation\n            /*\n            * {\n            *   opt: \"xx\",\n            *   priority: xx\n            * }\n            */\n            exp = exp.replace(/\\(\\s*(-\\d+\\.{0,1}\\d*\\s*)\\)/g,\"0\" + \"$1\");\n            var optArr = [\n                {opt: '+',priority: 1},\n                {opt: '-',priority: 1},\n                {opt: '*',priority: 2},\n                {opt: '/',priority: 2},\n                {opt: '%',priority: 2},\n            ];\n            function priority(opt){\n                for(var i = 0 ; i < 4 ; i++)\n                    if(opt == optArr[i].opt)\n                        return optArr[i].priority;\n                return -1;\n            }\n            function isNum(c){\n                return c >= '0' && c <= '9';\n            }\n            function toNum(str,pos) {\n                var sztmp = \"\";\n                do {\n                    sztmp += str.charAt(pos);\n                    pos++;\n                } while((str[pos] >='0' && str[pos]<='9') || str[pos] == '.' || str[pos] == \"^\");\n                var sztmpArr = sztmp.split(\"^\");\n                sztmp = sztmpArr[sztmpArr.length - 1] * 1;\n                for (var i = sztmpArr.length - 2 ; i >= 0 ; i--){\n                    sztmp = Math.pow(sztmpArr[i] * 1,sztmp);\n                }\n                return {num: sztmp * 1,index: pos};\n            }\n\n            var num = new dataStruct.stack();\n            var opt = new dataStruct.stack();\n            var i = 0;\n            while (true){\n                if (exp.charAt(i).search(/\\s/g) !== -1){\n                    i++;\n                } else if (isNum(exp.charAt(i))){\n                    var tmp = toNum(exp,i);\n                    num.push(tmp.num);\n                    i = tmp.index;\n                } else {\n                    if (exp.length <= i && opt.empty()){\n                        break;\n                    }\n                    if (opt.empty()){\n                        opt.push(exp.charAt(i));\n                        i++;\n                    } else {\n                        if (exp.charAt(i) == \"(\" || priority(exp.charAt(i)) > priority(opt.top())){\n                            opt.push(exp.charAt(i));\n                            i++;\n                        } else if (exp.charAt(i) == \")\" && opt.top() == \"(\"){\n                            opt.pop();\n                            i++;\n                        } else {\n                            var opttmp = opt.top();\n                            opt.pop();\n                            var numa = num.top();\n                            num.pop();\n                            var numb = num.top();\n                            num.pop();\n                            var res;\n                            switch (opttmp){\n                                case \"+\":\n                                    res = numb + numa;\n                                    break;\n                                case \"-\":\n                                    res = numb - numa;\n                                    break;\n                                case \"*\":\n                                    res = numb * numa;\n                                    break;\n                                case \"/\":\n                                    res = numb / numa;\n                                    break;\n                                case \"%\":\n                                    res = numb % numa;\n                                    break;\n                                default:\n                                    var err = new Error(\"Don't have this operator!\");\n                                    throw err;\n                                    break;\n                            }\n                            num.push(res);\n                        }\n                    }\n                }\n            }\n            return num.top();\n        } else if (exp.search(/==/g) !== -1) {// sigma\n            /*\n            * style of sigma:\n            * z\n            * ==\n            *  /\n            *  | expression\n            *  \\\n            * ==\n            * x=y\n            */\n            if (lines[1] != \"==\") {\n                var index;\n                var fills = [];\n                var tmp;\n                for (var i = 0; i < lines.length; i++) {\n                    if (lines[i].search(/\\s*==\\s*/) !== -1) {\n                        index = i - 1;\n                        break;\n                    }\n                }\n                for (var i = 0; i < index; i++) {\n                    if (lines[i].search(/^\\s*$/) !== -1)\n                        continue;\n                    tmp = lines[i].replace(/\\s*(\\S)\\s*=\\s*(\\S)\\s*/g, \"$1=$2\").split(\"=\");\n                    fills.push({\n                        name: tmp[0],\n                        value: tmp[1]\n                    });\n                }\n                var count = lines[index];\n                if (count.search(/inf/g) !== -1 || count.search(/∞/g) !== -1) {\n                    count = inf;\n                } else {\n                    count *= 1;\n                }\n                var expression_ = \"\";\n                for (var i = (index + 3); i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n                for (var i = 0 ; i < fills.length ; i++){\n                    expression_ = expression.replace(new RegExp(fills[i].name),fills[i].value);\n                }\n                var lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, count, {\n                    name: lastLine[0],\n                    value: lastLine[1]\n                });\n            } else {\n                var count = lines[0];\n                if (count.search(/inf/g) !== -1 || count.search(/∞/g) !== -1) {\n                    count = inf;\n                } else {\n                    count *= 1;\n                }\n                var expression_ = \"\";\n                for (var i = 3; i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n                var lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, count, {\n                    name: lastLine[0],\n                    value: lastLine[1]\n                });\n            }\n        } else if (exp.search(/-{3}/g) !== -1){\n            var maxLine = \"\";\n            for (var i = 0 ; i < lines.length ; i++){\n                if (lines[i].search(/^-+$/g) !== -1){\n                    if (lines[i].length > maxLine.length){\n                        maxLine = lines[i];\n                    }\n                }\n            }\n            var tmp = exp.split(maxLine);\n            var up = tmp[0],down = tmp[1];\n            return expression(up) / expression(down);\n        } else {\n            console.log(\"Now that this method is not available, you can send a brief introduction of the detailed information of this method to zhengyh2018@gmail.com by email, and we will understand the message as soon as possible and make improvements (please set the title to [emath add methods).)\");\n        }\n    }\n}",
+        "ohpm_code_before": [
+          "/**\n * Parse the expression of the string arithmetic and get the result.\n */\nexport function expression(exp: string): number | number[] {\n    const lines: string[] = exp.split(\"\\n\");\n    const exps: string[] = exp.split(/={5}/g);\n\n    if (exps.length > 1) {\n        // Many expressions\n        const reses: number[] = [];\n        for (let i = 0; i < exps.length; i++) {\n            const result = expression(exps[i]);\n            if (typeof result === 'number') {\n                reses.push(result);\n            }\n            // Note: Nested arrays not fully supported in this return type to keep it simple,\n            // but logic follows diff.\n        }\n        return reses;\n    } else {\n        // Check for Sigma or Fraction formats\n        // Condition: No special chars like _, \\, and not \"x(..)=..\" and not \"==\" and not \"--\"\n        if (exp.search(/[_\\\\]/g) === -1 &&\n            exp.search(/[a-zA-z]\\s*\\([\\s\\S]*\\)\\s*=/g) === -1 &&\n            exp.search(/={2}/g) === -1 &&\n            exp.search(/-{2}/g) === -1) {\n\n            // Four arithmetic operation (The core Stack-based parser)\n\n            // Handle negative numbers: (-5) -> (0-5)\n            exp = exp.replace(/\\(\\s*(-\\d+\\.{0,1}\\d*\\s*)\\)/g, \"0\" + \"$1\");\n\n            const optArr: OptPriority[] = [\n                { opt: '+', priority: 1 },\n                { opt: '-', priority: 1 },\n                { opt: '*', priority: 2 },\n                { opt: '/', priority: 2 },\n                { opt: '%', priority: 2 },\n            ];\n\n            const priority = (opt: string): number => {\n                for (let i = 0; i < optArr.length; i++) {\n                    if (opt == optArr[i].opt)\n                        return optArr[i].priority;\n                }\n                return -1;\n            };\n\n            const isNum = (c: string): boolean => {\n                return c >= '0' && c <= '9';\n            };\n\n            const toNum = (str: string, pos: number): NumResult => {\n                let sztmp = \"\";\n                let currentPos = pos;\n\n                // Loop while char is digit, dot, or power symbol\n                while (currentPos < str.length &&\n                    ((str[currentPos] >= '0' && str[currentPos] <= '9') ||\n                        str[currentPos] == '.' ||\n                        str[currentPos] == \"^\")) {\n                    sztmp += str.charAt(currentPos);\n                    currentPos++;\n                }\n\n                // Handle power ^\n                const sztmpArr = sztmp.split(\"^\");\n                let val = Number(sztmpArr[sztmpArr.length - 1]);\n\n                for (let i = sztmpArr.length - 2; i >= 0; i--) {\n                    val = Math.pow(Number(sztmpArr[i]), val);\n                }\n\n                return { num: val, index: currentPos };\n            };\n\n            const numStack = new stack<number>();\n            const optStack = new stack<string>();\n            let i = 0;\n\n            while (true) {\n                if (i >= exp.length && optStack.empty()) {\n                    break;\n                }\n\n                if (i < exp.length && exp.charAt(i).match(/\\s/)) {\n                    i++;\n                } else if (i < exp.length && isNum(exp.charAt(i))) {\n                    const tmp = toNum(exp, i);\n                    numStack.push(tmp.num);\n                    i = tmp.index;\n                } else {\n                    // Operator or brackets\n                    if (i >= exp.length && optStack.empty()) {\n                        break;\n                    }\n\n                    if (optStack.empty()) {\n                        if (i < exp.length) {\n                            optStack.push(exp.charAt(i));\n                            i++;\n                        } else {\n                            break; // Safety break\n                        }\n                    } else {\n                        const topOpt = optStack.top();\n\n                        if (i < exp.length && (exp.charAt(i) == \"(\" || (topOpt && priority(exp.charAt(i)) > priority(topOpt)))) {\n                            optStack.push(exp.charAt(i));\n                            i++;\n                        } else if (i < exp.length && exp.charAt(i) == \")\" && topOpt == \"(\") {\n                            optStack.pop();\n                            i++;\n                        } else {\n                            // Calculate\n                            const opttmp = optStack.pop();\n                            const numa = numStack.pop();\n                            const numb = numStack.pop();\n\n                            if (opttmp && numa !== undefined && numb !== undefined) {\n                                let res = 0;\n                                switch (opttmp) {\n                                    case \"+\": res = numb + numa; break;\n                                    case \"-\": res = numb - numa; break;\n                                    case \"*\": res = numb * numa; break;\n                                    case \"/\": res = numb / numa; break;\n                                    case \"%\": res = numb % numa; break;\n                                    default:\n                                        throw new Error(\"Don't have this operator!\");\n                                }\n                                numStack.push(res);\n                            }\n                            // Note: If i hasn't advanced, we loop again to compare the current char with the new top\n                        }\n                    }\n                }\n            }\n            return numStack.top() ?? 0;\n\n        } else if (exp.search(/==/g) !== -1) {\n            // Sigma / Summation logic\n            // Structure assumption based on diff:\n            // z\n            // ==\n            //  /\n            //  | expression\n            //  \\\n            // ==\n            // x=y\n\n            let index = -1;\n            const fills: FillItem[] = [];\n            let tmp: string[];\n\n            for (let i = 0; i < lines.length; i++) {\n                if (lines[i].search(/\\s*==\\s*/) !== -1) {\n                    index = i - 1;\n                    break;\n                }\n            }\n\n            if (lines[1] != \"==\") {\n                // Complex sigma\n                for (let i = 0; i < index; i++) {\n                    if (lines[i].search(/^\\s*$/) !== -1) continue;\n                    tmp = lines[i].replace(/\\s*(\\S)\\s*=\\s*(\\S)\\s*/g, \"$1=$2\").split(\"=\");\n                    if(tmp.length >= 2) {\n                        fills.push({ name: tmp[0], value: tmp[1] });\n                    }\n                }\n\n                let countStr = lines[index];\n                let countNum = 0;\n                if (countStr.search(/inf/g) !== -1 || countStr.search(/∞/g) !== -1) {\n                    countNum = inf;\n                } else {\n                    countNum = Number(countStr);\n                }\n\n                let expression_ = \"\";\n                // Extracting expression between the sigma bars\n                for (let i = (index + 3); i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n\n                // Apply pre-fills\n                for (let i = 0; i < fills.length; i++) {\n                    expression_ = expression_.replace(new RegExp(fills[i].name, 'g'), fills[i].value);\n                }\n\n                const lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, countNum, {\n                    name: lastLine[0],\n                    value: Number(lastLine[1])\n                } as SigmaInit);\n\n            } else {\n                // Simple sigma\n                let countStr = lines[0];\n                let countNum = 0;\n                if (countStr.search(/inf/g) !== -1 || countStr.search(/∞/g) !== -1) {\n                    countNum = inf;\n                } else {\n                    countNum = Number(countStr);\n                }\n\n                let expression_ = \"\";\n                for (let i = 3; i < (lines.length - 3); i++) {\n                    expression_ += lines[i].replace(/^\\s\\|\\s*([\\s\\S]*)/g, \"$1\");\n                    if ((i + 1) < (lines.length - 3)) {\n                        expression_ += \"\\n\";\n                    }\n                }\n\n                const lastLine = lines[lines.length - 1].split(/\\s*=\\s*/g);\n                return sigma(expression_, countNum, {\n                    name: lastLine[0],\n                    value: Number(lastLine[1])\n                } as SigmaInit);\n            }\n\n        } else if (exp.search(/-{3}/g) !== -1) {\n            // Fraction representation with dashes\n            let maxLine = \"\";\n            for (let i = 0; i < lines.length; i++) {\n                if (lines[i].search(/^-+$/g) !== -1) {\n                    if (lines[i].length > maxLine.length) {\n                        maxLine = lines[i];\n                    }\n                }\n            }\n            // Split by the longest dash line\n            const tmp = exp.split(maxLine);\n            if (tmp.length >= 2) {\n                const up = tmp[0];\n                const down = tmp[1];\n                return (expression(up) as number) / (expression(down) as number);\n            }\n            return 0;\n        } else {\n            console.error(\"Expression format not supported or implementation missing.\");\n            return 0;\n        }\n    }\n}"
+        ]
+      }
+    ],
+    "fileInfo": {
+      "sourceFile": "lib/number.js",
+      "sourceLines": "64-264",
+      "targetFile": "src/main/ets/lib/number.ets",
+      "targetLines": "76-323"
+    },
+    "location": {
+      "filePath": "src/main/ets/lib/number.ets",
+      "lines": "76-323"
+    }
+  }
+]
