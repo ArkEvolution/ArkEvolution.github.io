@@ -7,34 +7,39 @@ layout: page
   JavaScript and TypeScript (JS/TS) libraries to <strong>ArkTS</strong>, a statically typed
   derivative for performance-critical mobile environments. However, most ports are one-off
   snapshots that quickly diverge from upstream evolution, leaving critical bug fixes and
-  security patches unintegrated. Achieving <strong>repository-level co-evolution</strong>
-  between JS/TS origins and ArkTS ports faces two major challenges: <strong>massive,
-  interdependent code changes</strong> between JS/TS versions that cause cascading compilation
-  errors when integrated in batch, and <strong>heavy structural refactoring</strong> of ArkTS,
-  including function-to-class conversion, added type declarations, and re-implemented APIs,
-  that makes it difficult to locate edit positions and ensure compatibility.<br/>
+  security patches unintegrated. Achieving repository-level co-evolution between JS/TS origins
+  and ArkTS ports faces two major challenges: (1) massive, interdependent code changes between
+  JS/TS versions that cause cascading compilation errors when integrated in batch; (2) the
+  heavy structural refactoring of ArkTS (function-to-class conversion, added type declarations,
+  re-implemented APIs) that makes it difficult to locate edit positions and ensure
+  compatibility.<br/>
   &nbsp;&nbsp;&nbsp;We present <a href="{{ '/ArkEvolution/' | relative_url }}"><strong>ARKEVOLUTION</strong></a>,
-  an LLM-augmented approach that enables <strong>incremental, repository-level co-evolution</strong>.
-  To address large upstream change sets, ARKEVOLUTION constructs an
-  <strong>Evolution-Aware Code Entity Dependency Graph (ECED)</strong> that uniformly models
-  code entities and their dependencies. It distinguishes breaking from non-breaking changes
-  through change-impact dependency, clusters entities with direct or indirect impact
-  dependencies into groups, and annotates each group with an LLM-generated change intent for
-  priority-based incremental or selective integration. To handle cross-language structural
-  differences, ARKEVOLUTION uses deterministic mapping through signature matching and inverse
-  adaptation rules, then propagates mappings along the ECED graph. It combines change intent,
-  JS/TS diffs, ArkTS context, and repair strategies from an experience knowledge base to guide
-  the LLM toward <strong>semantically equivalent and compatible ArkTS code</strong>.<br/>
+  an LLM-augmented approach that enables incremental, repository-level co-evolution. To address
+  the first challenge, ARKEVOLUTION constructs an <strong>Evolution-Aware Code Entity Dependency
+  Graph (ECED)</strong> that uniformly models all code entities and their dependencies. It
+  defines change-impact dependency to distinguish breaking from non-breaking changes, clusters
+  entities with direct or indirect impact dependencies into groups. Each group is annotated
+  with an LLM-generated change intent, allowing priority-based incremental or selective
+  integration. For the second challenge, ARKEVOLUTION introduces a two-phase cross-language
+  mapping: deterministic mapping via signature matching and inverse adaptation rules, followed
+  by dependency-based propagation along the ECED graph. After localization, it integrates
+  groups in ascending order of priority, retrieves repair strategies (e.g., building an adapter,
+  preserving pre-change code, replacing reference names) from a pre-constructed experience
+  knowledge base. Combining the change intent, JS/TS code diffs, the ArkTS context to be
+  evolved, and the specific repair strategies, it guides the LLM to generate semantically
+  equivalent and compatible code.<br/>
   &nbsp;&nbsp;&nbsp;We evaluate ARKEVOLUTION on <strong>52 real-world upgrade tasks</strong>
   extracted from 13 ArkTS packages with explicit co-evolution histories, including 39
   incremental and 13 leap upgrades. ARKEVOLUTION achieves <strong>98.49% Precision</strong>,
   <strong>99.51% Recall</strong>, and <strong>99.00% F1-measure</strong> in identifying
-  co-evolution-required entities. It attains a <strong>90.14% compilation pass rate</strong>
-  and an <strong>86.89% test pass rate</strong>, outperforming the state-of-the-art adaptation
-  tool and ablation variants. In practical use, we upgraded eight popular ArkTS packages such
-  as <strong>@ohos/axios</strong> with 21 evolution tasks, submitted pull requests, and 18
-  passed the full OpenHarmony CI toolchain quality review. The current public evaluation table
-  marks 1 task as <strong>Merged</strong>, while the remaining tasks are under review.
+  co-evolution-required entities. It attains a compilation pass rate of <strong>90.14%</strong>
+  and a test pass rate of <strong>86.89%</strong>, significantly outperforming the
+  state-of-the-art adaptation tool and ablation variants. In practical use, we upgraded eight
+  popular ArkTS packages (e.g., <strong>@ohos/axios</strong>) with 21 evolution tasks, submitted
+  pull requests, and 18 passed the full OpenHarmony CI toolchain quality review (ArkTS coding
+  specifications, compilation, testing, and compatibility review). Of these,
+  <strong>XXX (XX%)</strong> have been merged by developers. This confirms the practical utility
+  of our approach.
 </div>
 
 <div class="post-content" style="margin-top: 1.25rem;">
@@ -110,7 +115,7 @@ layout: page
 
           <span>
               <a href="{{ '/ISSUE-REPORTS/' | relative_url }}">
-              <strong>ArkEvolution OpenHarmony CI evaluation results<br></strong>
+              <strong>ArkEvolution Results<br></strong>
           </a>
           </span>
       </div>
@@ -121,7 +126,7 @@ layout: page
 
           <span>
               <a href="{{ '/ArkEvolution-Resources/' | relative_url }}">
-                  <strong>ArkEvolution benchmark download<br></strong>
+                  <strong>Benchmark download<br></strong>
               </a>
           </span>
       </div>
