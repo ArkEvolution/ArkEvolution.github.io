@@ -22,10 +22,9 @@ nav_title: Evoluation Results
     max-width: none;
   }
 
+  /* 彻底禁用横向滚动条，交由浏览器压缩列宽 */
   .post-content .table-wrapper {
-    display: block;
-    max-width: 100%;
-    overflow-x: hidden !important;
+    width: 100%;
     padding-bottom: 0.5rem;
   }
 
@@ -34,29 +33,30 @@ nav_title: Evoluation Results
     border-spacing: 0 !important;
     color: #111111;
     font-family: "Times New Roman", Times, serif;
-    table-layout: auto !important;
+    /* 改为 auto，让浏览器根据内容长短自动分配列宽 */
+    table-layout: auto !important; 
     width: 100% !important;
-    min-width: auto !important;
-    max-width: 100% !important;
-    font-size: 1.05rem;
+    /* 字体微调为 0.95rem，保证清晰可读的同时节省总宽度 */
+    font-size: 0.95rem; 
     background: #ffffff;
   }
 
   .post-content th,
   .post-content td {
     border: 1px solid #222222 !important;
-    padding: 0.35rem 0.45rem;
+    /* 减小内边距 (padding)，去掉不必要的空白区域 */
+    padding: 0.25rem 0.35rem; 
     text-align: center;
     white-space: normal;
-    word-break: break-all;
-    overflow-wrap: anywhere;
+    /* 强制长单词和 URL 链接直接换行，防止单独一列撑破屏幕 */
+    word-break: break-all; 
     vertical-align: middle;
   }
 
   .post-content th {
     background: #666666 !important;
     color: #ffffff;
-    font-size: 1.08rem;
+    font-size: 1rem;
     font-style: italic;
     font-weight: 700;
     line-height: 1.35;
@@ -82,6 +82,17 @@ nav_title: Evoluation Results
     font-style: italic;
   }
 
+  /* 强制压缩第 7 列和第 8 列的宽度，逼迫长表头自然换行 */
+  .post-content th:nth-child(7),
+  .post-content td:nth-child(7),
+  .post-content th:nth-child(8),
+  .post-content td:nth-child(8) {
+    width: 85px !important; /* 根据效果可适当增减此值 */
+    max-width: 85px !important;
+    white-space: normal !important; 
+    word-break: normal !important; /* 按英文单词自然换行，避免单词被生硬切断 */
+    line-height: 1.2 !important; 
+  }
 </style>
 
 | ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
