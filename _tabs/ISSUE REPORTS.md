@@ -30,24 +30,56 @@ nav_title: Evoluation Results
   }
 
   .post-content table {
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    color: #111111;
+    font-family: "Times New Roman", Times, serif;
     table-layout: fixed !important;
     width: 1700px !important;
     min-width: 1700px !important;
     max-width: none !important;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    background: #ffffff;
   }
 
   .post-content th,
   .post-content td {
+    border: 1px solid #222222 !important;
     overflow: visible;
-    padding: 0.75rem 0.8rem;
+    padding: 0.35rem 0.45rem;
+    text-align: center;
     white-space: normal;
     word-break: normal;
     vertical-align: middle;
   }
 
   .post-content th {
+    background: #666666 !important;
+    color: #ffffff;
+    font-size: 1.08rem;
+    font-style: italic;
+    font-weight: 700;
     line-height: 1.35;
+  }
+
+  .post-content tbody tr {
+    background: #ffffff !important;
+  }
+
+  .post-content tbody tr:nth-child(even),
+  .post-content tbody tr:nth-child(odd) {
+    background: #ffffff !important;
+  }
+
+  .post-content td:nth-child(2) {
+    font-weight: 700;
+    font-style: italic;
+    text-align: left;
+  }
+
+  .post-content td:nth-child(11) a {
+    color: #005fff;
+    font-style: italic;
   }
 
   .post-content th:nth-child(1), .post-content td:nth-child(1) { width: 60px; }
