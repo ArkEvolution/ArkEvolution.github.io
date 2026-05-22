@@ -8,14 +8,31 @@ nav_title: Evoluation Results
 ---
 
 <style>
-  /* 1. 彻底干掉 Jekyll 主题自带的表格横向滚动层，限制其最大宽度不超过父容器 */
+  /* 1. 让中间的内容容器自动撑满剩余空间，消除左侧多余留白 */
+  #core-wrapper {
+    flex: 1 1 auto !important; 
+    max-width: 100% !important;
+    width: auto !important; /* 用 auto 避免产生全局横向滚动条 */
+  }
+
+  /* 2. 隐藏右侧侧边栏(目录等)，把右边的空间也抢过来 */
+  #panel-wrapper {
+    display: none !important;
+  }
+
+  /* 3. 解除文章内容区域的宽度限制 */
+  .post-content {
+    max-width: 100% !important;
+  }
+
+  /* 4. 彻底干掉主题自带的表格横向滚动层 */
   .table-wrapper {
     overflow-x: hidden !important; 
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  /* 2. 启用 Fixed 固定布局，强行锁定表格宽度为容器的 100% */
+  /* 5. 启用 Fixed 固定布局，强行锁定表格宽度为容器的 100% */
   .post-content table, .table-wrapper table {
     table-layout: fixed !important;
     width: 100% !important;
@@ -24,10 +41,10 @@ nav_title: Evoluation Results
     font-size: 13px !important; 
     font-family: "Times New Roman", Times, serif;
     background: #ffffff;
-    margin: 0 !important; /* 防止多余外边距撑开页面 */
+    margin: 0 !important; 
   }
 
-  /* 3. 强制所有单元格允许换行，打破主题的 nowrap 限制 */
+  /* 6. 强制所有单元格允许换行，打破主题的 nowrap 限制 */
   .post-content th, .post-content td, .table-wrapper th, .table-wrapper td {
     white-space: normal !important;
     word-wrap: break-word !important; 
@@ -59,7 +76,7 @@ nav_title: Evoluation Results
   }
 
   /* ========================================= */
-  /* 4. 核心：精确分配 11 列的百分比宽度 (总和 100%) */
+  /* 7. 核心：精确分配 11 列的百分比宽度 (总和 100%) */
   /* ========================================= */
   th:nth-child(1), td:nth-child(1) { width: 4%; }   /* ID */
   th:nth-child(2), td:nth-child(2) { width: 10%; }  /* Package */
