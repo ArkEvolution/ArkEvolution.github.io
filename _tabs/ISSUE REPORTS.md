@@ -45,7 +45,7 @@ nav_title: Evoluation Results
   .post-content th,
   .post-content td {
     border: 1px solid #222222 !important;
-    overflow: visible;
+    overflow-wrap: break-word;
     padding: 0.35rem 0.45rem;
     text-align: center;
     white-space: normal;
@@ -83,17 +83,9 @@ nav_title: Evoluation Results
     font-style: italic;
   }
 
-  .post-content th:nth-child(1), .post-content td:nth-child(1) { width: 60px; }
-  .post-content th:nth-child(2), .post-content td:nth-child(2) { width: 170px; }
-  .post-content th:nth-child(3), .post-content td:nth-child(3) { width: 170px; }
-  .post-content th:nth-child(4), .post-content td:nth-child(4) { width: 130px; }
-  .post-content th:nth-child(5), .post-content td:nth-child(5) { width: 100px; }
-  .post-content th:nth-child(6), .post-content td:nth-child(6) { width: 100px; }
-  .post-content th:nth-child(7), .post-content td:nth-child(7) { width: 150px; }
-  .post-content th:nth-child(8), .post-content td:nth-child(8) { width: 140px; }
-  .post-content th:nth-child(9), .post-content td:nth-child(9) { width: 220px; }
-  .post-content th:nth-child(10), .post-content td:nth-child(10) { width: 110px; }
-  .post-content th:nth-child(11), .post-content td:nth-child(11) { width: 120px; }
+  .post-content th:nth-child(1), .post-content td:nth-child(1) { width: 6%; }
+  .post-content th:nth-child(10), .post-content td:nth-child(10) { width: 8%; }
+  .post-content th:nth-child(11), .post-content td:nth-child(11) { width: 10%; }
 </style>
 
 | ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
