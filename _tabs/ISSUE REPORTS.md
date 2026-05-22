@@ -25,7 +25,7 @@ nav_title: Evoluation Results
   .post-content .table-wrapper {
     display: block;
     max-width: 100%;
-    overflow-x: auto !important;
+    overflow-x: hidden !important;
     padding-bottom: 0.5rem;
   }
 
@@ -34,10 +34,10 @@ nav_title: Evoluation Results
     border-spacing: 0 !important;
     color: #111111;
     font-family: "Times New Roman", Times, serif;
-    table-layout: fixed !important;
+    table-layout: auto !important;
     width: 100% !important;
-    min-width: 100% !important;
-    max-width: none !important;
+    min-width: auto !important;
+    max-width: 100% !important;
     font-size: 1.05rem;
     background: #ffffff;
   }
@@ -45,13 +45,12 @@ nav_title: Evoluation Results
   .post-content th,
   .post-content td {
     border: 1px solid #222222 !important;
-    overflow-wrap: break-word;
     padding: 0.35rem 0.45rem;
     text-align: center;
     white-space: normal;
-    word-break: break-word;
+    word-break: break-all;
+    overflow-wrap: anywhere;
     vertical-align: middle;
-    hyphens: auto;
   }
 
   .post-content th {
@@ -83,9 +82,6 @@ nav_title: Evoluation Results
     font-style: italic;
   }
 
-  .post-content th:nth-child(1), .post-content td:nth-child(1) { width: 6%; }
-  .post-content th:nth-child(10), .post-content td:nth-child(10) { width: 8%; }
-  .post-content th:nth-child(11), .post-content td:nth-child(11) { width: 10%; }
 </style>
 
 | ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
