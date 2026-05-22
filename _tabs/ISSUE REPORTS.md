@@ -34,9 +34,9 @@ nav_title: Evoluation Results
     border-spacing: 0 !important;
     color: #111111;
     font-family: "Times New Roman", Times, serif;
-    table-layout: fixed !important;
-    width: 1700px !important;
-    min-width: 1700px !important;
+    table-layout: auto !important;
+    width: 100% !important;
+    min-width: 100% !important;
     max-width: none !important;
     font-size: 1.05rem;
     background: #ffffff;
@@ -49,7 +49,7 @@ nav_title: Evoluation Results
     padding: 0.35rem 0.45rem;
     text-align: center;
     white-space: normal;
-    word-break: normal;
+    word-break: break-word;
     vertical-align: middle;
   }
 
