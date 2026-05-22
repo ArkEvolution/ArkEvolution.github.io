@@ -4,6 +4,9 @@ source "https://rubygems.org"
 
 gemspec
 
+# sass-embedded 1.100.0 fails to build on the GitHub Pages Ruby 3.1 runner.
+gem "sass-embedded", "< 1.100"
+
 group :test do
   gem "html-proofer", "~> 3.18"
 end
