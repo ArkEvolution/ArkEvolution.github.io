@@ -23,7 +23,7 @@ nav_title: Benchmark download
 
 ### Example
 
-```markdown
+```text
 Ui+j = <Vi, Vi+j, Vi', Vi+j', Delta1, Delta2, M>
 
 - Vi: ArkTS version before evolution
