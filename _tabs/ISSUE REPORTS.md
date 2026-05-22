@@ -23,31 +23,44 @@ nav_title: Evoluation Results
   }
 
   .post-content .table-wrapper {
-    overflow-x: auto;
+    display: block;
+    max-width: 100%;
+    overflow-x: auto !important;
     padding-bottom: 0.5rem;
   }
 
   .post-content table {
-    table-layout: auto;
-    width: max-content;
-    min-width: 100%;
-    font-size: 0.92rem;
+    table-layout: fixed !important;
+    width: 1700px !important;
+    min-width: 1700px !important;
+    max-width: none !important;
+    font-size: 0.95rem;
   }
 
   .post-content th,
   .post-content td {
-    padding: 0.7rem 0.9rem;
-    white-space: nowrap;
+    overflow: visible;
+    padding: 0.75rem 0.8rem;
+    white-space: normal;
+    word-break: normal;
     vertical-align: middle;
   }
 
-  .post-content th:nth-child(7),
-  .post-content th:nth-child(8),
-  .post-content th:nth-child(9) {
-    white-space: normal;
-    min-width: 10rem;
+  .post-content th {
     line-height: 1.35;
   }
+
+  .post-content th:nth-child(1), .post-content td:nth-child(1) { width: 60px; }
+  .post-content th:nth-child(2), .post-content td:nth-child(2) { width: 170px; }
+  .post-content th:nth-child(3), .post-content td:nth-child(3) { width: 170px; }
+  .post-content th:nth-child(4), .post-content td:nth-child(4) { width: 130px; }
+  .post-content th:nth-child(5), .post-content td:nth-child(5) { width: 100px; }
+  .post-content th:nth-child(6), .post-content td:nth-child(6) { width: 100px; }
+  .post-content th:nth-child(7), .post-content td:nth-child(7) { width: 270px; }
+  .post-content th:nth-child(8), .post-content td:nth-child(8) { width: 250px; }
+  .post-content th:nth-child(9), .post-content td:nth-child(9) { width: 220px; }
+  .post-content th:nth-child(10), .post-content td:nth-child(10) { width: 110px; }
+  .post-content th:nth-child(11), .post-content td:nth-child(11) { width: 120px; }
 </style>
 
 | ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
