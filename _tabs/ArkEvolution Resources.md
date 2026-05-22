@@ -20,17 +20,3 @@ nav_title: Benchmark download
 {: .prompt-tip }
 
 [**Download the ArkEvolution benchmark**](/ArkEvolution/benchmark/benchmark.zip)
-
-### Example
-
-```text
-Ui+j = <Vi, Vi+j, Vi', Vi+j', Delta1, Delta2, M>
-
-- Vi: ArkTS version before evolution
-- Vi+j: ArkTS version after evolution
-- Vi': corresponding JS/TS version before evolution
-- Vi+j': corresponding JS/TS version after evolution
-- Delta1: ArkTS syntax-adaptation changes
-- Delta2: upstream JS/TS evolutionary changes
-- M: mapped entities requiring synchronized evolution
-```
