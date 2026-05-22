@@ -7,6 +7,39 @@ permalink: /ISSUE-REPORTS/
 nav_title: Evoluation Results
 ---
 
+<style>
+  #core-wrapper {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  #panel-wrapper {
+    display: none;
+  }
+
+  .post-content {
+    max-width: none;
+  }
+
+  .post-content .table-wrapper {
+    overflow-x: visible;
+  }
+
+  .post-content table {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 0.72rem;
+  }
+
+  .post-content th,
+  .post-content td {
+    overflow-wrap: anywhere;
+    padding: 0.45rem 0.35rem;
+    white-space: normal;
+  }
+</style>
+
 | ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | protobuf | 7.2.4 -> 8.0.0 | 36 | 94% | 83% | 160 | 14 | All reviews passed | Merged | [PR #90](https://gitcode.com/openharmony-tpc/protobuf/pull/90) |
