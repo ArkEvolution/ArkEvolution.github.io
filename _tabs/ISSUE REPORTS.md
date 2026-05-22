@@ -95,7 +95,7 @@ nav_title: Evoluation Results
   .post-content th:nth-child(11), .post-content td:nth-child(11) { width: 120px; }
 </style>
 
-| ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
+| ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines<br>by ArkEvolution | # Manually modified<br>code lines | OpenHarmony CI Check | PR status | PR Link |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | protobuf | 7.2.4 -> 8.0.0 | 36 | 94% | 83% | 160 | 14 | All reviews passed | Merged | [PR #90](https://gitcode.com/openharmony-tpc/protobuf/pull/90) |
 | 2 | xmpp | 0.13.1 -> 0.14.0 | 7 | 91% | 87% | 159 | 17 | All reviews passed | Merged | [PR #2953](https://gitcode.com/openharmony-tpc/openharmony_tpc_samples/pull/2953) |
