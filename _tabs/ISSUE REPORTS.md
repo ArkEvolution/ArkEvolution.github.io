@@ -8,34 +8,31 @@ nav_title: Evoluation Results
 ---
 
 <style>
-  /* 1. 释放最大宽度限制 */
-  #main-wrapper, #core-wrapper, .post-content, .page-content {
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-
-  /* 2. 彻底干掉 Jekyll 主题自带的横向滚动层 */
+  /* 1. 彻底干掉 Jekyll 主题自带的表格横向滚动层，限制其最大宽度不超过父容器 */
   .table-wrapper {
     overflow-x: hidden !important; 
     width: 100% !important;
+    max-width: 100% !important;
   }
 
-  /* 3. 启用 Fixed 固定布局，强行锁定表格宽度为 100% */
+  /* 2. 启用 Fixed 固定布局，强行锁定表格宽度为容器的 100% */
   .post-content table, .table-wrapper table {
     table-layout: fixed !important;
     width: 100% !important;
+    max-width: 100% !important;
     border-collapse: collapse !important;
-    font-size: 13px !important; /* 字体稍微调小一点，确保 11 列能放得下 */
+    font-size: 13px !important; 
     font-family: "Times New Roman", Times, serif;
     background: #ffffff;
+    margin: 0 !important; /* 防止多余外边距撑开页面 */
   }
 
-  /* 4. 强制所有单元格允许换行，打破主题的 nowrap 限制 */
+  /* 3. 强制所有单元格允许换行，打破主题的 nowrap 限制 */
   .post-content th, .post-content td, .table-wrapper th, .table-wrapper td {
     white-space: normal !important;
     word-wrap: break-word !important; 
-    word-break: break-word !important; /* 长单词和长链接强制折行 */
-    padding: 6px 4px !important; /* 压缩内边距 */
+    word-break: break-word !important; 
+    padding: 6px 4px !important; 
     text-align: center;
     vertical-align: middle;
     border: 1px solid #222222 !important;
@@ -58,11 +55,11 @@ nav_title: Evoluation Results
   .post-content td:nth-child(11) a {
     color: #005fff;
     font-style: italic;
-    word-break: break-all !important; /* 确保链接极度压缩换行 */
+    word-break: break-all !important; 
   }
 
   /* ========================================= */
-  /* 5. 核心：精确分配 11 列的百分比宽度 (总和 100%) */
+  /* 4. 核心：精确分配 11 列的百分比宽度 (总和 100%) */
   /* ========================================= */
   th:nth-child(1), td:nth-child(1) { width: 4%; }   /* ID */
   th:nth-child(2), td:nth-child(2) { width: 10%; }  /* Package */
