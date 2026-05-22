@@ -23,20 +23,30 @@ nav_title: Evoluation Results
   }
 
   .post-content .table-wrapper {
-    overflow-x: visible;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
   }
 
   .post-content table {
-    table-layout: fixed;
-    width: 100%;
-    font-size: 0.72rem;
+    table-layout: auto;
+    width: max-content;
+    min-width: 100%;
+    font-size: 0.92rem;
   }
 
   .post-content th,
   .post-content td {
-    overflow-wrap: anywhere;
-    padding: 0.45rem 0.35rem;
+    padding: 0.7rem 0.9rem;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .post-content th:nth-child(7),
+  .post-content th:nth-child(8),
+  .post-content th:nth-child(9) {
     white-space: normal;
+    min-width: 10rem;
+    line-height: 1.35;
   }
 </style>
 
