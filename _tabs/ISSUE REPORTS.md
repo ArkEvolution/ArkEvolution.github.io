@@ -8,11 +8,18 @@ nav_title: Evoluation Results
 ---
 
 <style>
-  /* 1. 让中间的内容容器自动撑满剩余空间，消除左侧多余留白 */
+  /* 1. 让中间的内容容器撑满 */
   #core-wrapper {
-    flex: 1 1 auto !important; 
+    flex: 0 0 100% !important;
     max-width: 100% !important;
-    width: auto !important; /* 用 auto 避免产生全局横向滚动条 */
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .row {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* 2. 隐藏右侧侧边栏(目录等)，把右边的空间也抢过来 */
@@ -20,9 +27,16 @@ nav_title: Evoluation Results
     display: none !important;
   }
 
-  /* 3. 解除文章内容区域的宽度限制 */
+  /* 3. 解除文章内容区域的宽度限制和边距 */
   .post-content {
     max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  article.post {
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   /* 4. 彻底干掉主题自带的表格横向滚动层 */
