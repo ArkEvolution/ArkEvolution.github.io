@@ -8,67 +8,45 @@ nav_title: Evoluation Results
 ---
 
 <style>
-  #core-wrapper {
-    flex: 0 0 100%;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  #panel-wrapper {
-    display: none;
-  }
-
-  .post-content {
-    max-width: none;
-  }
-
-  /* 彻底禁用横向滚动条，交由浏览器压缩列宽 */
-  .post-content .table-wrapper {
-    width: 100%;
-    padding-bottom: 0.5rem;
-  }
-
-  .post-content table {
-    border-collapse: collapse !important;
-    border-spacing: 0 !important;
-    color: #111111;
-    font-family: "Times New Roman", Times, serif;
-    /* 改为 auto，让浏览器根据内容长短自动分配列宽 */
-    table-layout: auto !important; 
+  /* 1. 释放最大宽度限制 */
+  #main-wrapper, #core-wrapper, .post-content, .page-content {
+    max-width: 100% !important;
     width: 100% !important;
-    /* 字体微调为 0.95rem，保证清晰可读的同时节省总宽度 */
-    font-size: 0.95rem; 
+  }
+
+  /* 2. 彻底干掉 Jekyll 主题自带的横向滚动层 */
+  .table-wrapper {
+    overflow-x: hidden !important; 
+    width: 100% !important;
+  }
+
+  /* 3. 启用 Fixed 固定布局，强行锁定表格宽度为 100% */
+  .post-content table, .table-wrapper table {
+    table-layout: fixed !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 13px !important; /* 字体稍微调小一点，确保 11 列能放得下 */
+    font-family: "Times New Roman", Times, serif;
     background: #ffffff;
   }
 
-  .post-content th,
-  .post-content td {
-    border: 1px solid #222222 !important;
-    /* 减小内边距 (padding)，去掉不必要的空白区域 */
-    padding: 0.25rem 0.35rem; 
+  /* 4. 强制所有单元格允许换行，打破主题的 nowrap 限制 */
+  .post-content th, .post-content td, .table-wrapper th, .table-wrapper td {
+    white-space: normal !important;
+    word-wrap: break-word !important; 
+    word-break: break-word !important; /* 长单词和长链接强制折行 */
+    padding: 6px 4px !important; /* 压缩内边距 */
     text-align: center;
-    white-space: normal;
-    /* 强制长单词和 URL 链接直接换行，防止单独一列撑破屏幕 */
-    word-break: break-all; 
     vertical-align: middle;
+    border: 1px solid #222222 !important;
+    line-height: 1.3 !important;
   }
 
-  .post-content th {
+  .post-content th, .table-wrapper th {
     background: #666666 !important;
-    color: #ffffff;
-    font-size: 1rem;
+    color: #ffffff !important;
     font-style: italic;
     font-weight: 700;
-    line-height: 1.35;
-  }
-
-  .post-content tbody tr {
-    background: #ffffff !important;
-  }
-
-  .post-content tbody tr:nth-child(even),
-  .post-content tbody tr:nth-child(odd) {
-    background: #ffffff !important;
   }
 
   .post-content td:nth-child(2) {
@@ -80,19 +58,24 @@ nav_title: Evoluation Results
   .post-content td:nth-child(11) a {
     color: #005fff;
     font-style: italic;
+    word-break: break-all !important; /* 确保链接极度压缩换行 */
   }
 
-  /* 强制压缩第 7 列和第 8 列的宽度，逼迫长表头自然换行 */
-  .post-content th:nth-child(7),
-  .post-content td:nth-child(7),
-  .post-content th:nth-child(8),
-  .post-content td:nth-child(8) {
-    width: 85px !important; /* 根据效果可适当增减此值 */
-    max-width: 85px !important;
-    white-space: normal !important; 
-    word-break: normal !important; /* 按英文单词自然换行，避免单词被生硬切断 */
-    line-height: 1.2 !important; 
-  }
+  /* ========================================= */
+  /* 5. 核心：精确分配 11 列的百分比宽度 (总和 100%) */
+  /* ========================================= */
+  th:nth-child(1), td:nth-child(1) { width: 4%; }   /* ID */
+  th:nth-child(2), td:nth-child(2) { width: 10%; }  /* Package */
+  th:nth-child(3), td:nth-child(3) { width: 11%; }  /* Version Upgrades */
+  th:nth-child(4), td:nth-child(4) { width: 7%; }   /* Commits */
+  th:nth-child(5), td:nth-child(5) { width: 6%; }   /* CPR */
+  th:nth-child(6), td:nth-child(6) { width: 6%; }   /* TPR */
+  th:nth-child(7), td:nth-child(7) { width: 13%; }  /* Modified by Ark */
+  th:nth-child(8), td:nth-child(8) { width: 12%; }  /* Manually modified */
+  th:nth-child(9), td:nth-child(9) { width: 12%; }  /* CI Check */
+  th:nth-child(10), td:nth-child(10) { width: 8%; } /* PR status */
+  th:nth-child(11), td:nth-child(11) { width: 11%; }/* PR Link */
+
 </style>
 
 | ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
