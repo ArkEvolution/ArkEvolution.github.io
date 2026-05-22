@@ -57,7 +57,7 @@ self.addEventListener('message', (event) => {
 });
 
 self.addEventListener('fetch', event => {
-    if (event.request.headers.has('range')) {
+    if (new URL(event.request.url).pathname.startsWith('{{ "/ArkEvolution/" | relative_url }}')) {
         event.respondWith(fetch(event.request));
         return;
     }
@@ -74,7 +74,8 @@ self.addEventListener('fetch', event => {
                 if (event.request.method !== 'GET' ||
                     !verifyDomain(url) ||
                     isExcluded(url) ||
-                    response.status !== 200) {
+                    response.status !== 200 ||
+                    response.status === 206) {
                     return response;
                 }
 

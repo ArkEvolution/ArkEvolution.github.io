@@ -1,12 +1,18 @@
 $(document).ready(function() {
 	var help = document.getElementById("d-help-win");
 	var video = document.getElementById("help-video");
+
+	if (!help) {
+		return;
+	}
+
 	$("#d-help").click(function() {
 		help.style.display = "block";
 		if (video) {
 			video.play().catch(function() {});
 		}
 	});
+
 	$("#d-help-colse").click(function() {
 		if (video) {
 			video.pause();
