@@ -14,4 +14,4 @@
 RQ1-benchmark.7z filter=lfs diff=lfs merge=lfs -text
 ArkEvolution/benchmark/benchmark.zip filter=lfs diff=lfs merge=lfs -text
 *.mp4 binary
-ArkEvolution/demo/demo.mp4 filter=lfs diff=lfs merge=lfs -text
+ArkEvolution/demo/demo.mp4 binary
