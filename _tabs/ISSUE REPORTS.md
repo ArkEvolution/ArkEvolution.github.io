@@ -34,7 +34,7 @@ nav_title: Evoluation Results
     border-spacing: 0 !important;
     color: #111111;
     font-family: "Times New Roman", Times, serif;
-    table-layout: auto !important;
+    table-layout: fixed !important;
     width: 100% !important;
     min-width: 100% !important;
     max-width: none !important;
@@ -51,6 +51,7 @@ nav_title: Evoluation Results
     white-space: normal;
     word-break: break-word;
     vertical-align: middle;
+    hyphens: auto;
   }
 
   .post-content th {
@@ -88,14 +89,14 @@ nav_title: Evoluation Results
   .post-content th:nth-child(4), .post-content td:nth-child(4) { width: 130px; }
   .post-content th:nth-child(5), .post-content td:nth-child(5) { width: 100px; }
   .post-content th:nth-child(6), .post-content td:nth-child(6) { width: 100px; }
-  .post-content th:nth-child(7), .post-content td:nth-child(7) { width: 270px; }
-  .post-content th:nth-child(8), .post-content td:nth-child(8) { width: 250px; }
+  .post-content th:nth-child(7), .post-content td:nth-child(7) { width: 150px; }
+  .post-content th:nth-child(8), .post-content td:nth-child(8) { width: 140px; }
   .post-content th:nth-child(9), .post-content td:nth-child(9) { width: 220px; }
   .post-content th:nth-child(10), .post-content td:nth-child(10) { width: 110px; }
   .post-content th:nth-child(11), .post-content td:nth-child(11) { width: 120px; }
 </style>
 
-| ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines<br>by ArkEvolution | # Manually modified<br>code lines | OpenHarmony CI Check | PR status | PR Link |
+| ID | Package | Version Upgrades | # Code Commits | CPR (%) | TPR (%) | # Modified Code Lines by ArkEvolution | # Manually modified code lines | OpenHarmony CI Check | PR status | PR Link |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | protobuf | 7.2.4 -> 8.0.0 | 36 | 94% | 83% | 160 | 14 | All reviews passed | Merged | [PR #90](https://gitcode.com/openharmony-tpc/protobuf/pull/90) |
 | 2 | xmpp | 0.13.1 -> 0.14.0 | 7 | 91% | 87% | 159 | 17 | All reviews passed | Merged | [PR #2953](https://gitcode.com/openharmony-tpc/openharmony_tpc_samples/pull/2953) |
