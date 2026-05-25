@@ -19,4 +19,4 @@ nav_title: Benchmark download
 > `M` records the mapped entities that need synchronized evolution.
 {: .prompt-tip }
 
-[**Download the ArkEvolution benchmark**](/ArkEvolution/benchmark/benchmark.zip)
+[**Download the ArkEvolution benchmark**](https://github.com/ArkEvolution/ArkEvolution.github.io/releases/download/data/benchmark.zip)
