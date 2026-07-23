@@ -12,4 +12,4 @@ external_url: http://124.70.181.98:92/
 
 ArkEvolution is an effective automated tool for repository-level JS/TS-to-ArkTS co-evolution.
 
-[Open ArkEvolution](/ArkEvolution/)
+[Open ArkEvolution](http://124.70.181.98:92/ArkEvolution/)
